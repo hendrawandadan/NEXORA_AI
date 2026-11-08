@@ -1,0 +1,39 @@
+{
+  "file": "D:\\NEXORA_AI_v2\\data\\raw\\EURUSD\\EURUSD_Weekly_202001050000_202611010000.csv",
+  "timeframe": "W1",
+  "schema_columns": [
+    "time",
+    "open",
+    "high",
+    "low",
+    "close",
+    "volume",
+    "vol",
+    "spread"
+  ],
+  "schema_valid": true,
+  "rows_input": 357,
+  "rows_valid_unique": 357,
+  "invalid_timestamps": 0,
+  "duplicates": 0,
+  "missing_ohlc": 0,
+  "nonpositive_prices": 0,
+  "invalid_ohlc": 0,
+  "interval_check": {
+    "expected_minutes": 10080,
+    "observed_minutes": 10080.0,
+    "status": "PASS"
+  },
+  "gap_count": 0,
+  "first_bar": "2020-01-05 00:00:00",
+  "last_bar": "2026-11-01 00:00:00",
+  "spread_points": {
+    "count": 357,
+    "median_points": 0.0,
+    "p95_points": 50.0,
+    "max_points": 50.0
+  },
+  "gap_examples": [],
+  "status": "BASIC_CHECKS_PASS",
+  "note": "Gap perlu ditafsirkan sesuai sesi dan kalender instrumen; audit tidak membuktikan histori lengkap."
+}

@@ -1,0 +1,113 @@
+{
+  "datasets_found": 21,
+  "datasets_usable": 17,
+  "individual_runs": 17,
+  "global_runs": 0,
+  "failures": [
+    {
+      "dataset": "data\\raw\\EURUSD\\EURUSD_Daily_202001020000_202611060000.csv",
+      "stage": "audit/min_bars",
+      "error": "Review status or insufficient rows"
+    },
+    {
+      "dataset": "data\\raw\\EURUSD\\EURUSD_H12_202001020000_202611061200.csv",
+      "stage": "audit/min_bars",
+      "error": "Review status or insufficient rows"
+    },
+    {
+      "dataset": "data\\raw\\EURUSD\\EURUSD_Monthly_202001010000_202611010000.csv",
+      "stage": "audit/min_bars",
+      "error": "Review status or insufficient rows"
+    },
+    {
+      "dataset": "data\\raw\\EURUSD\\EURUSD_Weekly_202001050000_202611010000.csv",
+      "stage": "audit/min_bars",
+      "error": "Review status or insufficient rows"
+    },
+    {
+      "dataset": "H1",
+      "stage": "global",
+      "error": "Global model skipped: need at least two symbols with usable data"
+    },
+    {
+      "dataset": "H2",
+      "stage": "global",
+      "error": "Global model skipped: need at least two symbols with usable data"
+    },
+    {
+      "dataset": "H3",
+      "stage": "global",
+      "error": "Global model skipped: need at least two symbols with usable data"
+    },
+    {
+      "dataset": "H4",
+      "stage": "global",
+      "error": "Global model skipped: need at least two symbols with usable data"
+    },
+    {
+      "dataset": "H6",
+      "stage": "global",
+      "error": "Global model skipped: need at least two symbols with usable data"
+    },
+    {
+      "dataset": "H8",
+      "stage": "global",
+      "error": "Global model skipped: need at least two symbols with usable data"
+    },
+    {
+      "dataset": "M1",
+      "stage": "global",
+      "error": "Global model skipped: need at least two symbols with usable data"
+    },
+    {
+      "dataset": "M10",
+      "stage": "global",
+      "error": "Global model skipped: need at least two symbols with usable data"
+    },
+    {
+      "dataset": "M12",
+      "stage": "global",
+      "error": "Global model skipped: need at least two symbols with usable data"
+    },
+    {
+      "dataset": "M15",
+      "stage": "global",
+      "error": "Global model skipped: need at least two symbols with usable data"
+    },
+    {
+      "dataset": "M2",
+      "stage": "global",
+      "error": "Global model skipped: need at least two symbols with usable data"
+    },
+    {
+      "dataset": "M20",
+      "stage": "global",
+      "error": "Global model skipped: need at least two symbols with usable data"
+    },
+    {
+      "dataset": "M3",
+      "stage": "global",
+      "error": "Global model skipped: need at least two symbols with usable data"
+    },
+    {
+      "dataset": "M30",
+      "stage": "global",
+      "error": "Global model skipped: need at least two symbols with usable data"
+    },
+    {
+      "dataset": "M4",
+      "stage": "global",
+      "error": "Global model skipped: need at least two symbols with usable data"
+    },
+    {
+      "dataset": "M5",
+      "stage": "global",
+      "error": "Global model skipped: need at least two symbols with usable data"
+    },
+    {
+      "dataset": "M6",
+      "stage": "global",
+      "error": "Global model skipped: need at least two symbols with usable data"
+    }
+  ]
+}

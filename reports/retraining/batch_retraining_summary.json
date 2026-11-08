@@ -1,0 +1,145 @@
+{
+  "sources": {
+    "matrix": "D:\\NEXORA_AI_v2\\reports\\audit\\training_coverage_matrix.csv",
+    "summary": "D:\\NEXORA_AI_v2\\reports\\audit\\training_coverage_summary.json",
+    "report": "D:\\NEXORA_AI_v2\\reports\\audit\\training_coverage_report.md"
+  },
+  "coverage_recap": {
+    "expected_overall": {
+      "total": 378,
+      "trained": 247,
+      "missing": 131,
+      "incomplete": 0,
+      "invalid": 0
+    },
+    "usable_only": {
+      "total": 294,
+      "trained": 247,
+      "missing": 47,
+      "incomplete": 0,
+      "invalid": 0
+    },
+    "insufficient_bars_or_nonusable": {
+      "total": 84,
+      "trained": 0,
+      "missing": 84,
+      "incomplete": 0,
+      "invalid": 0
+    }
+  },
+  "actions": {
+    "to_train": 47,
+    "to_skip": 247,
+    "to_backlog_data": 84,
+    "to_investigate": 0
+  },
+  "batch_counts": {
+    "Batch 1": {
+      "runs": 37,
+      "timeframes": [
+        "M15",
+        "M2",
+        "M20",
+        "M3",
+        "M30",
+        "M4",
+        "M5",
+        "M6"
+      ],
+      "horizons": [
+        2,
+        4,
+        8,
+        12,
+        24
+      ],
+      "compute_tier_counts": {
+        "low": 16,
+        "medium": 15,
+        "high": 6
+      }
+    },
+    "Batch 2": {
+      "runs": 0,
+      "timeframes": [],
+      "horizons": [],
+      "compute_tier_counts": {}
+    },
+    "Batch 3": {
+      "runs": 10,
+      "timeframes": [
+        "M1",
+        "M3"
+      ],
+      "horizons": [
+        1,
+        2,
+        4,
+        8,
+        12,
+        24
+      ],
+      "compute_tier_counts": {
+        "high": 10
+      }
+    }
+  },
+  "backlog_timeframes": {
+    "individual": [
+      "D1",
+      "H12",
+      "H8",
+      "MN1",
+      "W1"
+    ],
+    "global": [
+      "D1",
+      "H12",
+      "H8",
+      "MN1",
+      "W1"
+    ],
+    "records": 84
+  },
+  "risks_and_dependencies": {
+    "dependencies": [
+      "Batch 3 depends on both symbols being usable for same timeframe",
+      "Missing non-usable timeframes require data expansion before retraining",
+      "INCOMPLETE/INVALID (if any) must be investigated before retraining"
+    ],
+    "current_investigate_count": 0
+  },
+  "success_criteria": {
+    "batch_1": "All EURUSD usable-missing combos become TRAINED with valid report+model metadata.",
+    "batch_2": "All XAUUSD usable-missing combos become TRAINED with valid report+model metadata.",
+    "batch_3": "All global usable-missing combos for EURUSD+XAUUSD become TRAINED with matching symbol set metadata.",
+    "post_check": "No duplicate key, no orphan artifact, trading metrics regenerated for new signals."
+  },
+  "cost_estimation": {
+    "relative_model": {
+      "formula": "rows * max_iter * scope_factor * horizon_factor",
+      "scope_factor": {
+        "individual": 1.0,
+        "global": 1.8
+      },
+      "horizon_factor": "1 + (horizon/24)*0.35",
+      "limitation": "relative-only; not wall-clock duration"
+    },
+    "quick_vs_full": {
+      "max_iter_quick": 80,
+      "max_iter_full": 300,
+      "iter_ratio_full_over_quick": 3.75,
+      "planned_weight_quick": 3715732269.1666665,
+      "planned_weight_full": 13933996009.375
+    },
+    "scope_compare_full": {
+      "individual_planned_weight_full": 5453004493.75,
+      "global_planned_weight_full": 8480991515.625
+    }
+  },
+  "config_alignment_checks": {
+    "engine_default_hint": "auto",
+    "trained_with_missing_engine_meta_count": 0,
+    "note": "Engine metadata is taken from report artifact; verify before execution if nonzero."
+  }
+}

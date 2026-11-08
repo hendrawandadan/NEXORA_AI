@@ -1,0 +1,229 @@
+{
+  "config": {
+    "horizons_target": [
+      1,
+      2,
+      4,
+      8,
+      12,
+      24
+    ],
+    "min_bars": 5000,
+    "walk_forward_folds": 3
+  },
+  "dataset_inventory": {
+    "total_discovered_pairs": 42,
+    "symbols_present": [
+      "EURUSD",
+      "XAUUSD"
+    ],
+    "target_symbols": [
+      "EURUSD",
+      "XAUUSD"
+    ]
+  },
+  "status_counts": [
+    {
+      "scope": "global",
+      "status": "MISSING",
+      "count": 40
+    },
+    {
+      "scope": "global",
+      "status": "TRAINED",
+      "count": 86
+    },
+    {
+      "scope": "individual",
+      "status": "MISSING",
+      "count": 91
+    },
+    {
+      "scope": "individual",
+      "status": "TRAINED",
+      "count": 161
+    }
+  ],
+  "individual_summary": {
+    "EURUSD": {
+      "total_expected_runs": 126,
+      "trained": 65,
+      "missing": 61,
+      "incomplete": 0,
+      "invalid": 0,
+      "timeframes_all": [
+        "D1",
+        "H1",
+        "H12",
+        "H2",
+        "H3",
+        "H4",
+        "H6",
+        "H8",
+        "M1",
+        "M10",
+        "M12",
+        "M15",
+        "M2",
+        "M20",
+        "M3",
+        "M30",
+        "M4",
+        "M5",
+        "M6",
+        "MN1",
+        "W1"
+      ],
+      "timeframes_usable": [
+        "H1",
+        "H2",
+        "H3",
+        "H4",
+        "H6",
+        "H8",
+        "M1",
+        "M10",
+        "M12",
+        "M15",
+        "M2",
+        "M20",
+        "M3",
+        "M30",
+        "M4",
+        "M5",
+        "M6"
+      ],
+      "horizons": [
+        1,
+        2,
+        4,
+        8,
+        12,
+        24
+      ]
+    },
+    "XAUUSD": {
+      "total_expected_runs": 126,
+      "trained": 96,
+      "missing": 30,
+      "incomplete": 0,
+      "invalid": 0,
+      "timeframes_all": [
+        "D1",
+        "H1",
+        "H12",
+        "H2",
+        "H3",
+        "H4",
+        "H6",
+        "H8",
+        "M1",
+        "M10",
+        "M12",
+        "M15",
+        "M2",
+        "M20",
+        "M3",
+        "M30",
+        "M4",
+        "M5",
+        "M6",
+        "MN1",
+        "W1"
+      ],
+      "timeframes_usable": [
+        "H1",
+        "H2",
+        "H3",
+        "H4",
+        "H6",
+        "M1",
+        "M10",
+        "M12",
+        "M15",
+        "M2",
+        "M20",
+        "M3",
+        "M30",
+        "M4",
+        "M5",
+        "M6"
+      ],
+      "horizons": [
+        1,
+        2,
+        4,
+        8,
+        12,
+        24
+      ]
+    }
+  },
+  "global_summary": {
+    "target_symbol_set": "EURUSD+XAUUSD",
+    "common_timeframes_all": [
+      "D1",
+      "H1",
+      "H12",
+      "H2",
+      "H3",
+      "H4",
+      "H6",
+      "H8",
+      "M1",
+      "M10",
+      "M12",
+      "M15",
+      "M2",
+      "M20",
+      "M3",
+      "M30",
+      "M4",
+      "M5",
+      "M6",
+      "MN1",
+      "W1"
+    ],
+    "common_timeframes_usable": [
+      "H1",
+      "H2",
+      "H3",
+      "H4",
+      "H6",
+      "M1",
+      "M10",
+      "M12",
+      "M15",
+      "M2",
+      "M20",
+      "M3",
+      "M30",
+      "M4",
+      "M5",
+      "M6"
+    ],
+    "total_expected_runs": 126,
+    "trained": 86,
+    "missing": 40,
+    "incomplete": 0,
+    "invalid": 0
+  },
+  "issues": [],
+  "orphans": [],
+  "duplicate_reports_individual": [],
+  "duplicate_reports_global": [],
+  "retraining_plan": {
+    "individual_eurusd": {
+      "runs_required_all_nontrained": 61,
+      "runs_required_usable_only": 37
+    },
+    "individual_xauusd": {
+      "runs_required_all_nontrained": 30,
+      "runs_required_usable_only": 0
+    },
+    "global_eurusd_xauusd": {
+      "runs_required_all_nontrained": 40,
+      "runs_required_usable_only": 10
+    }
+  }
+}

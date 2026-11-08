@@ -1,0 +1,67 @@
+{
+  "kind": "individual",
+  "symbol": "XAUUSD",
+  "timeframe": "M5",
+  "horizon_bars": 2,
+  "engine": "lightgbm",
+  "rows": 378589,
+  "train_rows": 227032,
+  "validation_rows": 75677,
+  "test_rows": 75631,
+  "train_start": "2020-01-02 17:35:00",
+  "test_start": "2024-04-18 13:35:00",
+  "validation_metrics": {
+    "n": 75677,
+    "accuracy": 0.5111989111619119,
+    "balanced_accuracy": 0.511078131782587,
+    "brier": 0.2500127809159892,
+    "log_loss": 0.6931752906734195,
+    "positive_rate": 0.502900484955799,
+    "auc": 0.5151659019505836
+  },
+  "test_metrics": {
+    "n": 75631,
+    "accuracy": 0.5092885192579762,
+    "balanced_accuracy": 0.5086530957483101,
+    "brier": 0.25007516980837363,
+    "log_loss": 0.6933037039558311,
+    "positive_rate": 0.5126337083999947,
+    "auc": 0.5137030381924679
+  },
+  "walk_forward": [
+    {
+      "n": 63064,
+      "accuracy": 0.5101959913738424,
+      "balanced_accuracy": 0.510012132675826,
+      "brier": 0.2501883582247007,
+      "log_loss": 0.6935306241185004,
+      "positive_rate": 0.5017601167068375,
+      "auc": 0.515199002282215,
+      "fold": 1,
+      "engine": "lightgbm"
+    },
+    {
+      "n": 63064,
+      "accuracy": 0.5099264239502728,
+      "balanced_accuracy": 0.5095560336582341,
+      "brier": 0.24981887234718936,
+      "log_loss": 0.6927838031423128,
+      "positive_rate": 0.5048680705315235,
+      "auc": 0.5166822356405807,
+      "fold": 2,
+      "engine": "lightgbm"
+    },
+    {
+      "n": 63064,
+      "accuracy": 0.5109095522009387,
+      "balanced_accuracy": 0.5100658255837935,
+      "brier": 0.24992489681711796,
+      "log_loss": 0.692999365114168,
+      "positive_rate": 0.5139857922110872,
+      "auc": 0.5145806410961127,
+      "fold": 3,
+      "engine": "lightgbm"
+    }
+  ],
+  "warning": "Directional ML evaluation, not a cost-aware execution backtest."
+}

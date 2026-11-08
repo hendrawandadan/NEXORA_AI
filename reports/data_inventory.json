@@ -1,0 +1,57 @@
+{
+  "datasets_detected": 42,
+  "symbols": [
+    "EURUSD",
+    "XAUUSD"
+  ],
+  "timeframes": [
+    "D1",
+    "H1",
+    "H12",
+    "H2",
+    "H3",
+    "H4",
+    "H6",
+    "H8",
+    "M1",
+    "M10",
+    "M12",
+    "M15",
+    "M2",
+    "M20",
+    "M3",
+    "M30",
+    "M4",
+    "M5",
+    "M6",
+    "MN1",
+    "W1"
+  ],
+  "dataset_count_by_timeframe": {
+    "D1": 2,
+    "H1": 2,
+    "H12": 2,
+    "H2": 2,
+    "H3": 2,
+    "H4": 2,
+    "H6": 2,
+    "H8": 2,
+    "M1": 2,
+    "M10": 2,
+    "M12": 2,
+    "M15": 2,
+    "M2": 2,
+    "M20": 2,
+    "M3": 2,
+    "M30": 2,
+    "M4": 2,
+    "M5": 2,
+    "M6": 2,
+    "MN1": 2,
+    "W1": 2
+  },
+  "status_counts": {
+    "BASIC_CHECKS_PASS": 42
+  },
+  "report_csv": "D:\\NEXORA_AI_v2\\reports\\data_audit.csv"
+}

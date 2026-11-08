@@ -1,0 +1,67 @@
+{
+  "kind": "individual",
+  "symbol": "EURUSD",
+  "timeframe": "M1",
+  "horizon_bars": 8,
+  "engine": "lightgbm",
+  "rows": 1997692,
+  "train_rows": 1198491,
+  "validation_rows": 399497,
+  "test_rows": 399449,
+  "train_start": "2020-08-21 00:00:00",
+  "test_start": "2025-10-10 19:12:00",
+  "validation_metrics": {
+    "n": 399497,
+    "accuracy": 0.5172904927946893,
+    "balanced_accuracy": 0.5158124458691099,
+    "brier": 0.24920359205974627,
+    "log_loss": 0.6915348415636354,
+    "positive_rate": 0.49631661814732025,
+    "auc": 0.5253711010460473
+  },
+  "test_metrics": {
+    "n": 399449,
+    "accuracy": 0.5217687364344384,
+    "balanced_accuracy": 0.5159257614496074,
+    "brier": 0.24898079998058315,
+    "log_loss": 0.6910879479666253,
+    "positive_rate": 0.4862247746270488,
+    "auc": 0.5258395777930125
+  },
+  "walk_forward": [
+    {
+      "n": 332914,
+      "accuracy": 0.517983623398235,
+      "balanced_accuracy": 0.5139176126857906,
+      "brier": 0.24919751113454716,
+      "log_loss": 0.6915312740912406,
+      "positive_rate": 0.491571396817196,
+      "auc": 0.524046983631984,
+      "fold": 1,
+      "engine": "lightgbm"
+    },
+    {
+      "n": 332914,
+      "accuracy": 0.5167130249854317,
+      "balanced_accuracy": 0.5158783630559634,
+      "brier": 0.24919914667331547,
+      "log_loss": 0.6915270019680844,
+      "positive_rate": 0.49799347579254705,
+      "auc": 0.5256951547116374,
+      "fold": 2,
+      "engine": "lightgbm"
+    },
+    {
+      "n": 332907,
+      "accuracy": 0.524437755889783,
+      "balanced_accuracy": 0.5177056632593604,
+      "brier": 0.24882721396672225,
+      "log_loss": 0.6907666666390299,
+      "positive_rate": 0.484405554704467,
+      "auc": 0.5281766719215824,
+      "fold": 3,
+      "engine": "lightgbm"
+    }
+  ],
+  "warning": "Directional ML evaluation, not a cost-aware execution backtest."
+}

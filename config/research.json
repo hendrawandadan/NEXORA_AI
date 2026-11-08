@@ -1,0 +1,36 @@
+{
+  "broker": "Exness",
+  "scope": "all_instruments_visible_in_market_watch",
+  "timeframes": {
+    "mode": "auto",
+    "source": "discovered_export_files"
+  },
+  "history_start": "2016-11-07",
+  "history_end": "2026-11-07",
+  "architecture": "hybrid",
+  "training": {
+    "horizons": [
+      1,
+      2,
+      4,
+      8,
+      12,
+      24
+    ],
+    "train_fraction": 0.6,
+    "validation_fraction": 0.2,
+    "embargo_bars": 24,
+    "max_iter": 300,
+    "seed": 42,
+    "min_bars": 5000
+  },
+  "walk_forward": {
+    "folds": 3,
+    "min_train_fraction": 0.5
+  },
+  "features": {
+    "atr_normalized": true,
+    "symbol_identity_global": true
+  },
+  "timeframe_policy": "discover_all_exported_timeframes"
+}

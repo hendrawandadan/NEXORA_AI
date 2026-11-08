@@ -1,0 +1,38 @@
+{
+  "file": "D:\\NEXORA_AI_v2\\data\\raw\\XAUUSD_MN1.csv",
+  "timeframe": "MN1",
+  "schema_columns": [
+    "time",
+    "open",
+    "high",
+    "low",
+    "close",
+    "volume",
+    "spread"
+  ],
+  "schema_valid": true,
+  "rows_input": 67,
+  "rows_valid_unique": 67,
+  "invalid_timestamps": 0,
+  "duplicates": 0,
+  "missing_ohlc": 0,
+  "nonpositive_prices": 0,
+  "invalid_ohlc": 0,
+  "interval_check": {
+    "expected_minutes": 43200,
+    "observed_minutes": 44640.0,
+    "status": "PASS"
+  },
+  "gap_count": 0,
+  "first_bar": "2020-01-01 00:00:00",
+  "last_bar": "2025-07-01 00:00:00",
+  "spread_points": {
+    "count": 67,
+    "median_points": 0.20000000000004547,
+    "p95_points": 0.3672000000000249,
+    "max_points": 1.0799999999999272
+  },
+  "gap_examples": [],
+  "status": "BASIC_CHECKS_PASS",
+  "note": "Gap perlu ditafsirkan sesuai sesi dan kalender instrumen; audit tidak membuktikan histori lengkap."
+}

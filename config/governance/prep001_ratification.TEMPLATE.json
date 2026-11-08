@@ -1,0 +1,49 @@
+{
+  "_README": "TEMPLATE ONLY. Copy to prep001_ratification.json and fill EVERY value, then have a human approver sign. This file itself is NOT read (only prep001_ratification.json is). Do NOT commit a ratified copy unless the human has actually decided. No value here is a decision; <FILL_ME> placeholders make the ratification invalid on purpose.",
+
+  "approver": "<FILL_ME: human name/role who approves>",
+  "decided_at": "<FILL_ME: ISO-8601 timestamp e.g. 2026-11-08T10:00:00Z>",
+  "references": [
+    "reports/retraining/execution_timing_contract.md",
+    "reports/retraining/walk_forward_reconciliation_report.md",
+    "reports/retraining/lightgbm_parameter_proposal.md"
+  ],
+
+  "timing_contract": {
+    "decision_timestamp": {
+      "value": "<FILL_ME: e.g. bar_t_close>",
+      "note": "When the strategy commits to a direction."
+    },
+    "earliest_executable_timestamp": {
+      "value": "<FILL_ME: e.g. bar_t+1_open>",
+      "note": "First market instant an order could realistically fill."
+    },
+    "execution_price_model": {
+      "value": "<FILL_ME: e.g. bar_t+1_open>",
+      "note": "Hypothetical execution price for any future cost-aware backtest."
+    },
+    "spread_usage": {
+      "value": "<FILL_ME: e.g. feature_only_no_cost | applied_as_cost>",
+      "note": "How spread is treated."
+    },
+    "slippage_usage": {
+      "value": "<FILL_ME: e.g. none | fixed_ticks | modeled>",
+      "note": "Slippage policy."
+    },
+    "cost_usage": {
+      "value": "<FILL_ME: e.g. gross_metrics | net_of_costs>",
+      "note": "Whether evaluated returns are gross or net."
+    }
+  },
+
+  "walk_forward_reconciliation": "<FILL_ME: R1 | R2 | R3>",
+  "walk_forward_note": "<FILL_ME: rationale; see walk_forward_reconciliation_report.md>",
+
+  "experiment_configuration": {
+    "candidate": "<FILL_ME: A | B | C>",
+    "max_depth": "<FILL_ME: integer, e.g. 4>",
+    "reg_alpha": "<FILL_ME: float, e.g. 0.1>",
+    "production_freeze": false,
+    "note": "<FILL_ME: A/B/C is an EXPERIMENT config only; not a production freeze>"
+  }
+}

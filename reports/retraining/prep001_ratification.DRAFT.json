@@ -1,0 +1,49 @@
+{
+  "approver": "Dadan Hendrawan",
+  "decided_at": "2026-11-08T07:01:00Z",
+  "references": [
+    "reports/retraining/execution_timing_contract.md",
+    "reports/retraining/PREP001_BASELINE_IMPLEMENTATION_FINAL_AUDIT.md"
+  ],
+  "config_hash": "af380460cda95287fe5bd63a161efc7208359cc2c182da2f570676514b37862e",
+  "config_hash_complete": false,
+  "feature_set_version": "feat-e12cda69dfe04e45",
+  "target_definition_version": "target-t3-d5f2c43434aa7c41",
+  "split_policy_version": "split-4d4a794c0cc217d9",
+  "timing_contract_hash": "3a7420bd4148f8127892f430cc081159ca2f2d1cb8e9807c6bac36982751ee1c",
+  "target": {
+    "target_type": "T3",
+    "target_hash": "d5f2c43434aa7c41eda5da11e3fae1d9ef896a12b5ad62bda7ca2d049595ff5d"
+  },
+  "timing_contract": {
+    "decision_timestamp": {
+      "value": "bar_t+1_open"
+    },
+    "earliest_executable_timestamp": {
+      "value": "bar_t+1_open"
+    },
+    "execution_price_model": {
+      "value": "open_price"
+    },
+    "spread_usage": {
+      "value": "deferred"
+    },
+    "slippage_usage": {
+      "value": "deferred"
+    },
+    "cost_usage": {
+      "value": "deferred"
+    }
+  },
+  "walk_forward_reconciliation": "R1",
+  "walk_forward_note": "",
+  "experiment_configuration": {
+    "candidate": "A",
+    "production_freeze": false,
+    "note": "PREP-001-T3-A first experiment; gross evaluation; costs deferred"
+  },
+  "integrity": {
+    "mechanism": "hmac-sha256",
+    "signature": "899bb8170d5ad25b0fb36bb1e1ed427941c99aca00a0a5e50c63d50b196f4f36"
+  }
+}

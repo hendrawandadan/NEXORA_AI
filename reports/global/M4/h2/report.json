@@ -1,0 +1,32 @@
+{
+  "kind": "global",
+  "timeframe": "M4",
+  "horizon_bars": 2,
+  "symbols": [
+    "EURUSD",
+    "XAUUSD"
+  ],
+  "engine": "lightgbm",
+  "train_rows": 283853,
+  "validation_rows": 94616,
+  "test_rows": 94616,
+  "validation_metrics": {
+    "n": 94616,
+    "accuracy": 0.5131056058171979,
+    "balanced_accuracy": 0.5130205421541119,
+    "brier": 0.24980141500418104,
+    "log_loss": 0.6927503239920954,
+    "positive_rate": 0.502515430793946,
+    "auc": 0.5179912506498799
+  },
+  "test_metrics": {
+    "n": 94616,
+    "accuracy": 0.5102731039147713,
+    "balanced_accuracy": 0.5100964103227017,
+    "brier": 0.2500338154386185,
+    "log_loss": 0.6932183629779307,
+    "positive_rate": 0.5096918068825569,
+    "auc": 0.5128931045341053
+  },
+  "warning": "Pooled global directional metrics; not a cost-aware portfolio backtest."
+}

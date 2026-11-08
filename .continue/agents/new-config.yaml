@@ -1,0 +1,22 @@
+{
+  "models": [
+    {
+      "title": "Gemini 1.5 Pro",
+      "provider": "gemini",
+      "model": "gemini-1.5-pro-latest",
+      "apiKey": "AQ.Ab8RN6LY0LYS7952jnKkaZ1aaJyrpGfLAuJOMmwYGQcmqJGBBQ"
+    },
+    {
+      "title": "Gemini 1.5 Flash",
+      "provider": "gemini",
+      "model": "gemini-1.5-flash-latest",
+      "apiKey": "AQ.Ab8RN6LY0LYS7952jnKkaZ1aaJyrpGfLAuJOMmwYGQcmqJGBBQ"
+    }
+  ],
+  "tabAutocompleteModel": {
+    "title": "Gemini Flash",
+    "provider": "gemini",
+    "model": "gemini-1.5-flash-latest",
+    "apiKey": "AQ.Ab8RN6LY0LYS7952jnKkaZ1aaJyrpGfLAuJOMmwYGQcmqJGBBQ"
+  }
+}

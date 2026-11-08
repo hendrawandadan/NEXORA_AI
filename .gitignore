@@ -1,0 +1,52 @@
+# Databases
+database/*.db
+database/*.sqlite
+database/*.sqlite3
+database/*.db-wal
+database/*.db-shm
+
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.pytest_cache/
+.venv/
+venv/
+env/
+
+# ML artifacts (large, generated, not source)
+*.joblib
+*.pkl
+*.h5
+*.pt
+*.onnx
+models/**/
+signals/**/
+backups/**/
+
+# Training staging / simulation outputs
+reports/retraining/staging/**
+reports/retraining/simulations/**
+reports/retraining/batch1_runs/**
+reports/t3/**
+reports/t1/**
+
+# Execution log transient files
+*.prewrite.*.bak
+*.incoming
+tmp*
+reports/retraining/diagnostics/**
+
+# Datasets (large CSVs)
+data/raw/**
+data/processed/**
+
+# OS / editor
+Thumbs.db
+.DS_Store
+.vscode/
+.idea/
+
+# Local env / secrets
+.env
+*.local

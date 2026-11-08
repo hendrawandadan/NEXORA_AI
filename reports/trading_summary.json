@@ -1,0 +1,157 @@
+{
+  "signals_dir": "D:\\NEXORA_AI_v2\\signals",
+  "records": 161,
+  "failures": [],
+  "consistency": {
+    "records": 161,
+    "symbols": [
+      "EURUSD",
+      "XAUUSD"
+    ],
+    "timeframes": [
+      "H1",
+      "H2",
+      "H3",
+      "H4",
+      "H6",
+      "H8",
+      "M1",
+      "M10",
+      "M12",
+      "M15",
+      "M2",
+      "M20",
+      "M3",
+      "M30",
+      "M4",
+      "M5",
+      "M6"
+    ],
+    "kinds": [
+      "individual"
+    ],
+    "positive_expectancy_ratio": 0.14906832298136646,
+    "pf_above_1_ratio": 0.14906832298136646,
+    "median_win_rate": 0.45584045584045585,
+    "median_max_drawdown": -0.8278474268763091
+  },
+  "group_by_symbol": {
+    "EURUSD": {
+      "expectancy": -0.00018361684586611942,
+      "win_rate": 0.431554057453338,
+      "profit_factor": 0.6742971282985009,
+      "max_drawdown": -0.5885997839260431
+    },
+    "XAUUSD": {
+      "expectancy": -0.00019649610135006836,
+      "win_rate": 0.4625449650642753,
+      "profit_factor": 0.782999132231334,
+      "max_drawdown": -0.9028515825182128
+    }
+  },
+  "group_by_timeframe": {
+    "H1": {
+      "expectancy": -0.0001931046001045143,
+      "win_rate": 0.4660264083545308,
+      "profit_factor": 0.7917272877128981,
+      "max_drawdown": -0.5905231393558986
+    },
+    "H2": {
+      "expectancy": -0.00017730552698162714,
+      "win_rate": 0.48107964293162075,
+      "profit_factor": 0.8816636491060086,
+      "max_drawdown": -0.41594611947944155
+    },
+    "H3": {
+      "expectancy": -0.00011599802538258709,
+      "win_rate": 0.48602221186045524,
+      "profit_factor": 0.918666323258264,
+      "max_drawdown": -0.4293676364790811
+    },
+    "H4": {
+      "expectancy": -9.170622281094208e-05,
+      "win_rate": 0.48737134694158546,
+      "profit_factor": 0.9319790487906152,
+      "max_drawdown": -0.42516353016701436
+    },
+    "H6": {
+      "expectancy": 0.00010970124444096209,
+      "win_rate": 0.508167681172015,
+      "profit_factor": 1.0573962615381274,
+      "max_drawdown": -0.24427775156760945
+    },
+    "H8": {
+      "expectancy": -0.00016542227610393328,
+      "win_rate": 0.47682287990715033,
+      "profit_factor": 0.8237500860497544,
+      "max_drawdown": -0.3483279528117754
+    },
+    "M1": {
+      "expectancy": -0.0001929857471320297,
+      "win_rate": 0.27285200932991427,
+      "profit_factor": 0.3086980301016076,
+      "max_drawdown": -0.9999987943635724
+    },
+    "M10": {
+      "expectancy": -0.0001958678884555994,
+      "win_rate": 0.4065694403628889,
+      "profit_factor": 0.6082149159439281,
+      "max_drawdown": -0.9370769341637724
+    },
+    "M12": {
+      "expectancy": -0.00018596235780303727,
+      "win_rate": 0.408927040770134,
+      "profit_factor": 0.6201213316327523,
+      "max_drawdown": -0.9280318289780504
+    },
+    "M15": {
+      "expectancy": -0.00018056338633292234,
+      "win_rate": 0.4196431791064448,
+      "profit_factor": 0.650405991609086,
+      "max_drawdown": -0.8658655806923817
+    },
+    "M2": {
+      "expectancy": -0.00020072017793780963,
+      "win_rate": 0.3895596887984161,
+      "profit_factor": 0.538976971509953,
+      "max_drawdown": -0.9999292596367602
+    },
+    "M20": {
+      "expectancy": -0.00017491232168052986,
+      "win_rate": 0.4562095801819577,
+      "profit_factor": 0.7544559971774291,
+      "max_drawdown": -0.8278474268763091
+    },
+    "M3": {
+      "expectancy": -0.00019693092850476174,
+      "win_rate": 0.40102946514006665,
+      "profit_factor": 0.5786001663567228,
+      "max_drawdown": -0.9978276084049071
+    },
+    "M30": {
+      "expectancy": -0.0001662348638659736,
+      "win_rate": 0.46793571540021844,
+      "profit_factor": 0.835715138459906,
+      "max_drawdown": -0.72730632470742
+    },
+    "M4": {
+      "expectancy": -0.00020709046596098545,
+      "win_rate": 0.4168859124611337,
+      "profit_factor": 0.6012400638824493,
+      "max_drawdown": -0.9945896878940097
+    },
+    "M5": {
+      "expectancy": -0.00020170888827411747,
+      "win_rate": 0.41655422499578343,
+      "profit_factor": 0.6281045100905359,
+      "max_drawdown": -0.9918731248338843
+    },
+    "M6": {
+      "expectancy": -0.0001985143057825353,
+      "win_rate": 0.4177140612725844,
+      "profit_factor": 0.646208938427759,
+      "max_drawdown": -0.9845351324679765
+    }
+  },
+  "out_csv": "D:\\NEXORA_AI_v2\\reports\\trading_metrics.csv"
+}
