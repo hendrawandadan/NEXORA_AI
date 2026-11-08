@@ -50,3 +50,4 @@ Thumbs.db
 # Local env / secrets
 .env
 *.local
+data/raw_fast/**
