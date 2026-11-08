@@ -1,0 +1,380 @@
+{
+  "experiment": "PREP-001-A/B/C-sweep",
+  "target_type": "T3",
+  "symbol": "EURUSD",
+  "timeframe": "M30",
+  "horizon": 2,
+  "dataset": "D:\\NEXORA_AI_v2\\data\\raw\\EURUSD\\EURUSD_M30_202001020000_202611062130.csv",
+  "margin": 0.03,
+  "fixed_lgbm_params": {
+    "n_estimators": 300,
+    "learning_rate": 0.03,
+    "num_leaves": 15,
+    "min_child_samples": 100,
+    "subsample": 0.8,
+    "subsample_freq": 1,
+    "colsample_bytree": 0.8,
+    "reg_lambda": 5,
+    "random_state": 42,
+    "verbosity": -1
+  },
+  "results": [
+    {
+      "candidate": "A",
+      "max_depth": -1,
+      "reg_alpha": 0.0,
+      "profile": "baseline: reproduces current implicit defaults; zero behaviour change",
+      "split": {
+        "train": 42295,
+        "valid": 14098,
+        "test": 14051
+      },
+      "validation_metrics": {
+        "n": 14098,
+        "accuracy": 0.51844,
+        "balanced_accuracy": 0.51922,
+        "brier": 0.24946,
+        "log_loss": 0.69206,
+        "positive_rate": 0.50497,
+        "auc": 0.52769
+      },
+      "test_metrics": {
+        "n": 14051,
+        "accuracy": 0.511,
+        "balanced_accuracy": 0.51019,
+        "brier": 0.24984,
+        "log_loss": 0.69284,
+        "positive_rate": 0.48772,
+        "auc": 0.51882
+      },
+      "walk_forward": [
+        {
+          "n": 11748,
+          "accuracy": 0.51081,
+          "balanced_accuracy": 0.51172,
+          "brier": 0.25076,
+          "log_loss": 0.6947,
+          "positive_rate": 0.50375,
+          "auc": 0.51822,
+          "fold": 1
+        },
+        {
+          "n": 11748,
+          "accuracy": 0.51302,
+          "balanced_accuracy": 0.51404,
+          "brier": 0.24931,
+          "log_loss": 0.69172,
+          "positive_rate": 0.50621,
+          "auc": 0.52464,
+          "fold": 2
+        },
+        {
+          "n": 11726,
+          "accuracy": 0.52123,
+          "balanced_accuracy": 0.52035,
+          "brier": 0.24942,
+          "log_loss": 0.69202,
+          "positive_rate": 0.48431,
+          "auc": 0.52645,
+          "fold": 3
+        }
+      ],
+      "walk_forward_auc_mean": 0.5231,
+      "walk_forward_auc_std": 0.00353,
+      "trading": {
+        "margin": 0.03,
+        "by_cost_bps": {
+          "0": {
+            "trades": 5509,
+            "win_rate": 0.5219,
+            "profit_factor": 1.0662,
+            "expectancy": 1.528e-05,
+            "total_return": 0.0862,
+            "max_drawdown": -0.0379
+          },
+          "1": {
+            "trades": 5509,
+            "win_rate": 0.4335,
+            "profit_factor": 0.7004,
+            "expectancy": -8.472e-05,
+            "total_return": -0.3739,
+            "max_drawdown": -0.3748
+          },
+          "2": {
+            "trades": 5509,
+            "win_rate": 0.3434,
+            "profit_factor": 0.463,
+            "expectancy": -0.00018472,
+            "total_return": -0.6391,
+            "max_drawdown": -0.6393
+          },
+          "5": {
+            "trades": 5509,
+            "win_rate": 0.1666,
+            "profit_factor": 0.1509,
+            "expectancy": -0.00048472,
+            "total_return": -0.9309,
+            "max_drawdown": -0.9309
+          }
+        },
+        "expectancy_by_direction": {
+          "-1": {
+            "n": 2931,
+            "mean_ret": -1.725e-05
+          },
+          "0": {
+            "n": 8542,
+            "mean_ret": -9.6e-06
+          },
+          "1": {
+            "n": 2578,
+            "mean_ret": 1.304e-05
+          }
+        },
+        "direction_counts": {
+          "long": 2578,
+          "short": 2931,
+          "flat": 8542
+        }
+      }
+    },
+    {
+      "candidate": "B",
+      "max_depth": 4,
+      "reg_alpha": 0.1,
+      "profile": "primary: depth 4 (~16 leaves) aligns with num_leaves=15; mild L1",
+      "split": {
+        "train": 42295,
+        "valid": 14098,
+        "test": 14051
+      },
+      "validation_metrics": {
+        "n": 14098,
+        "accuracy": 0.51887,
+        "balanced_accuracy": 0.51965,
+        "brier": 0.2495,
+        "log_loss": 0.69213,
+        "positive_rate": 0.50497,
+        "auc": 0.5249
+      },
+      "test_metrics": {
+        "n": 14051,
+        "accuracy": 0.5127,
+        "balanced_accuracy": 0.51209,
+        "brier": 0.24972,
+        "log_loss": 0.6926,
+        "positive_rate": 0.48772,
+        "auc": 0.52073
+      },
+      "walk_forward": [
+        {
+          "n": 11748,
+          "accuracy": 0.51226,
+          "balanced_accuracy": 0.51325,
+          "brier": 0.25079,
+          "log_loss": 0.69475,
+          "positive_rate": 0.50375,
+          "auc": 0.51665,
+          "fold": 1
+        },
+        {
+          "n": 11748,
+          "accuracy": 0.51396,
+          "balanced_accuracy": 0.51503,
+          "brier": 0.24906,
+          "log_loss": 0.69124,
+          "positive_rate": 0.50621,
+          "auc": 0.52825,
+          "fold": 2
+        },
+        {
+          "n": 11726,
+          "accuracy": 0.51603,
+          "balanced_accuracy": 0.51536,
+          "brier": 0.24948,
+          "log_loss": 0.69214,
+          "positive_rate": 0.48431,
+          "auc": 0.52526,
+          "fold": 3
+        }
+      ],
+      "walk_forward_auc_mean": 0.52338,
+      "walk_forward_auc_std": 0.00492,
+      "trading": {
+        "margin": 0.03,
+        "by_cost_bps": {
+          "0": {
+            "trades": 5292,
+            "win_rate": 0.5289,
+            "profit_factor": 1.0765,
+            "expectancy": 1.735e-05,
+            "total_return": 0.0947,
+            "max_drawdown": -0.0393
+          },
+          "1": {
+            "trades": 5292,
+            "win_rate": 0.4371,
+            "profit_factor": 0.703,
+            "expectancy": -8.265e-05,
+            "total_return": -0.3552,
+            "max_drawdown": -0.3565
+          },
+          "2": {
+            "trades": 5292,
+            "win_rate": 0.3454,
+            "profit_factor": 0.4616,
+            "expectancy": -0.00018265,
+            "total_return": -0.6202,
+            "max_drawdown": -0.6206
+          },
+          "5": {
+            "trades": 5292,
+            "win_rate": 0.1653,
+            "profit_factor": 0.1471,
+            "expectancy": -0.00048265,
+            "total_return": -0.9224,
+            "max_drawdown": -0.9224
+          }
+        },
+        "expectancy_by_direction": {
+          "-1": {
+            "n": 2810,
+            "mean_ret": -2.15e-05
+          },
+          "0": {
+            "n": 8759,
+            "mean_ret": -7.98e-06
+          },
+          "1": {
+            "n": 2482,
+            "mean_ret": 1.265e-05
+          }
+        },
+        "direction_counts": {
+          "long": 2482,
+          "short": 2810,
+          "flat": 8759
+        }
+      }
+    },
+    {
+      "candidate": "C",
+      "max_depth": 3,
+      "reg_alpha": 0.5,
+      "profile": "conservative comparator: depth 3 caps below num_leaves=15 (higher underfit risk)",
+      "split": {
+        "train": 42295,
+        "valid": 14098,
+        "test": 14051
+      },
+      "validation_metrics": {
+        "n": 14098,
+        "accuracy": 0.52022,
+        "balanced_accuracy": 0.52107,
+        "brier": 0.24935,
+        "log_loss": 0.69184,
+        "positive_rate": 0.50497,
+        "auc": 0.52622
+      },
+      "test_metrics": {
+        "n": 14051,
+        "accuracy": 0.51527,
+        "balanced_accuracy": 0.51437,
+        "brier": 0.2496,
+        "log_loss": 0.69235,
+        "positive_rate": 0.48772,
+        "auc": 0.5214
+      },
+      "walk_forward": [
+        {
+          "n": 11748,
+          "accuracy": 0.50766,
+          "balanced_accuracy": 0.50869,
+          "brier": 0.25059,
+          "log_loss": 0.69435,
+          "positive_rate": 0.50375,
+          "auc": 0.51582,
+          "fold": 1
+        },
+        {
+          "n": 11748,
+          "accuracy": 0.51583,
+          "balanced_accuracy": 0.51701,
+          "brier": 0.249,
+          "log_loss": 0.69112,
+          "positive_rate": 0.50621,
+          "auc": 0.52829,
+          "fold": 2
+        },
+        {
+          "n": 11726,
+          "accuracy": 0.51876,
+          "balanced_accuracy": 0.51797,
+          "brier": 0.24936,
+          "log_loss": 0.69188,
+          "positive_rate": 0.48431,
+          "auc": 0.52575,
+          "fold": 3
+        }
+      ],
+      "walk_forward_auc_mean": 0.52329,
+      "walk_forward_auc_std": 0.00538,
+      "trading": {
+        "margin": 0.03,
+        "by_cost_bps": {
+          "0": {
+            "trades": 4298,
+            "win_rate": 0.5375,
+            "profit_factor": 1.1396,
+            "expectancy": 3.108e-05,
+            "total_return": 0.1416,
+            "max_drawdown": -0.0401
+          },
+          "1": {
+            "trades": 4298,
+            "win_rate": 0.4472,
+            "profit_factor": 0.7476,
+            "expectancy": -6.892e-05,
+            "total_return": -0.2572,
+            "max_drawdown": -0.2623
+          },
+          "2": {
+            "trades": 4298,
+            "win_rate": 0.356,
+            "profit_factor": 0.4925,
+            "expectancy": -0.00016892,
+            "total_return": -0.5167,
+            "max_drawdown": -0.5172
+          },
+          "5": {
+            "trades": 4298,
+            "win_rate": 0.1712,
+            "profit_factor": 0.1584,
+            "expectancy": -0.00046892,
+            "total_return": -0.8669,
+            "max_drawdown": -0.8669
+          }
+        },
+        "expectancy_by_direction": {
+          "-1": {
+            "n": 2308,
+            "mean_ret": -2.179e-05
+          },
+          "0": {
+            "n": 9753,
+            "mean_ret": -1.352e-05
+          },
+          "1": {
+            "n": 1990,
+            "mean_ret": 4.184e-05
+          }
+        },
+        "direction_counts": {
+          "long": 1990,
+          "short": 2308,
+          "flat": 9753
+        }
+      }
+    }
+  ]
+}

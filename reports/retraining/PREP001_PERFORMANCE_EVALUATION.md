@@ -91,6 +91,26 @@ sebagian bisa jadi hanya *bias arah periode* (`positive_rate` test 0,488 < 0,5).
 
 ---
 
+## 4A. A/B/C Hyperparameter Sweep (§8.3)
+
+Dijalankan read-only via `tools/run_prep001_abc_sweep.py` (override `max_depth`/`reg_alpha`,
+parameter lain identik dengan `create_model()`, split/embargo/margin identik).
+Kandidat dari `nexora_audit/experiment_config.py`:
+A = (-1, 0.0) baseline, B = (4, 0.1), C = (3, 0.5).
+
+| Kandidat | depth / α | Test Acc | Test AUC | WF AUC (mean±std) | 0bps PF/Ret | 1bps PF/Ret |
+|---|---|---|---|---|---|---|
+| A | −1 / 0.0 | 0,5110 | 0,5188 | 0,5231 ± 0,0035 | 1,066 / +8,6% | 0,700 / −37% |
+| B | 4 / 0.1 | 0,5127 | 0,5207 | 0,5234 ± 0,0049 | 1,077 / +9,5% | 0,703 / −36% |
+| C | 3 / 0.5 | **0,5153** | **0,5214** | 0,5233 ± 0,0054 | **1,140 / +14,2%** | 0,748 / **−26%** |
+
+**Temuan:** C (regularisasi terkuat) paling baik secara marginal (acc +0,4 pt, AUC +0,003),
+tetapi **ketiga kandidat tetap gagal di biaya ≥1 bps**. Walk-forward AUC praktis identik
+(~0,523) untuk ketiganya → **hyperparameter depth/α bukan penentu**; keterbatasan ada pada
+fitur/target. Sweep mengonfirmasi NO-GO, bukan membalikkannya.
+
+
+
 ## 5. Kesimpulan terhadap Exit Criteria Fase 2 (Roadmap §8)
 
 | Kriteria | Status |
@@ -99,8 +119,8 @@ sebagian bisa jadi hanya *bias arah periode* (`positive_rate` test 0,488 < 0,5).
 | §8.1 Mengalahkan baseline naif | ⚠️ Marginal (+1,0 pt vs mayoritas), **tidak** vs always-short |
 | §8.1 Walk-forward stabil | ✅ stabil tetapi level rendah (AUC ~0,52) |
 | §8.2 Cost-aware realistis | ❌ **Gagal** — profit hanya pada biaya ~0 |
-| §8.3 A/B/C | ⏳ belum (hanya A) |
-| §8.4 Experiment history reproducible | ⏳ sebagian (baru di-sync ke DB) |
+| §8.3 A/B/C | ✅ selesai (lihat §4A) — ketiga kandidat gagal di biaya ≥1 bps |
+| §8.4 Experiment history reproducible | ⏳ sebagian (hasil sweep tersimpan di `experiments/`) |
 | §8.5 Governance/audit | ✅ `READY_FOR_TRAINING` |
 | **§8.6 Go/No-Go** | ❌ **NO-GO** — jangan perluas ke Fase 3 |
 
@@ -114,8 +134,9 @@ sebagian bisa jadi hanya *bias arah periode* (`positive_rate` test 0,488 < 0,5).
      Edge tipis + korelasi ~0,02 konsisten dengan "memprediksi noise".
    - Pertimbangkan target yang lebih "belajar-able": horizon lebih panjang,
      **triple-barrier / meta-labeling**, atau target **return bertingkat** alih-alih biner.
-3. **Uji kandidat B & C** (§8.3) dengan protokol split identik **sebelum** menyimpulkan
-   bahwa arsitektur yang salah — bisa jadi konfigurasi A saja yang lemah.
+3. **A/B/C sudah diuji (§4A).** Sweep hyperparameter **tidak** menyelamatkan edge —
+   C hanya +0,4 pt accuracy vs A dan tetap gagal di biaya. Fokus sekarang ke
+   **revisi target/hipotesis**, bukan tuning model.
 4. **Wajib cost-aware sejak awal.** Edge < 0,15 bps tidak akan pernah lolos spread;
    metrik utama harus *net-of-cost*, bukan accuracy.
 5. **Dokumentasikan sebagai temuan negatif** yang sah — ini menutup jalan buntu
