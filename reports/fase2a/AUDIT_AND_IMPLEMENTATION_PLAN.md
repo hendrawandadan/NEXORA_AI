@@ -1,10 +1,20 @@
 # FASE 2A — LAPORAN AUDIT & IMPLEMENTATION PLAN
 ## Meta-Labeling & Triple-Barrier Research — EURUSD M30
 
-**Status dokumen:** AUDIT + RENCANA (belum ada training/eksperimen dijalankan)
-**Tanggal:** 2026-11-08
+**Status dokumen:** AUDIT + RENCANA *REVISED* (belum ada training/eksperimen dijalankan)
+**Tanggal:** 2026-11-08 (rev. 2 — keputusan Kronos-inspired)
 **Prinsip:** tidak menghapus/mengubah hasil Fase 2; tidak mengarang hasil; tidak
 menyatakan edge sebelum terbukti net-of-cost.
+
+> **REVISI KEPUTUSAN (rev. 2):** "Kronos" dijadikan **INSPIRASI ARSITEKTUR**, bukan
+> dependency eksternal. Layer 1 ("primary model") diimplementasikan sebagai
+> **ensemble LightGBM *Kronos-inspired*** (forecast arah + confidence/dispersi via
+> multi-seed & quantile) memakai stack yang sudah ada (sklearn/lightgbm/numpy/pandas).
+> **Tidak perlu torch / transformers / GPU.** Ide yang diadopsi: probabilistic
+> forecasting → estimasi distribusi/uncertainty sebagai fitur kualitas sinyal, dan
+> representasi K-line kaya (OHLC+wick+body+volume) yang sudah ada di `nexora_vision`.
+> Upgrade ke Kronos beneran (HuggingFace) hanya jika hasil menjanjikan & GPU tersedia,
+> lewat interface Layer 1 yang sama.
 
 ---
 
@@ -12,7 +22,7 @@ menyatakan edge sebelum terbukti net-of-cost.
 
 | Temuan | Dampak |
 |---|---|
-| **Kronos adalah model eksternal** (foundation model K-line, open-source, HuggingFace `NeoQuasar/Kronos-small`), **bukan** modul di repo ini | Desain harus mengintegrasikan dependency berat baru (torch + tokenizer), bukan memakai apa yang sudah ada |
+| **Kronos adalah model eksternal** (foundation model K-line, HuggingFace `NeoQuasar/Kronos-*`) — **KEPUTUSAN rev.2: dipakai sebagai INSPIRASI arsitektur, bukan dependency** | Layer 1 = ensemble LightGBM "Kronos-inspired" (forecast+dispersi), tanpa torch |
 | **Tidak ada torch / transformers / huggingface_hub terpasang**; **bertambah** ~2–3 GB dependency | Perlu keputusan instalasi & anggaran komputasi |
 | **Tidak ada GPU** (hanya Intel UHD 620, CPU-only) | Inferensi Kronos-small (24.7M params, context 512) di CPU = **lambat**; ~70k bar → perlu strategi (rolling inference / subsampling / batched) |
 | **Tidak ada** triple-barrier, meta-labeling, cost-engine | Semua harus dibangun baru |
@@ -99,13 +109,18 @@ nexora_scheduler   (kosong)
 
 Ini adalah **keputusan yang memblokir**—tidak boleh dilewati.
 
-### 3.1 Kronos adalah dependency eksternal + CPU-only
-- Kronos-small = 24.7M params, context 512, butuh `torch` + kode tokenizer + bobot HuggingFace (`NeoQuasar/Kronos-small`).
-- Environment: **CPU-only** (Intel UHD 620). Inferensi autoregresif 70k bar akan **sangat lambat** di CPU.
-- **Opsi (mohon pilih):**
-  - **A. CPU, subsample + rolling inference** (lookback 512, stride mis. 24/48 bar) — realistis, lebih sedikit prediksi. Ini yang saya rekomendasikan untuk memulai.
-  - **B. GPU cloud** (Colab/Kaggle) untuk inferensi Kronos, simpan prediksi ke CSV, lanjutkan meta-labeling lokal — lebih akurat, tapi butuh langkah manual/eksternal.
-  - **C. Tidak pakai Kronos** — pakai LGBM existing sebagai "primary model" (bukan Kronos). **Ini mengubah premis prompt** — hanya jika Anda setuju.
+### 3.1 Kronos = INSPIRASI arsitektur (KEPUTUSAN rev.2: Opsi C)
+- **Tidak menjalankan Kronos asli.** Kronos (small/base/mini) hanya menjadi *inspirasi desain*.
+- **Layer 1 "Kronos-inspired"** dibangun dari stack existing:
+  - **Ensemble LightGBM** multi-seed (mis. 5 seed) → forecast (mean) + **dispersi** (std antar-seed).
+  - **Quantile / probabilistic forecasting**: prediksi beberapa kuantil → estimasi uncertainty.
+  - **Representasi K-line**: reuse 29 fitur `nexora_vision/features.py` (OHLC, wick, body, vol, momentum, session).
+  - Output Layer 1: `forecast_return`, `direction`, `confidence` (|prob−0.5|), `dispersion`.
+- **Keuntungan:** CPU-friendly, reproducible, tanpa dependency baru, tidak menyentuh lingkungan produksi.
+- **Upgrade path:** interface Layer 1 identik; jika Gate 0/eksperimen menjanjikan dan GPU
+  tersedia, Layer 1 bisa diganti Kronos HuggingFace tanpa mengubah Layer 2 / pipeline evaluasi.
+- **Gate 0 tetap wajib:** ukur dulu *standalone* apakah Layer 1 (Kronos-inspired ensemble)
+  punya edge directional/cost-aware. Jika ~0 → STOP, laporkan (hemat effort).
 
 ### 3.2 Spread historis tidak dapat dipercaya sebagai biaya
 - Kolom `spread` M30: **median 0**, mean 3.39 points, max 300. Banyak 0 → bukan bid/ask nyata.
@@ -139,11 +154,13 @@ Ini adalah **keputusan yang memblokir**—tidak boleh dilewati.
 - Anti-leakage: barrier dihitung hanya dari info ≤ t; ATR trailing.
 - **Gate:** buktikan tidak ada look-ahead (unit test waktu label > waktu fitur).
 
-### Tahap 3 — Primary Model Integration (Kronos)
-- **Keputusan §3.1 wajib dulu.**
-- **File baru:** `nexora_laboratory/kronos_predictor.py` (wrapper) — hanya jika opsi A/B.
-- Keluaran fitur meta: forecast return, arah, dispersi (dari `sample_count`), confidence.
-- **Gate 0:** evaluasi standalone Kronos (AUC + cost-aware). Jika edge ~0 → STOP, laporkan.
+### Tahap 3 — Primary Model (Kronos-inspired ensemble)
+- **Keputusan §3.1 = Opsi C (Kronos-inspired, tanpa torch).**
+- **File baru:** `nexora_laboratory/primary_model.py`
+- Ensemble LightGBM multi-seed + quantile → `forecast_return`, `direction`, `confidence`, `dispersion`.
+- Tidak ada dependency baru; reuse `create_model` / `features`.
+- **Gate 0:** evaluasi standalone ensemble (AUC + cost-aware). Jika edge ~0 → STOP, laporkan.
+- *(Upgrade opsional nanti: wrapper `kronos_predictor.py` untuk model HF bila GPU tersedia.)*
 
 ### Tahap 4 — Meta-Labeling
 - **File baru:** `nexora_laboratory/meta_labeling.py`
@@ -182,10 +199,14 @@ Ini adalah **keputusan yang memblokir**—tidak boleh dilewati.
 | Eksp | Primary | Meta-layer | Catatan |
 |---|---|---|---|
 | Baseline Fase 2 | LGBM (frozen) | — | pembanding resmi (tak diubah) |
-| A | Kronos | — | Kronos saja (Gate 0) |
-| B | Kronos | Logistic Regression | |
-| C | Kronos | Gradient Boosting (LGBM) | |
-| D | Kronos | (opsional, berjustifikasi) | hanya bila B/C menunjukkan arah jelas |
+| A | Kronos-inspired ensemble | — | primary saja (Gate 0) |
+| B | Kronos-inspired ensemble | Logistic Regression | |
+| C | Kronos-inspired ensemble | Gradient Boosting (LGBM) | |
+| D | Kronos-inspired ensemble | (opsional, berjustifikasi) | hanya bila B/C menunjukkan arah jelas |
+
+**Cost scenario (disetujui, ASUMSI):** round-trip **1,0 / 1,5 / 2,0 pip** + slippage 0,2 pip;
+sensitivity penuh. Kolom spread dataset (median 0) **tidak** dipakai sebagai biaya nyata.
+**Triple-barrier (kandidat awal):** upper 1,5×ATR, lower 1,0×ATR, vertical 16 bar M30 + sensitivity.
 
 Split, biaya, aturan eksekusi **identik** di semua eksperimen. Test out-of-sample tidak disentuh sampai evaluasi akhir.
 
@@ -220,14 +241,15 @@ Jika gagal → **NO-GO** dengan diagnosis (seperti Fase 2). Tidak memaksakan has
 
 ---
 
-## 8. YANG DIMINTA UNTUK PERSETUJUAN ANDA
+## 8. KEPUTUSAN YANG TELAH DISETUJUI (rev. 2)
 
-1. **Konfirmasi Kronos eksternal** (HuggingFace `NeoQuasar/Kronos-small`) & pilih opsi **§3.1 A / B / C**.
-2. **Setujui skenario biaya** (mis. 1.0/1.5/2.0 pip round-trip + slippage) — §3.2.
-3. **Setujui Gate 0** (uji Kronos standalone dulu sebelum meta-labeling) — §3.3.
-4. Konfirmasi penempatan modul di `nexora_laboratory/` & kebijakan "jangan sentuh artefak Fase 2".
+1. **Kronos = inspirasi arsitektur (Opsi C).** Layer 1 = ensemble LightGBM "Kronos-inspired"
+   (forecast + confidence/dispersi), tanpa torch/GPU. Upgrade ke Kronos HF nanti bila perlu. ✅
+2. **Skenario biaya:** round-trip 1,0 / 1,5 / 2,0 pip + slippage 0,2 pip (ASUMSI, sensitivity). ✅
+3. **Gate 0:** uji primary (ensemble) standalone dulu sebelum meta-labeling. ✅
+4. Modul baru di `nexora_laboratory/`; **tidak menyentuh** artefak Fase 2. ✅
 
-Setelah persetujuan, saya mulai **Tahap 1 (Data Validation)** — belum training.
+Lanjut ke **Tahap 1 (Data Validation)** — read-only, belum training.
 
 ---
 
