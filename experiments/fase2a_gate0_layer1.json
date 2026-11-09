@@ -1,0 +1,95 @@
+{
+  "config": {
+    "horizon": 4,
+    "n_seeds": 5,
+    "target": "T3"
+  },
+  "split": {
+    "train": 42294,
+    "val": 14098,
+    "test": 14050
+  },
+  "auc_raw": 0.51828,
+  "auc_cal": 0.51836,
+  "brier_raw": 0.25026,
+  "brier_cal": 0.24963,
+  "cost_scenarios": {
+    "optimistic": {
+      "name": "optimistic",
+      "round_trip_pips": 1.0,
+      "slippage_pips": 0.2,
+      "total_pips": 1.2,
+      "assumption": "RESEARCH ASSUMPTION, not actual broker cost. Scenario values are preset assumptions; <SPREAD> column is not used as a real cost to avoid double counting."
+    },
+    "baseline": {
+      "name": "baseline",
+      "round_trip_pips": 1.5,
+      "slippage_pips": 0.2,
+      "total_pips": 1.7,
+      "assumption": "RESEARCH ASSUMPTION, not actual broker cost. Scenario values are preset assumptions; <SPREAD> column is not used as a real cost to avoid double counting."
+    },
+    "stress": {
+      "name": "stress",
+      "round_trip_pips": 2.0,
+      "slippage_pips": 0.2,
+      "total_pips": 2.2,
+      "assumption": "RESEARCH ASSUMPTION, not actual broker cost. Scenario values are preset assumptions; <SPREAD> column is not used as a real cost to avoid double counting."
+    }
+  },
+  "selective": {
+    "conf>=0.05": {
+      "n": 1227,
+      "gross_mean": 7.49e-05,
+      "net": {
+        "optimistic": {
+          "mean": -4.51e-05,
+          "winrate": 0.4686
+        },
+        "baseline": {
+          "mean": -9.51e-05,
+          "winrate": 0.4344
+        },
+        "stress": {
+          "mean": -0.0001451,
+          "winrate": 0.3847
+        }
+      }
+    },
+    "conf>=0.1": {
+      "n": 653,
+      "gross_mean": 0.0001099,
+      "net": {
+        "optimistic": {
+          "mean": -1.01e-05,
+          "winrate": 0.487
+        },
+        "baseline": {
+          "mean": -6.01e-05,
+          "winrate": 0.4533
+        },
+        "stress": {
+          "mean": -0.0001101,
+          "winrate": 0.3982
+        }
+      }
+    },
+    "conf>=0.15": {
+      "n": 287,
+      "gross_mean": 0.0001548,
+      "net": {
+        "optimistic": {
+          "mean": 3.48e-05,
+          "winrate": 0.5192
+        },
+        "baseline": {
+          "mean": -1.52e-05,
+          "winrate": 0.4774
+        },
+        "stress": {
+          "mean": -6.52e-05,
+          "winrate": 0.4216
+        }
+      }
+    }
+  }
+}
