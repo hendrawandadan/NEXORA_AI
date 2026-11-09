@@ -1,0 +1,91 @@
+{
+  "code_sha256": {
+    "nexora_laboratory\\adaptive_barrier.py": "d21dd39aeb8a18877e973dba44b996bf1e270c0106f0a6c5e7f847a2ea2f4490",
+    "nexora_laboratory\\adaptive_experiment.py": "51145d931db51e035ff0fcedc1b4323d40916ad26ab782f734e0705e492d1eca",
+    "nexora_laboratory\\cost_engine.py": "796bc7878153ff057df5fc5fb21e67c5863b89344f4cbe27f13b63ed3d5e64f7",
+    "nexora_laboratory\\event_attribution.py": "1d7719f07e4530e347d29a199156b75a6ce8d9e2d02be71864bf9e23ad0ee8c0",
+    "nexora_laboratory\\regime.py": "a17685905b8f6485ff7634964156d7394aab2256c0a24d863c7ae7aafd3e14e5",
+    "nexora_laboratory\\triple_barrier.py": "5afe3751fb80e58b37dc9e8695ca70d61c4320fe15997257227f5e7e281f2e65",
+    "tools\\run_adaptive_vs_atr.py": "e112cbe35fb859e0f75f3907752eb19ef9f9b8f2906932694034d0964bfd4150"
+  },
+  "created_at": "2026-11-09T04:51:57.221173+00:00",
+  "criteria": {
+    "c1_positive_in_3_folds_baseline": {
+      "folds_evaluated": 3,
+      "pass": false,
+      "positive_folds": 2
+    },
+    "c2_ci_excludes_zero_baseline": {
+      "ci_high": 4.289385203778714e-05,
+      "ci_low": -3.604338680877364e-05,
+      "pass": false
+    },
+    "c3_stress_consistent": {
+      "adaptive_mean_net": -0.00015259806401423547,
+      "atr_mean_net": -0.00015157759003614913,
+      "pass": false
+    },
+    "c4_trade_count_adequate": {
+      "min_required": 50,
+      "pass": true
+    },
+    "c5_not_single_regime": {
+      "pass": true,
+      "regimes_adaptive_better": 2
+    },
+    "c6_no_leakage": {
+      "note": "enforced by tests/test_adaptive_barrier.py + purged folds",
+      "pass": true
+    }
+  },
+  "experiment_id": "FASE2A-R1-ATR-vs-VolTargeted-EURUSD-M30-h2",
+  "frozen_config": {
+    "adaptive_1": {
+      "horizon": 16,
+      "k_vol": 1.25,
+      "lgbm_params": {
+        "colsample_bytree": 0.8,
+        "learning_rate": 0.03,
+        "min_child_samples": 100,
+        "n_estimators": 200,
+        "num_leaves": 15,
+        "reg_lambda": 5,
+        "subsample": 0.8,
+        "subsample_freq": 1,
+        "verbosity": -1
+      },
+      "vertical": 16
+    },
+    "baseline_atr": {
+      "atr_span": 14,
+      "k_dn": 1.0,
+      "k_up": 1.5,
+      "vertical": 16
+    }
+  },
+  "hash_version": "nexora-experiment-freeze-v1",
+  "manifest_hash": "b299fa26a027d322a160c4270e3c7840abb10120f2134c6c0733c1b9a2581d3d",
+  "n_folds": 3,
+  "protocol": {
+    "cost_scenarios": [
+      "optimistic",
+      "baseline",
+      "stress"
+    ],
+    "entry": "open t+1",
+    "execution": "simulated bid/ask (executable mode)",
+    "purge_bars": 24,
+    "signal_source": "models/t3/individual/EURUSD/M30/h2",
+    "verdict_rule": "AND of \u00a76 criteria",
+    "walk_forward": "3 expanding folds"
+  },
+  "purge_bars": 24,
+  "reasons": [
+    "\u00a76.1: adaptive beat ATR in only 2 baseline folds (<3)",
+    "\u00a76.2: baseline bootstrap 95% CI of (adaptive-ATR) includes 0",
+    "\u00a76.3: adaptive not better than ATR under stress scenario"
+  ],
+  "result_file": "reports\\fase2a\\adaptive_vs_atr\\adaptive_vs_atr_report.json",
+  "result_sha256": "4781e494e2469323e43f79d1fb314e4f23029f042c5348846af24a80c4ddb867",
+  "verdict": "NO-GO"
+}

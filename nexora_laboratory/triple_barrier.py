@@ -22,6 +22,10 @@ CORRECTION (review items 1-6). Key changes vs v1:
      barrier outcome is NEVER equated with profit/loss.
 
   4. EVENT STATUS kept distinct. Ambiguous is NOT converted into vertical exit.
+     Ambiguity is first decided on the main bar (mid OHLC). When M1 bars are
+     supplied, label_events makes a second pass that resolves an AMBIGUOUS event
+     ONLY if the 1-minute path crosses one barrier strictly before the other;
+     same-minute (or uncovered) ambiguity stays AMBIGUOUS.
 
   5. EVENT ATTRIBUTION. event_start_time / event_end_time stored so overlapping
      events can be purged and weighted downstream.
@@ -83,28 +87,19 @@ def _profit_barrier_touched(exit_quote: float, upper: float, lower: float, side:
     return exit_quote >= upper if side == 1 else exit_quote <= lower
 
 
-def label_events(
+def _label_core(
     bars: pd.DataFrame,
     atr: pd.Series,
     cfg: BarrierConfig,
     exec_cfg: ExecutionConfig,
     side: int,
-    m1: Optional[pd.DataFrame] = None,
 ) -> pd.DataFrame:
-    """Triple-barrier labels for one position side.
+    """Fast vectorised barrier labelling on mid OHLC (no M1).
 
-    Parameters
-    ----------
-    side : +1 (BUY) or -1 (SELL). For BUY, upper=profit/lower=loss. For SELL,
-        lower=profit/upper=loss. Barrier touch uses exit-side executable quote.
-    exec_cfg : ExecutionConfig with assumed half-spread and entry timing.
-        spread_already_in_prices is implied by price reconstruction.
-    m1 : optional 1-minute bars ('ts','high','low') to resolve intrabar order.
-
-    Returns columns:
-        signal_time, entry_time, entry_price, exit_time, exit_price,
-        event_start_time, event_end_time, atr, upper, lower, vertical_time,
-        barrier_outcome, event_status, side, ambiguous, gross_return, exec_mid_gross_return
+    Bars whose intrabar range spans BOTH barriers are labelled AMBIGUOUS here.
+    Optional 1-minute refinement is applied afterwards by
+    _resolve_ambiguous_with_m1 (invoked from label_events). Keeping M1 out of this
+    loop is what makes ~70k M30 bars label in ~1s instead of minutes.
     """
     if side not in (1, -1):
         raise ValueError("side must be +1 (BUY) or -1 (SELL)")
@@ -124,13 +119,6 @@ def label_events(
     #  - BUY exits at bid (mid - hs)
     #  - SELL exits at ask (mid + hs)
     exit_offset = -hs if side == 1 else +hs
-
-    m1_by_bucket = None
-    if m1 is not None and len(m1):
-        m1b = m1.copy()
-        m1b["bucket"] = m1b["ts"].dt.floor("30min")
-        m1_by_bucket = {k: v[["high", "low"]].to_numpy(dtype=float)
-                        for k, v in m1b.groupby("bucket")}
 
     rows = []
     for t in range(n):
@@ -177,33 +165,8 @@ def label_events(
                 hit_loss = ex_high >= upper
 
             if hit_profit and hit_loss:
-                # resolve order with M1 (exit-side quotes)
-                resolved = False
-                if m1_by_bucket is not None:
-                    key = pd.Timestamp(ts[b]).floor("30min")
-                    arr = m1_by_bucket.get(key)
-                    if arr is not None and len(arr) >= 1:
-                        for mh, ml in arr:
-                            eh = mh + exit_offset
-                            el = ml + exit_offset
-                            if side == 1:
-                                p = eh >= upper
-                                ls = el <= lower
-                            else:
-                                p = el <= lower
-                                ls = eh >= upper
-                            if p and not ls:
-                                status, exit_idx, exit_price = UPPER_HIT if side == 1 else LOWER_HIT, b, (upper if side == 1 else lower)
-                                resolved = True
-                                break
-                            if ls and not p:
-                                status, exit_idx, exit_price = LOWER_HIT if side == 1 else UPPER_HIT, b, (lower if side == 1 else upper)
-                                resolved = True
-                                break
-                            if p and ls:
-                                break
-                if resolved:
-                    break
+                # Both barriers touched in the same M30 bar: AMBIGUOUS on mid data.
+                # (Optional M1 refinement happens in the label_events wrapper.)
                 status, exit_idx, exit_price = AMBIGUOUS, b, exit_quote_at(b)
                 break
             if hit_profit:
@@ -263,6 +226,104 @@ def label_events(
         })
 
     return pd.DataFrame(rows)
+
+
+def _resolve_ambiguous_with_m1(
+    labels: pd.DataFrame,
+    m1: pd.DataFrame,
+    exec_cfg: ExecutionConfig,
+    side: int,
+) -> pd.DataFrame:
+    """Second pass: resolve AMBIGUOUS events using 1-minute bars.
+
+    Only AMBIGUOUS events are inspected. When the 1-minute path shows one barrier
+    reached strictly before the other, the event is resolved to that barrier.
+    Otherwise (both in the same minute, or no 1-minute coverage) it STAYS
+    AMBIGUOUS -- an ambiguous order is never forced into a false profit/loss.
+    """
+    if labels.empty or m1 is None or len(m1) == 0:
+        return labels
+    if AMBIGUOUS not in set(labels["event_status"]):
+        return labels
+    hs = float(exec_cfg.half_spread_price)
+    exit_offset = -hs if side == 1 else +hs
+
+    # Normalise dtypes: keys as datetime64[ns]; bars as int64 ns for searchsorted.
+    m1b = m1.sort_values("ts").reset_index(drop=True)
+    m1_ts = pd.to_datetime(m1b["ts"]).astype("datetime64[ns]").to_numpy()
+    m1_hi = m1b["high"].to_numpy(dtype=float)
+    m1_lo = m1b["low"].to_numpy(dtype=float)
+
+    labels = labels.copy()
+    for i in labels.index[labels["event_status"] == AMBIGUOUS]:
+        row = labels.loc[i]
+        upper, lower = float(row["upper"]), float(row["lower"])
+        bucket = pd.Timestamp(row["exit_time"]).floor("30min")
+        lo_pos = int(np.searchsorted(m1_ts, np.datetime64(bucket), side="left"))
+        hi_pos = int(np.searchsorted(m1_ts, np.datetime64(bucket + pd.Timedelta("30min")), side="left"))
+        sub_hi, sub_lo = m1_hi[lo_pos:hi_pos], m1_lo[lo_pos:hi_pos]
+        if len(sub_hi) == 0:
+            continue
+        if side == 1:
+            up_hit = (sub_hi + exit_offset) >= upper
+            dn_hit = (sub_lo + exit_offset) <= lower
+        else:
+            up_hit = (sub_lo + exit_offset) <= lower
+            dn_hit = (sub_hi + exit_offset) >= upper
+
+        first_up = int(np.argmax(up_hit)) if up_hit.any() else None
+        first_dn = int(np.argmax(dn_hit)) if dn_hit.any() else None
+        if first_up is None or first_dn is None or first_up == first_dn:
+            continue  # undetermined at 1-minute resolution -> keep AMBIGUOUS
+        if first_up < first_dn:
+            status = UPPER_HIT if side == 1 else LOWER_HIT
+            exit_price = upper if side == 1 else lower
+            minute_idx = first_up
+        else:
+            status = LOWER_HIT if side == 1 else UPPER_HIT
+            exit_price = lower if side == 1 else upper
+            minute_idx = first_dn
+        entry_price = float(row["entry_price"])
+        exit_ts = m1_ts[lo_pos + minute_idx]
+        labels.at[i, "event_status"] = status
+        labels.at[i, "ambiguous"] = False
+        labels.at[i, "exit_price"] = float(exit_price)
+        labels.at[i, "exit_time"] = exit_ts
+        labels.at[i, "event_end_time"] = exit_ts
+        labels.at[i, "barrier_outcome"] = 1 if status == (UPPER_HIT if side == 1 else LOWER_HIT) else -1
+        labels.at[i, "gross_return"] = float(side * (exit_price - entry_price) / entry_price)
+    return labels
+
+
+def label_events(
+    bars: pd.DataFrame,
+    atr: pd.Series,
+    cfg: BarrierConfig,
+    exec_cfg: ExecutionConfig,
+    side: int,
+    m1: Optional[pd.DataFrame] = None,
+) -> pd.DataFrame:
+    """Triple-barrier labels for one position side.
+
+    Parameters
+    ----------
+    side : +1 (BUY) or -1 (SELL). For BUY, upper=profit/lower=loss. For SELL,
+        lower=profit/upper=loss. Barrier touch uses exit-side executable quote.
+    exec_cfg : ExecutionConfig with assumed half-spread and entry timing.
+        spread_already_in_prices is implied by price reconstruction.
+    m1 : optional 1-minute bars ('ts','high','low') to resolve intrabar order.
+        When omitted, events whose 30-min range spans both barriers stay
+        AMBIGUOUS (never forced).
+
+    Returns columns:
+        signal_time, entry_time, entry_price, exit_time, exit_price,
+        event_start_time, event_end_time, atr, upper, lower, vertical_time,
+        barrier_outcome, event_status, side, ambiguous, gross_return, exec_mid_gross_return
+    """
+    labels = _label_core(bars, atr, cfg, exec_cfg, side)
+    if m1 is not None and len(m1) and not labels.empty:
+        labels = _resolve_ambiguous_with_m1(labels, m1, exec_cfg, side)
+    return labels
 
 
 def label_summary(labels: pd.DataFrame) -> dict:

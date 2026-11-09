@@ -172,6 +172,54 @@ def test_ambiguous_intrabar_event():
     assert first["ambiguous"] is True or bool(first["ambiguous"]) is True
 
 
+# ---- M1 disambiguation of ambiguous events -------------------------------
+def test_m1_resolves_ambiguous_when_order_is_clear():
+    """Ambiguous on the 30-min bar, but M1 shows the upper barrier crossed first."""
+    n = 20
+    b = _flat_bars(n, 1.1)
+    atr = _const_atr(b, val=0.001)
+    cfg = BarrierConfig(k_up=1.5, k_dn=1.0, vertical=5)
+    b.loc[1, "high"] = 1.1 + 0.005     # spans both barriers on the entry bar
+    b.loc[1, "low"] = 1.1 - 0.005
+    upper = 1.1 + 1.5 * 0.001          # 1.1015
+    bucket = pd.Timestamp(b.loc[1, "ts"]).floor("30min")
+    # 1-minute path: crosses UPPER in the first minute, LOWER later
+    m1 = pd.DataFrame({
+        "ts": [bucket, bucket + pd.Timedelta("1min"), bucket + pd.Timedelta("2min")],
+        "high": [1.1045, 1.1030, 1.0980],
+        "low": [1.1005, 1.1010, 1.0930],
+    })
+    lab = label_events(b, atr, cfg, ExecutionConfig(), side=1, m1=m1)
+    first = lab.iloc[0]
+    assert first["event_status"] == UPPER_HIT
+    assert bool(first["ambiguous"]) is False
+    assert np.isclose(first["exit_price"], upper, atol=1e-9)
+    assert first["gross_return"] > 0
+
+
+def test_m1_keeps_ambiguous_when_same_minute():
+    """If both barriers are touched inside a single 1-min bar, stays AMBIGUOUS."""
+    n = 20
+    b = _flat_bars(n, 1.1)
+    atr = _const_atr(b, val=0.001)
+    cfg = BarrierConfig(k_up=1.5, k_dn=1.0, vertical=5)
+    b.loc[1, "high"] = 1.1 + 0.005
+    b.loc[1, "low"] = 1.1 - 0.005
+    bucket = pd.Timestamp(b.loc[1, "ts"]).floor("30min")
+    m1 = pd.DataFrame({"ts": [bucket], "high": [1.1045], "low": [1.0930]})
+    lab = label_events(b, atr, cfg, ExecutionConfig(), side=1, m1=m1)
+    assert lab.iloc[0]["event_status"] == AMBIGUOUS
+
+
+def test_m1_none_equals_core_behavior():
+    """Passing m1=None must reproduce the pure-core labels exactly."""
+    b = _make_with_spike(up_idx=3, up_px=1.1 + 10 * 0.001)
+    atr = _const_atr(b)
+    a = label_events(b, atr, CFG, ExecutionConfig(), side=1)
+    c = label_events(b, atr, CFG, ExecutionConfig(), side=1, m1=None)
+    assert a["event_status"].tolist() == c["event_status"].tolist()
+
+
 # ---- no-leakage / event window -------------------------------------------
 def test_event_window_after_signal():
     n = 40
