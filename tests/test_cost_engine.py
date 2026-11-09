@@ -1,4 +1,4 @@
-"""Tests for FASE 2A cost engine (units, no double counting)."""
+"""FASE 2A v2 tests: cost engine (component split, no double counting)."""
 
 from __future__ import annotations
 
@@ -6,47 +6,51 @@ import pytest
 
 from nexora_laboratory.cost_engine import (
     PIP_SIZE,
-    all_scenarios,
-    apply_cost,
-    cost_return_fraction,
-    get_scenario,
+    STATUS_NOT_AVAILABLE,
+    cost_fraction_from_pips,
+    components_for_scenario,
+    total_cost_fraction,
 )
 
 
-def test_scenario_totals_match_approved():
-    # Approved: optimistic 1.0+0.2=1.2, baseline 1.5+0.2=1.7, stress 2.0+0.2=2.2
-    assert get_scenario("optimistic").total_pips == pytest.approx(1.2, abs=1e-9)
-    assert get_scenario("baseline").total_pips == pytest.approx(1.7, abs=1e-9)
-    assert get_scenario("stress").total_pips == pytest.approx(2.2, abs=1e-9)
+def test_scenario_totals():
+    assert components_for_scenario("optimistic").total_pips() == pytest.approx(1.2)
+    assert components_for_scenario("baseline").total_pips() == pytest.approx(1.7)
+    assert components_for_scenario("stress").total_pips() == pytest.approx(2.2)
 
 
-def test_cost_fraction_units():
-    # 1.7 pip * 0.0001 = 0.00017 fraction at reference price 1.0
-    assert cost_return_fraction("baseline") == pytest.approx(1.7 * PIP_SIZE, abs=1e-12)
-    assert cost_return_fraction("baseline") == pytest.approx(0.00017, abs=1e-12)
+def test_commission_status_not_available():
+    c = components_for_scenario("baseline")
+    assert c.commission_status == STATUS_NOT_AVAILABLE
 
 
-def test_reference_price_scaling():
-    # At price 1.10 the same pip cost is a slightly smaller fraction
-    c = cost_return_fraction("baseline", reference_price=1.10)
-    assert c == pytest.approx(0.00017 / 1.10, abs=1e-12)
+def test_cost_uses_reference_price():
+    # 1.7 pip at entry price 1.10 -> 1.7*0.0001/1.10
+    c = components_for_scenario("baseline")
+    frac = total_cost_fraction(c, reference_price=1.10, spread_already_in_prices=False)
+    assert frac == pytest.approx(1.7 * PIP_SIZE / 1.10)
 
 
-def test_no_double_counting_single_subtraction():
-    # apply_cost subtracts exactly one scenario total once
-    gross = 0.0005
-    net = apply_cost(gross, "baseline")
-    assert net == pytest.approx(gross - cost_return_fraction("baseline"), abs=1e-12)
+def test_no_double_count_spread_in_executable_mode():
+    """Executable mode already contains spread in prices -> exclude spread here."""
+    c = components_for_scenario("baseline")  # spread 1.5, slip 0.2
+    flat = total_cost_fraction(c, 1.10, spread_already_in_prices=False)
+    execu = total_cost_fraction(c, 1.10, spread_already_in_prices=True)
+    # executable must subtract ONLY slippage/commission/swap (0.2 pip), much less
+    assert execu == pytest.approx(0.2 * PIP_SIZE / 1.10)
+    assert flat - execu == pytest.approx(1.5 * PIP_SIZE / 1.10)  # exactly the spread, once
 
 
-def test_unknown_scenario_raises():
+def test_pips_to_fraction():
+    assert cost_fraction_from_pips(1.0, 1.0) == pytest.approx(0.0001)
+
+
+def test_reference_price_positive_required():
+    c = components_for_scenario("baseline")
+    with pytest.raises(ValueError):
+        total_cost_fraction(c, reference_price=0.0, spread_already_in_prices=False)
+
+
+def test_unknown_scenario():
     with pytest.raises(KeyError):
-        get_scenario("cheap")
-
-
-def test_all_scenarios_present_and_assumption_tagged():
-    s = all_scenarios()
-    assert set(s) == {"optimistic", "baseline", "stress"}
-    for sc in s.values():
-        d = sc.as_dict()
-        assert "assumption" in d and "double" in d["assumption"].lower()
+        components_for_scenario("cheap")

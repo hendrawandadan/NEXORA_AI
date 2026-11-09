@@ -1,104 +1,129 @@
-"""FASE 2A - Transaction Cost Engine (EURUSD 5-digit convention).
+"""FASE 2A - Transaction Cost Engine v2 (component-separated, no double counting).
 
-Converts the APPROVED research cost scenarios into a return fraction that can be
-subtracted from a gross price return. This module is deliberately explicit about
-units so that costs are applied exactly ONCE (no double counting).
+CORRECTION (review items 1, 6, 7, 8). Total cost is composed from explicit
+components, each applied exactly once:
 
-Approved scenarios (RESEARCH ASSUMPTIONS, not real broker costs):
-    optimistic : 1.0 pip round-trip + 0.2 pip slippage  = 1.2 pip total
-    baseline   : 1.5 pip round-trip + 0.2 pip slippage  = 1.7 pip total
-    stress     : 2.0 pip round-trip + 0.2 pip slippage  = 2.2 pip total
+    total = spread_component + commission_component + slippage_component + swap_component
 
-Unit convention (EURUSD quoted to 5 decimals, e.g. 1.12184):
-    - 1 pip  = 0.0001  (== 10 "points"; the export's <SPREAD> column is in points)
-    - 1 point = 0.00001
-The engine returns cost as a FRACTION OF PRICE (0.00012 for 1.2 pip at 1.0 EURUSD),
-which is directly comparable to a gross fractional return like open->open.
+Two COST APPLICATION MODES (use exactly ONE per evaluation, never both):
+    (A) EXECUTABLE mode: bid/ask reconstructed from mid-price (OHLC) plus an
+        assumed half-spread; gross_return already contains the spread crossing.
+        -> ``spread_already_in_prices=True`` so we DO NOT subtract spread again.
+    (B) FLAT mode: gross_return uses mid prices; subtract total component cost
+        once here (spread + slippage + commission + swap).
 
-The dataset's <SPREAD> column is NOT used as a real cost (it is 88.8% zero); it
-remains only a relative feature (`spread_relative`) elsewhere. This avoids paying
-two independent spread estimates.
+DATA REALITY (verified): no historical bid/ask exists; only OHLC + a <SPREAD>
+column that is 88.8% zero. Therefore:
+    - We do NOT claim historical spread is known.
+    - spread is an explicit ASSUMPTION (from scenario); results = SIMULATED EXECUTION.
+    - commission and swap are NOT_AVAILABLE (not silently real zero): for M30
+      intraday (no overnight) swap is "assumed 0 for intraday, NOT empirical";
+      commission is UNKNOWN unless a value is supplied.
+
+Unit convention (EURUSD 5-decimal): 1 pip = 0.0001 price units = 10 broker points.
 """
 
 from __future__ import annotations
 
-from dataclasses import dataclass, asdict
-from typing import Dict, Tuple
+from dataclasses import dataclass
+from typing import Dict
 
-PIP_SIZE = 0.0001          # price units per pip for EURUSD (5-decimal quote)
-POINTS_PER_PIP = 10        # 1 pip == 10 broker "points"
+PIP_SIZE = 0.0001
+POINTS_PER_PIP = 10
 
-SCENARIOS: Dict[str, Tuple[float, float]] = {
-    # name: (round_trip_pips, slippage_pips)
+STATUS_ASSUMED = "ASSUMED"
+STATUS_NOT_AVAILABLE = "NOT_AVAILABLE"
+STATUS_ASSUMED_INTRADAY = "ASSUMED_ZERO_INTRADAY"
+
+
+@dataclass(frozen=True)
+class CostComponents:
+    """Each cost component in PIPS with an explicit status."""
+
+    round_trip_spread_pips: float = 1.5
+    slippage_pips: float = 0.2
+    commission_pips: float = 0.0
+    swap_pips: float = 0.0
+
+    spread_status: str = STATUS_ASSUMED
+    slippage_status: str = STATUS_ASSUMED
+    commission_status: str = STATUS_NOT_AVAILABLE
+    swap_status: str = STATUS_ASSUMED_INTRADAY
+
+    def total_pips(self, include_spread: bool = True) -> float:
+        total = self.slippage_pips + self.commission_pips + self.swap_pips
+        if include_spread:
+            total += self.round_trip_spread_pips
+        return round(total, 9)
+
+    def as_dict(self) -> dict:
+        return {
+            "round_trip_spread_pips": self.round_trip_spread_pips,
+            "slippage_pips": self.slippage_pips,
+            "commission_pips": self.commission_pips,
+            "swap_pips": self.swap_pips,
+            "status": {
+                "spread": self.spread_status,
+                "slippage": self.slippage_status,
+                "commission": self.commission_status,
+                "swap": self.swap_status,
+            },
+            "note": (
+                "spread is an ASSUMPTION (no historical bid/ask available; <SPREAD> "
+                "column is 88.8% zero). commission is NOT_AVAILABLE unless supplied. "
+                "swap assumed 0 for intraday (not empirical). Results = SIMULATED EXECUTION."
+            ),
+        }
+
+
+# Approved scenario assumptions (round-trip spread, slippage) in pips.
+SCENARIO_PIPS: Dict[str, tuple] = {
     "optimistic": (1.0, 0.2),
     "baseline": (1.5, 0.2),
     "stress": (2.0, 0.2),
 }
 
-ASSUMPTION_NOTE = (
-    "RESEARCH ASSUMPTION, not actual broker cost. Scenario values are preset "
-    "assumptions; <SPREAD> column is not used as a real cost to avoid double counting."
-)
 
-
-@dataclass(frozen=True)
-class CostScenario:
-    name: str
-    round_trip_pips: float
-    slippage_pips: float
-
-    @property
-    def total_pips(self) -> float:
-        return round(self.round_trip_pips + self.slippage_pips, 6)
-
-    def as_return_fraction(self, reference_price: float = 1.0) -> float:
-        """Total cost expressed as a fraction of price.
-
-        ``reference_price`` is the price the return is measured against. For an
-        open->open fractional return, using ``reference_price`` = entry price is
-        exact; using 1.0 gives an approximation whose relative error is <~10%.
-        Sizing-agnostic: this is a per-unit-notional round-trip cost.
-        """
-        return (self.total_pips * PIP_SIZE) / float(reference_price)
-
-    def as_dict(self) -> Dict[str, object]:
-        return {
-            **asdict(self),
-            "total_pips": self.total_pips,
-            "assumption": ASSUMPTION_NOTE,
-        }
-
-
-def get_scenario(name: str) -> CostScenario:
+def components_for_scenario(name: str, commission_pips: float = 0.0) -> CostComponents:
     key = (name or "").strip().lower()
-    if key not in SCENARIOS:
-        raise KeyError(f"unknown scenario {name!r}; allowed: {sorted(SCENARIOS)}")
-    rt, slip = SCENARIOS[key]
-    return CostScenario(name=key, round_trip_pips=rt, slippage_pips=slip)
+    if key not in SCENARIO_PIPS:
+        raise KeyError(f"unknown scenario {name!r}; allowed: {sorted(SCENARIO_PIPS)}")
+    spread, slip = SCENARIO_PIPS[key]
+    return CostComponents(
+        round_trip_spread_pips=spread,
+        slippage_pips=slip,
+        commission_pips=commission_pips,
+    )
 
 
-def all_scenarios() -> Dict[str, CostScenario]:
-    return {name: get_scenario(name) for name in SCENARIOS}
+def pips_to_price(pips: float) -> float:
+    return pips * PIP_SIZE
 
 
-def cost_return_fraction(name: str, reference_price: float = 1.0) -> float:
-    """Convenience: total cost (round-trip + slippage) as a return fraction."""
-    return get_scenario(name).as_return_fraction(reference_price)
+def cost_fraction_from_pips(pips: float, reference_price: float) -> float:
+    """Component-pips -> return fraction, using the ACTUAL entry price (review 7)."""
+    if reference_price <= 0:
+        raise ValueError("reference_price must be positive")
+    return pips_to_price(pips) / float(reference_price)
 
 
-def apply_cost(gross_return: float, name: str, reference_price: float = 1.0) -> float:
-    """Net return = gross_return - cost_fraction (single subtraction, no double count)."""
-    return float(gross_return) - cost_return_fraction(name, reference_price)
+def total_cost_fraction(
+    comp: CostComponents, reference_price: float, spread_already_in_prices: bool,
+) -> float:
+    """Total cost as return fraction with strict no-double-count semantics.
+
+    If ``spread_already_in_prices`` is True (EXECUTABLE mode), the spread
+    component is EXCLUDED here because it is already embedded in bid/ask prices.
+    """
+    return cost_fraction_from_pips(
+        comp.total_pips(include_spread=not spread_already_in_prices), reference_price
+    )
 
 
-def summarize() -> Dict[str, Dict[str, object]]:
-    return {name: sc.as_dict() for name, sc in all_scenarios().items()}
+def summarize() -> Dict[str, dict]:
+    return {name: components_for_scenario(name).as_dict() for name in SCENARIO_PIPS}
 
 
 if __name__ == "__main__":
     import json
-
     print(json.dumps(summarize(), indent=2))
-    for name in SCENARIOS:
-        sc = get_scenario(name)
-        print(f"{name:>10}: {sc.total_pips:.1f} pip -> return_frac(1.0)={sc.as_return_fraction():.6f}")

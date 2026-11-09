@@ -1,4 +1,7 @@
-"""Tests for FASE 2A triple-barrier labeling: anti-leakage + correctness."""
+"""FASE 2A v2 tests: side-aware executable triple-barrier (review item 9).
+
+All fixtures use known synthetic prices so outcomes are mathematically verifiable.
+"""
 
 from __future__ import annotations
 
@@ -7,107 +10,190 @@ import pandas as pd
 import pytest
 
 from nexora_laboratory.triple_barrier import (
+    AMBIGUOUS,
+    LOWER_HIT,
+    UPPER_HIT,
+    VERTICAL_EXIT,
     BarrierConfig,
+    ExecutionConfig,
     atr_from_bars,
     label_events,
-    label_summary,
 )
 
 
-def _synthetic_bars(n=200, seed=0, start="2021-01-04 00:00"):
-    rng = np.random.default_rng(seed)
+def _flat_bars(n, price=1.1000, start="2021-01-04 00:00"):
     ts = pd.date_range(start, periods=n, freq="30min")
-    close = 1.10 + np.cumsum(rng.normal(0, 0.0005, n))
-    open_ = close + rng.normal(0, 0.0001, n)
-    high = np.maximum(open_, close) + np.abs(rng.normal(0, 0.0002, n))
-    low = np.minimum(open_, close) - np.abs(rng.normal(0, 0.0002, n))
-    return pd.DataFrame({"ts": ts, "open": open_, "high": high, "low": low, "close": close})
+    return pd.DataFrame({
+        "ts": ts, "open": np.full(n, price), "high": np.full(n, price),
+        "low": np.full(n, price), "close": np.full(n, price),
+    })
 
 
-def test_label_time_is_after_signal_time_no_leak():
-    bars = _synthetic_bars(300, seed=1)
-    atr = atr_from_bars(bars, 14)
-    cfg = BarrierConfig(k_up=1.5, k_dn=1.0, vertical=16, atr_span=14)
-    labels = label_events(bars, atr, cfg, entry_at_next_open=True)
-    assert not labels.empty
-    # Label resolution time must be strictly after the signal time (no future label == signal)
-    assert (labels["exit_time"] > labels["signal_time"]).all()
-    # Entry must be the next bar's open and after signal
-    assert (labels["entry_time"] > labels["signal_time"]).all()
+def _const_atr(bars, val=0.0010):
+    return pd.Series(np.full(len(bars), val), index=bars.index)
 
 
-def test_entry_is_next_open():
-    bars = _synthetic_bars(120, seed=2)
-    atr = atr_from_bars(bars, 14)
-    cfg = BarrierConfig(vertical=8)
-    labels = label_events(bars, atr, cfg, entry_at_next_open=True)
-    # For the first label (t=0), entry_price must equal bars.open[1]
+def _make_with_spike(up_idx=None, up_px=None, dn_idx=None, dn_px=None, n=40, price=1.1):
+    b = _flat_bars(n, price)
+    if up_idx is not None:
+        b.loc[up_idx, "high"] = up_px
+    if dn_idx is not None:
+        b.loc[dn_idx, "low"] = dn_px
+    return b
+
+
+CFG = BarrierConfig(k_up=1.5, k_dn=1.0, vertical=5)
+
+
+# ---- 1. BUY upper hit ------------------------------------------------------
+def test_buy_upper_hit():
+    bars = _make_with_spike(up_idx=3, up_px=1.1 + 10 * 0.001)  # far above upper
+    atr = _const_atr(bars)
+    # need full window: n=40, vertical=5 ok
+    labels = label_events(bars, atr, CFG, ExecutionConfig(half_spread_price=0.0), side=1)
     first = labels.iloc[0]
-    assert np.isclose(first["entry_price"], bars["open"].iloc[1])
-    assert first["signal_time"] == bars["ts"].iloc[0]
-    assert first["entry_time"] == bars["ts"].iloc[1]
+    assert first["event_status"] == UPPER_HIT
+    assert first["barrier_outcome"] == 1
+    assert labels["gross_return"].max() > 0
 
 
-def test_barriers_are_atr_scaled_and_ordered():
-    bars = _synthetic_bars(150, seed=3)
-    atr = atr_from_bars(bars, 14)
-    cfg = BarrierConfig(k_up=1.5, k_dn=1.0, vertical=16)
-    labels = label_events(bars, atr, cfg)
-    # upper > entry > lower and gaps match ATR multiples
-    assert (labels["upper"] > labels["entry_price"]).all()
-    assert (labels["lower"] < labels["entry_price"]).all()
-    up_gap = labels["upper"] - labels["entry_price"]
-    dn_gap = labels["entry_price"] - labels["lower"]
-    assert np.allclose(up_gap, cfg.k_up * labels["atr"])
-    assert np.allclose(dn_gap, cfg.k_dn * labels["atr"])
+# ---- 2. BUY lower hit ------------------------------------------------------
+def test_buy_lower_hit():
+    bars = _make_with_spike(dn_idx=3, dn_px=1.1 - 10 * 0.001)
+    atr = _const_atr(bars)
+    labels = label_events(bars, atr, CFG, ExecutionConfig(half_spread_price=0.0), side=1)
+    first = labels.iloc[0]
+    assert first["event_status"] == LOWER_HIT
+    assert first["barrier_outcome"] == -1
 
 
-def test_atr_uses_only_past_bars():
-    """Changing FUTURE bars must not change ATR at an earlier index."""
-    bars = _synthetic_bars(100, seed=4)
-    atr1 = atr_from_bars(bars, 14)
-    bars2 = bars.copy()
-    bars2.loc[80:, ["open", "high", "low", "close"]] *= 1.5  # alter the future
-    atr2 = atr_from_bars(bars2, 14)
-    # ATR up to index 79 must be identical (uses <= t)
-    assert np.allclose(atr1.iloc[:80].to_numpy(), atr2.iloc[:80].to_numpy(), equal_nan=True)
+# ---- 3. SELL upper hit (upper is LOSS for sell) ---------------------------
+def test_sell_upper_hit_is_loss():
+    bars = _make_with_spike(up_idx=3, up_px=1.1 + 10 * 0.001)
+    atr = _const_atr(bars)
+    labels = label_events(bars, atr, CFG, ExecutionConfig(half_spread_price=0.0), side=-1)
+    first = labels.iloc[0]
+    assert first["event_status"] == UPPER_HIT   # physically upper touched
+    assert first["barrier_outcome"] == -1        # but it's a LOSS for a short
+    assert first["gross_return"] < 0
 
 
-def test_first_touch_order_respected_on_single_bar_spike():
-    """A bar that only pierces upper first must resolve +1 (not vertical)."""
+# ---- 4. SELL lower hit (lower is PROFIT for sell) ------------------------
+def test_sell_lower_hit_is_profit():
+    bars = _make_with_spike(dn_idx=3, dn_px=1.1 - 10 * 0.001)
+    atr = _const_atr(bars)
+    labels = label_events(bars, atr, CFG, ExecutionConfig(half_spread_price=0.0), side=-1)
+    first = labels.iloc[0]
+    assert first["event_status"] == LOWER_HIT
+    assert first["barrier_outcome"] == 1
+    assert first["gross_return"] > 0
+
+
+# ---- 5/6. BUY vertical profit / loss -------------------------------------
+def test_buy_vertical_profit_and_loss():
+    # wide barriers never hit -> vertical; drift close at the vertical exit bar
+    n = 20
+    b = _flat_bars(n, 1.1)
+    atr = _const_atr(b, val=0.01)  # wide barriers
+    cfg = BarrierConfig(k_up=10, k_dn=10, vertical=5)
+    # first event: signal t=0, entry=1, vertical exit index = 1+5 = 6
+    vert_idx = 1 + cfg.vertical
+    # profit: exit bar closed higher
+    b2 = b.copy(); b2.loc[vert_idx, "close"] = 1.1005; b2.loc[vert_idx, "high"] = 1.1005
+    lab = label_events(b2, atr, cfg, ExecutionConfig(), side=1)
+    first = lab.iloc[0]
+    assert first["event_status"] == VERTICAL_EXIT
+    assert first["gross_return"] > 0
+    # loss
+    b3 = b.copy(); b3.loc[vert_idx, "close"] = 1.0995; b3.loc[vert_idx, "low"] = 1.0995
+    lab2 = label_events(b3, atr, cfg, ExecutionConfig(), side=1)
+    assert lab2.iloc[0]["event_status"] == VERTICAL_EXIT
+    assert lab2.iloc[0]["gross_return"] < 0
+
+
+# ---- 7/8. SELL vertical profit / loss -----------------------------------
+def test_sell_vertical_profit_and_loss():
+    n = 20
+    b = _flat_bars(n, 1.1)
+    atr = _const_atr(b, val=0.01)
+    cfg = BarrierConfig(k_up=10, k_dn=10, vertical=5)
+    vert_idx = 1 + cfg.vertical
+    b2 = b.copy(); b2.loc[vert_idx, "close"] = 1.0995; b2.loc[vert_idx, "low"] = 1.0995
+    lab = label_events(b2, atr, cfg, ExecutionConfig(), side=-1)
+    assert lab.iloc[0]["event_status"] == VERTICAL_EXIT
+    assert lab.iloc[0]["gross_return"] > 0   # short profits when price falls
+    b3 = b.copy(); b3.loc[vert_idx, "close"] = 1.1005; b3.loc[vert_idx, "high"] = 1.1005
+    lab2 = label_events(b3, atr, cfg, ExecutionConfig(), side=-1)
+    assert lab2.iloc[0]["gross_return"] < 0
+
+
+# ---- bid/ask spread accounting -------------------------------------------
+def test_executable_spread_accounting():
+    """With a half-spread, a BUY entry is at ask (higher) and exit at bid (lower):
+    gross return identical price path should be strictly worse than zero spread."""
+    n = 20
+    b = _flat_bars(n, 1.1)
+    atr = _const_atr(b, val=0.01)
+    cfg = BarrierConfig(k_up=10, k_dn=10, vertical=5)
+    # vertical exit at same mid; round-trip spread cost should make BUY negative
+    lab0 = label_events(b, atr, cfg, ExecutionConfig(half_spread_price=0.0), side=1)
+    lab1 = label_events(b, atr, cfg, ExecutionConfig(half_spread_price=0.0001), side=1)
+    assert np.isclose(lab0.iloc[0]["gross_return"], 0.0, atol=1e-9)
+    assert lab1.iloc[0]["gross_return"] < 0  # buy ask, exit bid -> loss ~2*hs/price
+
+
+def test_executable_entry_exit_sides():
+    n = 20
+    b = _flat_bars(n, 1.1)
+    atr = _const_atr(b, val=0.01)
+    cfg = BarrierConfig(k_up=10, k_dn=10, vertical=5)
+    hs = 0.0001
+    lab_buy = label_events(b, atr, cfg, ExecutionConfig(half_spread_price=hs), side=1)
+    # BUY entry = mid+hs
+    assert np.isclose(lab_buy.iloc[0]["entry_price"], 1.1 + hs)
+    lab_sell = label_events(b, atr, cfg, ExecutionConfig(half_spread_price=hs), side=-1)
+    # SELL entry = mid-hs
+    assert np.isclose(lab_sell.iloc[0]["entry_price"], 1.1 - hs)
+
+
+# ---- ambiguous intrabar event -------------------------------------------
+def test_ambiguous_intrabar_event():
+    """A bar whose range spans BOTH barriers with no M1 -> AMBIGUOUS (not vertical)."""
+    n = 20
+    b = _flat_bars(n, 1.1)
+    atr = _const_atr(b, val=0.001)
+    cfg = BarrierConfig(k_up=1.5, k_dn=1.0, vertical=5)
+    # bar 1 (entry) spans both: high above upper, low below lower
+    b.loc[1, "high"] = 1.1 + 0.005
+    b.loc[1, "low"] = 1.1 - 0.005
+    lab = label_events(b, atr, cfg, ExecutionConfig(), side=1)  # no m1
+    first = lab.iloc[0]
+    assert first["event_status"] == AMBIGUOUS
+    assert first["ambiguous"] is True or bool(first["ambiguous"]) is True
+
+
+# ---- no-leakage / event window -------------------------------------------
+def test_event_window_after_signal():
     n = 40
-    ts = pd.date_range("2021-01-04 00:00", periods=n, freq="30min")
-    px = np.full(n, 1.1000)
-    open_ = px.copy(); close = px.copy(); high = px + 0.0001; low = px - 0.0001
-    # Force a big upward spike at bar 5 only
-    high[5] = 1.1100
-    bars = pd.DataFrame({"ts": ts, "open": open_, "high": high, "low": low, "close": close})
-    # constant ATR
-    atr = pd.Series(np.full(n, 0.001), index=bars.index)
-    cfg = BarrierConfig(k_up=1.5, k_dn=1.0, vertical=16)
-    labels = label_events(bars, atr, cfg, entry_at_next_open=True)
-    # Find the event whose window includes bar 5 (entry index <=5)
-    hit = labels[labels["raw_outcome"] == 1]
-    assert len(hit) >= 1
+    b = _flat_bars(n, 1.1)
+    atr = _const_atr(b)
+    lab = label_events(b, atr, CFG, ExecutionConfig(), side=1)
+    assert (lab["entry_time"] > lab["signal_time"]).all()
+    assert (lab["event_end_time"] >= lab["event_start_time"]).all()
+    assert (lab["exit_time"] > lab["signal_time"]).all()
 
 
-def test_vertical_when_no_barrier_hit():
-    n = 40
-    ts = pd.date_range("2021-01-04 00:00", periods=n, freq="30min")
-    px = np.full(n, 1.1000)
-    bars = pd.DataFrame({"ts": ts, "open": px, "high": px + 0.00001,
-                         "low": px - 0.00001, "close": px})
-    atr = pd.Series(np.full(n, 0.01), index=bars.index)  # wide barriers, never hit
-    cfg = BarrierConfig(k_up=5.0, k_dn=5.0, vertical=10)
-    labels = label_events(bars, atr, cfg)
-    assert (labels["raw_outcome"] == 0).all()
-    assert (~labels["ambiguous"]).all()
+def test_atr_no_future_leak():
+    n = 80
+    b = _flat_bars(n, 1.1)
+    atr1 = atr_from_bars(b, 14)
+    b2 = b.copy(); b2.loc[50:, ["open", "high", "low", "close"]] *= 1.5
+    atr2 = atr_from_bars(b2, 14)
+    assert np.allclose(atr1.iloc[:50].to_numpy(), atr2.iloc[:50].to_numpy(), equal_nan=True)
 
 
-def test_summary_shape():
-    bars = _synthetic_bars(120, seed=5)
-    atr = atr_from_bars(bars, 14)
-    labels = label_events(bars, atr, BarrierConfig())
-    s = label_summary(labels)
-    assert s["n"] == len(labels)
-    assert s["upper(+1)"] + s["lower(-1)"] + s["vertical(0)"] == s["n"] - s["ambiguous"]
+def test_invalid_side_raises():
+    b = _flat_bars(20, 1.1)
+    atr = _const_atr(b)
+    with pytest.raises(ValueError):
+        label_events(b, atr, CFG, ExecutionConfig(), side=0)
