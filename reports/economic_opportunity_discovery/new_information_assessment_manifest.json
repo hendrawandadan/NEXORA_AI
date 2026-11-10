@@ -1,0 +1,14 @@
+{
+  "inputs": {
+    "XAUUSD_H1": "e849763d6b9d9a2fd6e28577acf34cd93d0a887e14a8d11c65e14ad6e0913490",
+    "XAUUSD_H4": "0ef201ecdfd6b3b5036a31388e9d82c66d03027d9c6ff252d9b80202c05e4bee",
+    "XAUUSD_D1": "1743972fcb8b45e41a677af7c3e93a1dec7c4e5bd7818762ccca79e52ee9a468",
+    "EURUSD_H1": "ee758bcc8f11f43b188a42ce761b6f5f07e7e27d0dda23955c514cea45989227",
+    "EURUSD_H4": "5c94f204af9bda2066a55f8445b41ef7b056fcf9f6c15ebf7683652cf4aee067"
+  },
+  "outputs": {
+    "new_information_assessment.json": "b090382c5365cc36e5d706cdd8ddf926119f4d0308533f3e4a0d4a4357e6bc63"
+  },
+  "test_frac": 0.3,
+  "alpha": 0.05
+}

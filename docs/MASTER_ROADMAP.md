@@ -41,6 +41,36 @@ model produksi dan transaksi live tetap memerlukan kontrol keselamatan dan otori
 Status: `DONE` / `ACTIVE` / `PARTIAL` / `PLANNED`. Pemetaan modul mencerminkan
 kondisi repo saat dokumen ini dibuat (modul skeleton hanya berisi `__init__.py`).
 
+> ### Ratifikasi 3a — External Information Intelligence = enabler Fase 2 (INFO_ACQUISITION), BUKAN Fase 4
+>
+> **Keputusan (living document).** Paket `nexora_research/external_intelligence/`
+> ("External Information Intelligence") **diratifikasi sebagai enabler jalan
+> `INFO_ACQUISITION`** yang menyokong keputusan ulang **Fase 2** — sesuai kondisi
+> reopening **#1** pada `GOVERNANCE_DECISION_PRD_001.md` ("sumber data baru yang
+> memberikan informasi tambahan").
+>
+> Ia **BUKAN** pembukaan resmi **Fase 4 (Global Market Intelligence)**. Fase 4 tetap
+> `PLANNED` dan tetap menunggu fondasi Fase 2 terbukti (§9). External Information
+> Intelligence hanya membangun **jalur akuisisi & penalaran informasi eksternal**
+> (event, central bank, news, cross-market, event-response) yang menjadi *input* menuju
+> eksperimen ulang Fase 2 — bukan lompatan fase.
+>
+> **Batas tegas:**
+> - Lane: **INFO_ACQUISITION saja**. Price-Derived lane tetap `SUSPENDED`
+>   (NEXORA-GOV-PRD-001); tidak ada training/tuning/promosi/live/auto-reopen.
+> - Output = **research lead belum tervalidasi**, bukan sinyal atau klaim edge.
+> - Tersambung ke loop riset via `nexora_research/control_loop.py`
+>   (`run_control_loop(external_proposals=...)`), gate **lane-aware**.
+> - Pemicu `R_EVOLVE_NEW_INFO_SOURCE` (Tahap E) **menjalankan akuisisi nyata** lewat
+>   `nexora_research/strategy_evolution.py: execute_new_info_acquisition(...)`
+>   (proposal → `orchestrator.run_intelligence` → `run_control_loop`), fail-closed dan
+>   `dry_run` default.
+> - Penomoran lama "PHASE A2–A7" pada docstring modul **diganti** dengan nama fungsional
+>   "External Information Intelligence" (lihat `reports/external_intelligence/`).
+>
+> Riwayat: temuan audit `reports/external_intelligence/ROADMAP_ALIGNMENT_AUDIT.md`.
+
+
 ### Fase 1 — Foundation & Data Intelligence — `DONE`
 - Database & migration (`nexora_state_db/`, migrations 001–005)
 - Dataset management (`nexora_datahub/loader.py`, `discover_datasets`)
@@ -55,6 +85,9 @@ kondisi repo saat dokumen ini dibuat (modul skeleton hanya berisi `__init__.py`)
 - Evaluasi performa — **belum** (`nexora_evaluator/` siap dipakai)
 - Penyimpanan model & experiment history (`experiments/`, masih kosong)
 - Exit criteria terukur: lihat **§8**.
+- **Enabler aktif:** External Information Intelligence (jalan INFO_ACQUISITION) —
+  lihat **§3a**. Ia menyediakan hipotesis baru berbasis informasi eksternal untuk
+  menguji ulang Fase 2; **belum** ada verdict GO/NO-GO final.
 
 ### Fase 3 — Multi-Instrument Intelligence — `PLANNED`
 - Model individual per instrumen, parameter adaptif, multi-timeframe, multi-pair.
@@ -63,6 +96,10 @@ kondisi repo saat dokumen ini dibuat (modul skeleton hanya berisi `__init__.py`)
 ### Fase 4 — Global Market Intelligence — `PLANNED`
 - DXY, Treasury Yield, indeks global, komoditas, Economic Calendar, Central Bank,
   sentimen, intermarket correlation, multimodal. (`nexora_vision/` sudah ada: `features.py`)
+- **Catatan:** sebagian *kapabilitas pendahulu* (registry sumber, connector, event/
+  central-bank/news/cross-market reasoning) sudah ada di
+  `nexora_research/external_intelligence/`, tetapi **diratifikasi sebagai enabler
+  Fase 2 (§3a), BUKAN pembukaan Fase 4**. Fase 4 tetap `PLANNED`.
 
 ### Fase 5 — Market Understanding & Memory — `PLANNED`
 - Market regime detection, historical similarity, market memory, cross-market,

@@ -1,0 +1,367 @@
+{
+  "stage": 4,
+  "note": "STAGE 4 Data Availability & Quality. Consolidates STAGE 2/3 into a per-instrument readiness profile + explicit gaps. Readiness is a transparent rule-based score, NOT a predictability/profit claim.",
+  "instruments": {
+    "EURUSD": {
+      "instrument": "EURUSD",
+      "source": "bars",
+      "has_bars": true,
+      "has_tick": false,
+      "tick_spread_source": "estimate",
+      "commission_status": "NOT_AVAILABLE",
+      "timeframes": [
+        "H1",
+        "H4",
+        "M30"
+      ],
+      "bar_start": "2020-01-02",
+      "bar_end": "2026-11-06",
+      "tick_start": null,
+      "tick_end": null,
+      "quality_grade": "C",
+      "quality_score": 0.65,
+      "intraday_bars": 113680,
+      "years_history": 6.84,
+      "horizons_available": {
+        "M30": [
+          24,
+          48
+        ],
+        "H1": [
+          12,
+          24
+        ],
+        "H4": [
+          4,
+          8,
+          12
+        ]
+      },
+      "gaps": [
+        "spread is ESTIMATED (no tick Bid/Ask for this instrument)",
+        "commission unknown (Exness account type) -> NOT_AVAILABLE"
+      ],
+      "readiness_score": 0.777,
+      "verdict": "READY",
+      "components": {
+        "quality": 0.65,
+        "history_depth": 1.0,
+        "cost_credibility": 0.5,
+        "coverage": 1.0
+      },
+      "weights": {
+        "quality": 0.35,
+        "history_depth": 0.3,
+        "cost_credibility": 0.2,
+        "coverage": 0.15
+      }
+    },
+    "XAUUSD": {
+      "instrument": "XAUUSD",
+      "source": "bars",
+      "has_bars": true,
+      "has_tick": false,
+      "tick_spread_source": "tick(XAUUSDm proxy)",
+      "commission_status": "NOT_AVAILABLE",
+      "timeframes": [
+        "D1",
+        "H1",
+        "H4"
+      ],
+      "bar_start": "2020-01-02",
+      "bar_end": "2025-07-20",
+      "tick_start": null,
+      "tick_end": null,
+      "quality_grade": "A",
+      "quality_score": 1.0,
+      "intraday_bars": 41839,
+      "years_history": 5.55,
+      "horizons_available": {
+        "H1": [
+          12,
+          24
+        ],
+        "H4": [
+          4,
+          8,
+          12
+        ],
+        "D1": [
+          1,
+          2
+        ]
+      },
+      "gaps": [
+        "commission unknown (Exness account type) -> NOT_AVAILABLE"
+      ],
+      "readiness_score": 0.98,
+      "verdict": "READY",
+      "components": {
+        "quality": 1.0,
+        "history_depth": 1.0,
+        "cost_credibility": 0.9,
+        "coverage": 1.0
+      },
+      "weights": {
+        "quality": 0.35,
+        "history_depth": 0.3,
+        "cost_credibility": 0.2,
+        "coverage": 0.15
+      }
+    },
+    "GBPUSDm": {
+      "instrument": "GBPUSDm",
+      "source": "tick",
+      "has_bars": false,
+      "has_tick": true,
+      "tick_spread_source": "tick",
+      "commission_status": "NOT_AVAILABLE",
+      "timeframes": [],
+      "bar_start": null,
+      "bar_end": null,
+      "tick_start": "2020-01-02",
+      "tick_end": "2025-12-31",
+      "quality_grade": null,
+      "quality_score": null,
+      "intraday_bars": null,
+      "years_history": 6.0,
+      "horizons_available": {},
+      "gaps": [
+        "commission unknown (Exness account type) -> NOT_AVAILABLE"
+      ],
+      "readiness_score": 0.675,
+      "verdict": "PARTIAL",
+      "components": {
+        "quality": 0.5,
+        "history_depth": 1.0,
+        "cost_credibility": 1.0,
+        "coverage": 0.0
+      },
+      "weights": {
+        "quality": 0.35,
+        "history_depth": 0.3,
+        "cost_credibility": 0.2,
+        "coverage": 0.15
+      }
+    },
+    "USDJPYm": {
+      "instrument": "USDJPYm",
+      "source": "tick",
+      "has_bars": false,
+      "has_tick": true,
+      "tick_spread_source": "tick",
+      "commission_status": "NOT_AVAILABLE",
+      "timeframes": [],
+      "bar_start": null,
+      "bar_end": null,
+      "tick_start": "2020-01-02",
+      "tick_end": "2025-12-31",
+      "quality_grade": null,
+      "quality_score": null,
+      "intraday_bars": null,
+      "years_history": 6.0,
+      "horizons_available": {},
+      "gaps": [
+        "commission unknown (Exness account type) -> NOT_AVAILABLE"
+      ],
+      "readiness_score": 0.675,
+      "verdict": "PARTIAL",
+      "components": {
+        "quality": 0.5,
+        "history_depth": 1.0,
+        "cost_credibility": 1.0,
+        "coverage": 0.0
+      },
+      "weights": {
+        "quality": 0.35,
+        "history_depth": 0.3,
+        "cost_credibility": 0.2,
+        "coverage": 0.15
+      }
+    },
+    "XAUUSDm": {
+      "instrument": "XAUUSDm",
+      "source": "bars+tick",
+      "has_bars": true,
+      "has_tick": true,
+      "tick_spread_source": "tick",
+      "commission_status": "NOT_AVAILABLE",
+      "timeframes": [
+        "D1",
+        "H1",
+        "H4"
+      ],
+      "bar_start": "2020-01-02",
+      "bar_end": "2025-07-20",
+      "tick_start": "2020-01-02",
+      "tick_end": "2025-07-20",
+      "quality_grade": "A",
+      "quality_score": 1.0,
+      "intraday_bars": 41839,
+      "years_history": 5.55,
+      "horizons_available": {
+        "H1": [
+          12,
+          24
+        ],
+        "H4": [
+          4,
+          8,
+          12
+        ],
+        "D1": [
+          1,
+          2
+        ]
+      },
+      "gaps": [
+        "commission unknown (Exness account type) -> NOT_AVAILABLE"
+      ],
+      "readiness_score": 1.0,
+      "verdict": "READY",
+      "components": {
+        "quality": 1.0,
+        "history_depth": 1.0,
+        "cost_credibility": 1.0,
+        "coverage": 1.0
+      },
+      "weights": {
+        "quality": 0.35,
+        "history_depth": 0.3,
+        "cost_credibility": 0.2,
+        "coverage": 0.15
+      }
+    },
+    "AUDUSD": {
+      "instrument": "AUDUSD",
+      "source": "none",
+      "has_bars": false,
+      "has_tick": false,
+      "tick_spread_source": "none",
+      "commission_status": "NOT_AVAILABLE",
+      "timeframes": [],
+      "bar_start": null,
+      "bar_end": null,
+      "tick_start": null,
+      "tick_end": null,
+      "quality_grade": null,
+      "quality_score": null,
+      "intraday_bars": null,
+      "years_history": null,
+      "horizons_available": {},
+      "gaps": [
+        "DATA_UNAVAILABLE: no files on disk"
+      ],
+      "readiness_score": 0.0,
+      "verdict": "NOT_READY",
+      "components": {
+        "quality": 0.0,
+        "history_depth": 0.0,
+        "cost_credibility": 0.0,
+        "coverage": 0.0
+      },
+      "weights": {
+        "quality": 0.35,
+        "history_depth": 0.3,
+        "cost_credibility": 0.2,
+        "coverage": 0.15
+      }
+    },
+    "USDCAD": {
+      "instrument": "USDCAD",
+      "source": "none",
+      "has_bars": false,
+      "has_tick": false,
+      "tick_spread_source": "none",
+      "commission_status": "NOT_AVAILABLE",
+      "timeframes": [],
+      "bar_start": null,
+      "bar_end": null,
+      "tick_start": null,
+      "tick_end": null,
+      "quality_grade": null,
+      "quality_score": null,
+      "intraday_bars": null,
+      "years_history": null,
+      "horizons_available": {},
+      "gaps": [
+        "DATA_UNAVAILABLE: no files on disk"
+      ],
+      "readiness_score": 0.0,
+      "verdict": "NOT_READY",
+      "components": {
+        "quality": 0.0,
+        "history_depth": 0.0,
+        "cost_credibility": 0.0,
+        "coverage": 0.0
+      },
+      "weights": {
+        "quality": 0.35,
+        "history_depth": 0.3,
+        "cost_credibility": 0.2,
+        "coverage": 0.15
+      }
+    },
+    "USDCHF": {
+      "instrument": "USDCHF",
+      "source": "none",
+      "has_bars": false,
+      "has_tick": false,
+      "tick_spread_source": "none",
+      "commission_status": "NOT_AVAILABLE",
+      "timeframes": [],
+      "bar_start": null,
+      "bar_end": null,
+      "tick_start": null,
+      "tick_end": null,
+      "quality_grade": null,
+      "quality_score": null,
+      "intraday_bars": null,
+      "years_history": null,
+      "horizons_available": {},
+      "gaps": [
+        "DATA_UNAVAILABLE: no files on disk"
+      ],
+      "readiness_score": 0.0,
+      "verdict": "NOT_READY",
+      "components": {
+        "quality": 0.0,
+        "history_depth": 0.0,
+        "cost_credibility": 0.0,
+        "coverage": 0.0
+      },
+      "weights": {
+        "quality": 0.35,
+        "history_depth": 0.3,
+        "cost_credibility": 0.2,
+        "coverage": 0.15
+      }
+    }
+  },
+  "ranking": [
+    "XAUUSDm",
+    "XAUUSD",
+    "EURUSD",
+    "GBPUSDm",
+    "USDJPYm",
+    "AUDUSD",
+    "USDCAD",
+    "USDCHF"
+  ],
+  "summary": {
+    "ready": [
+      "EURUSD",
+      "XAUUSD",
+      "XAUUSDm"
+    ],
+    "partial": [
+      "GBPUSDm",
+      "USDJPYm"
+    ],
+    "not_ready": [
+      "AUDUSD",
+      "USDCAD",
+      "USDCHF"
+    ]
+  }
+}

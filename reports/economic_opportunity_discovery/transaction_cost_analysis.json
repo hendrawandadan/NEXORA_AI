@@ -1,0 +1,760 @@
+{
+  "stage": 3,
+  "note": "STAGE 3 Transaction Cost Analysis. Spread from measured distribution; slippage/commission are explicit assumptions (commission NOT_AVAILABLE). Descriptive economics; NO profitability claim, NO model result.",
+  "commission_pips_primary_band": 0.0,
+  "instruments": {
+    "GBPUSDm": {
+      "instrument": "GBPUSDm",
+      "spread_source": "tick",
+      "commission_status": "NOT_AVAILABLE",
+      "scenarios": {
+        "optimistic": {
+          "name": "optimistic",
+          "spread_pips": 1.15,
+          "slippage_pips": 0.2,
+          "commission_pips": 0.0,
+          "commission_status": "NOT_AVAILABLE",
+          "round_trip_pips": 1.35
+        },
+        "baseline": {
+          "name": "baseline",
+          "spread_pips": 1.55,
+          "slippage_pips": 0.2,
+          "commission_pips": 0.0,
+          "commission_status": "NOT_AVAILABLE",
+          "round_trip_pips": 1.75
+        },
+        "stress": {
+          "name": "stress",
+          "spread_pips": 6.85,
+          "slippage_pips": 0.5,
+          "commission_pips": 0.0,
+          "commission_status": "NOT_AVAILABLE",
+          "round_trip_pips": 7.35
+        }
+      },
+      "by_session": {
+        "ASIA": {
+          "spread_pips": 1.15,
+          "spread_mean_pips": 1.2586,
+          "slippage_pips": 0.2,
+          "commission_pips": 0.0,
+          "round_trip_pips": 1.35
+        },
+        "LONDON": {
+          "spread_pips": 1.15,
+          "spread_mean_pips": 1.2071,
+          "slippage_pips": 0.2,
+          "commission_pips": 0.0,
+          "round_trip_pips": 1.35
+        },
+        "NY": {
+          "spread_pips": 1.15,
+          "spread_mean_pips": 1.2021,
+          "slippage_pips": 0.2,
+          "commission_pips": 0.0,
+          "round_trip_pips": 1.35
+        },
+        "LATE": {
+          "spread_pips": 1.55,
+          "spread_mean_pips": 4.2836,
+          "slippage_pips": 0.2,
+          "commission_pips": 0.0,
+          "round_trip_pips": 1.75
+        }
+      },
+      "cheapest_session": "ASIA",
+      "most_expensive_session": "LATE",
+      "cost_drag_by_horizon": {},
+      "note": "Spread from measured data; slippage/commission are explicit assumptions (commission NOT_AVAILABLE). No profit claim."
+    },
+    "USDJPYm": {
+      "instrument": "USDJPYm",
+      "spread_source": "tick",
+      "commission_status": "NOT_AVAILABLE",
+      "scenarios": {
+        "optimistic": {
+          "name": "optimistic",
+          "spread_pips": 1.05,
+          "slippage_pips": 0.2,
+          "commission_pips": 0.0,
+          "commission_status": "NOT_AVAILABLE",
+          "round_trip_pips": 1.25
+        },
+        "baseline": {
+          "name": "baseline",
+          "spread_pips": 1.15,
+          "slippage_pips": 0.2,
+          "commission_pips": 0.0,
+          "commission_status": "NOT_AVAILABLE",
+          "round_trip_pips": 1.35
+        },
+        "stress": {
+          "name": "stress",
+          "spread_pips": 7.85,
+          "slippage_pips": 0.5,
+          "commission_pips": 0.0,
+          "commission_status": "NOT_AVAILABLE",
+          "round_trip_pips": 8.35
+        }
+      },
+      "by_session": {
+        "ASIA": {
+          "spread_pips": 1.05,
+          "spread_mean_pips": 1.0905,
+          "slippage_pips": 0.2,
+          "commission_pips": 0.0,
+          "round_trip_pips": 1.25
+        },
+        "LONDON": {
+          "spread_pips": 1.05,
+          "spread_mean_pips": 1.0714,
+          "slippage_pips": 0.2,
+          "commission_pips": 0.0,
+          "round_trip_pips": 1.25
+        },
+        "NY": {
+          "spread_pips": 1.05,
+          "spread_mean_pips": 1.1569,
+          "slippage_pips": 0.2,
+          "commission_pips": 0.0,
+          "round_trip_pips": 1.25
+        },
+        "LATE": {
+          "spread_pips": 1.85,
+          "spread_mean_pips": 4.2195,
+          "slippage_pips": 0.2,
+          "commission_pips": 0.0,
+          "round_trip_pips": 2.05
+        }
+      },
+      "cheapest_session": "ASIA",
+      "most_expensive_session": "LATE",
+      "cost_drag_by_horizon": {},
+      "note": "Spread from measured data; slippage/commission are explicit assumptions (commission NOT_AVAILABLE). No profit claim."
+    },
+    "XAUUSDm": {
+      "instrument": "XAUUSDm",
+      "spread_source": "tick",
+      "commission_status": "NOT_AVAILABLE",
+      "scenarios": {
+        "optimistic": {
+          "name": "optimistic",
+          "spread_pips": 2.05,
+          "slippage_pips": 0.5,
+          "commission_pips": 0.0,
+          "commission_status": "NOT_AVAILABLE",
+          "round_trip_pips": 2.55
+        },
+        "baseline": {
+          "name": "baseline",
+          "spread_pips": 3.05,
+          "slippage_pips": 0.5,
+          "commission_pips": 0.0,
+          "commission_status": "NOT_AVAILABLE",
+          "round_trip_pips": 3.55
+        },
+        "stress": {
+          "name": "stress",
+          "spread_pips": 9.05,
+          "slippage_pips": 1.5,
+          "commission_pips": 0.0,
+          "commission_status": "NOT_AVAILABLE",
+          "round_trip_pips": 10.55
+        }
+      },
+      "by_session": {
+        "ASIA": {
+          "spread_pips": 2.05,
+          "spread_mean_pips": 2.3483,
+          "slippage_pips": 0.5,
+          "commission_pips": 0.0,
+          "round_trip_pips": 2.55
+        },
+        "LONDON": {
+          "spread_pips": 2.05,
+          "spread_mean_pips": 2.3579,
+          "slippage_pips": 0.5,
+          "commission_pips": 0.0,
+          "round_trip_pips": 2.55
+        },
+        "NY": {
+          "spread_pips": 2.05,
+          "spread_mean_pips": 2.356,
+          "slippage_pips": 0.5,
+          "commission_pips": 0.0,
+          "round_trip_pips": 2.55
+        },
+        "LATE": {
+          "spread_pips": 2.05,
+          "spread_mean_pips": 2.584,
+          "slippage_pips": 0.5,
+          "commission_pips": 0.0,
+          "round_trip_pips": 2.55
+        }
+      },
+      "cheapest_session": "ASIA",
+      "most_expensive_session": "ASIA",
+      "cost_drag_by_horizon": {
+        "H1:h12": {
+          "optimistic": {
+            "cost_pips": 2.55,
+            "median_move_pips": 69.34,
+            "cost_fraction_of_move": 0.0368,
+            "move_to_cost_ratio": 27.1922,
+            "crossover": false
+          },
+          "baseline": {
+            "cost_pips": 3.55,
+            "median_move_pips": 69.34,
+            "cost_fraction_of_move": 0.0512,
+            "move_to_cost_ratio": 19.5324,
+            "crossover": false
+          },
+          "stress": {
+            "cost_pips": 10.55,
+            "median_move_pips": 69.34,
+            "cost_fraction_of_move": 0.1521,
+            "move_to_cost_ratio": 6.5725,
+            "crossover": false
+          }
+        },
+        "H1:h24": {
+          "optimistic": {
+            "cost_pips": 2.55,
+            "median_move_pips": 106.685,
+            "cost_fraction_of_move": 0.0239,
+            "move_to_cost_ratio": 41.8373,
+            "crossover": false
+          },
+          "baseline": {
+            "cost_pips": 3.55,
+            "median_move_pips": 106.685,
+            "cost_fraction_of_move": 0.0333,
+            "move_to_cost_ratio": 30.0521,
+            "crossover": false
+          },
+          "stress": {
+            "cost_pips": 10.55,
+            "median_move_pips": 106.685,
+            "cost_fraction_of_move": 0.0989,
+            "move_to_cost_ratio": 10.1123,
+            "crossover": false
+          }
+        },
+        "H4:h4": {
+          "optimistic": {
+            "cost_pips": 2.55,
+            "median_move_pips": 78.24,
+            "cost_fraction_of_move": 0.0326,
+            "move_to_cost_ratio": 30.6824,
+            "crossover": false
+          },
+          "baseline": {
+            "cost_pips": 3.55,
+            "median_move_pips": 78.24,
+            "cost_fraction_of_move": 0.0454,
+            "move_to_cost_ratio": 22.0394,
+            "crossover": false
+          },
+          "stress": {
+            "cost_pips": 10.55,
+            "median_move_pips": 78.24,
+            "cost_fraction_of_move": 0.1348,
+            "move_to_cost_ratio": 7.4161,
+            "crossover": false
+          }
+        },
+        "H4:h8": {
+          "optimistic": {
+            "cost_pips": 2.55,
+            "median_move_pips": 120.7,
+            "cost_fraction_of_move": 0.0211,
+            "move_to_cost_ratio": 47.3333,
+            "crossover": false
+          },
+          "baseline": {
+            "cost_pips": 3.55,
+            "median_move_pips": 120.7,
+            "cost_fraction_of_move": 0.0294,
+            "move_to_cost_ratio": 34.0,
+            "crossover": false
+          },
+          "stress": {
+            "cost_pips": 10.55,
+            "median_move_pips": 120.7,
+            "cost_fraction_of_move": 0.0874,
+            "move_to_cost_ratio": 11.4408,
+            "crossover": false
+          }
+        },
+        "H4:h12": {
+          "optimistic": {
+            "cost_pips": 2.55,
+            "median_move_pips": 154.67,
+            "cost_fraction_of_move": 0.0165,
+            "move_to_cost_ratio": 60.6549,
+            "crossover": false
+          },
+          "baseline": {
+            "cost_pips": 3.55,
+            "median_move_pips": 154.67,
+            "cost_fraction_of_move": 0.023,
+            "move_to_cost_ratio": 43.569,
+            "crossover": false
+          },
+          "stress": {
+            "cost_pips": 10.55,
+            "median_move_pips": 154.67,
+            "cost_fraction_of_move": 0.0682,
+            "move_to_cost_ratio": 14.6607,
+            "crossover": false
+          }
+        },
+        "D1:h1": {
+          "optimistic": {
+            "cost_pips": 2.55,
+            "median_move_pips": 84.07,
+            "cost_fraction_of_move": 0.0303,
+            "move_to_cost_ratio": 32.9686,
+            "crossover": false
+          },
+          "baseline": {
+            "cost_pips": 3.55,
+            "median_move_pips": 84.07,
+            "cost_fraction_of_move": 0.0422,
+            "move_to_cost_ratio": 23.6817,
+            "crossover": false
+          },
+          "stress": {
+            "cost_pips": 10.55,
+            "median_move_pips": 84.07,
+            "cost_fraction_of_move": 0.1255,
+            "move_to_cost_ratio": 7.9687,
+            "crossover": false
+          }
+        },
+        "D1:h2": {
+          "optimistic": {
+            "cost_pips": 2.55,
+            "median_move_pips": 132.87,
+            "cost_fraction_of_move": 0.0192,
+            "move_to_cost_ratio": 52.1059,
+            "crossover": false
+          },
+          "baseline": {
+            "cost_pips": 3.55,
+            "median_move_pips": 132.87,
+            "cost_fraction_of_move": 0.0267,
+            "move_to_cost_ratio": 37.4282,
+            "crossover": false
+          },
+          "stress": {
+            "cost_pips": 10.55,
+            "median_move_pips": 132.87,
+            "cost_fraction_of_move": 0.0794,
+            "move_to_cost_ratio": 12.5943,
+            "crossover": false
+          }
+        }
+      },
+      "note": "Spread from measured data; slippage/commission are explicit assumptions (commission NOT_AVAILABLE). No profit claim."
+    },
+    "EURUSD": {
+      "instrument": "EURUSD",
+      "spread_source": "estimate",
+      "commission_status": "NOT_AVAILABLE",
+      "scenarios": {
+        "optimistic": {
+          "name": "optimistic",
+          "spread_pips": 3.0,
+          "slippage_pips": 0.2,
+          "commission_pips": 0.0,
+          "commission_status": "NOT_AVAILABLE",
+          "round_trip_pips": 3.2
+        },
+        "baseline": {
+          "name": "baseline",
+          "spread_pips": 4.8,
+          "slippage_pips": 0.2,
+          "commission_pips": 0.0,
+          "commission_status": "NOT_AVAILABLE",
+          "round_trip_pips": 5.0
+        },
+        "stress": {
+          "name": "stress",
+          "spread_pips": 9.0,
+          "slippage_pips": 0.5,
+          "commission_pips": 0.0,
+          "commission_status": "NOT_AVAILABLE",
+          "round_trip_pips": 9.5
+        }
+      },
+      "by_session": {},
+      "cheapest_session": null,
+      "most_expensive_session": null,
+      "cost_drag_by_horizon": {
+        "M30:h24": {
+          "optimistic": {
+            "cost_pips": 3.2,
+            "median_move_pips": 18.4,
+            "cost_fraction_of_move": 0.1739,
+            "move_to_cost_ratio": 5.75,
+            "crossover": false
+          },
+          "baseline": {
+            "cost_pips": 5.0,
+            "median_move_pips": 18.4,
+            "cost_fraction_of_move": 0.2717,
+            "move_to_cost_ratio": 3.68,
+            "crossover": false
+          },
+          "stress": {
+            "cost_pips": 9.5,
+            "median_move_pips": 18.4,
+            "cost_fraction_of_move": 0.5163,
+            "move_to_cost_ratio": 1.9368,
+            "crossover": false
+          }
+        },
+        "M30:h48": {
+          "optimistic": {
+            "cost_pips": 3.2,
+            "median_move_pips": 27.9,
+            "cost_fraction_of_move": 0.1147,
+            "move_to_cost_ratio": 8.7187,
+            "crossover": false
+          },
+          "baseline": {
+            "cost_pips": 5.0,
+            "median_move_pips": 27.9,
+            "cost_fraction_of_move": 0.1792,
+            "move_to_cost_ratio": 5.58,
+            "crossover": false
+          },
+          "stress": {
+            "cost_pips": 9.5,
+            "median_move_pips": 27.9,
+            "cost_fraction_of_move": 0.3405,
+            "move_to_cost_ratio": 2.9368,
+            "crossover": false
+          }
+        },
+        "H1:h12": {
+          "optimistic": {
+            "cost_pips": 3.2,
+            "median_move_pips": 18.4,
+            "cost_fraction_of_move": 0.1739,
+            "move_to_cost_ratio": 5.75,
+            "crossover": false
+          },
+          "baseline": {
+            "cost_pips": 5.0,
+            "median_move_pips": 18.4,
+            "cost_fraction_of_move": 0.2717,
+            "move_to_cost_ratio": 3.68,
+            "crossover": false
+          },
+          "stress": {
+            "cost_pips": 9.5,
+            "median_move_pips": 18.4,
+            "cost_fraction_of_move": 0.5163,
+            "move_to_cost_ratio": 1.9368,
+            "crossover": false
+          }
+        },
+        "H1:h24": {
+          "optimistic": {
+            "cost_pips": 3.2,
+            "median_move_pips": 28.0,
+            "cost_fraction_of_move": 0.1143,
+            "move_to_cost_ratio": 8.75,
+            "crossover": false
+          },
+          "baseline": {
+            "cost_pips": 5.0,
+            "median_move_pips": 28.0,
+            "cost_fraction_of_move": 0.1786,
+            "move_to_cost_ratio": 5.6,
+            "crossover": false
+          },
+          "stress": {
+            "cost_pips": 9.5,
+            "median_move_pips": 28.0,
+            "cost_fraction_of_move": 0.3393,
+            "move_to_cost_ratio": 2.9474,
+            "crossover": false
+          }
+        },
+        "H4:h4": {
+          "optimistic": {
+            "cost_pips": 3.2,
+            "median_move_pips": 21.3,
+            "cost_fraction_of_move": 0.1502,
+            "move_to_cost_ratio": 6.6562,
+            "crossover": false
+          },
+          "baseline": {
+            "cost_pips": 5.0,
+            "median_move_pips": 21.3,
+            "cost_fraction_of_move": 0.2347,
+            "move_to_cost_ratio": 4.26,
+            "crossover": false
+          },
+          "stress": {
+            "cost_pips": 9.5,
+            "median_move_pips": 21.3,
+            "cost_fraction_of_move": 0.446,
+            "move_to_cost_ratio": 2.2421,
+            "crossover": false
+          }
+        },
+        "H4:h8": {
+          "optimistic": {
+            "cost_pips": 3.2,
+            "median_move_pips": 31.9,
+            "cost_fraction_of_move": 0.1003,
+            "move_to_cost_ratio": 9.9687,
+            "crossover": false
+          },
+          "baseline": {
+            "cost_pips": 5.0,
+            "median_move_pips": 31.9,
+            "cost_fraction_of_move": 0.1567,
+            "move_to_cost_ratio": 6.38,
+            "crossover": false
+          },
+          "stress": {
+            "cost_pips": 9.5,
+            "median_move_pips": 31.9,
+            "cost_fraction_of_move": 0.2978,
+            "move_to_cost_ratio": 3.3579,
+            "crossover": false
+          }
+        },
+        "H4:h12": {
+          "optimistic": {
+            "cost_pips": 3.2,
+            "median_move_pips": 39.4,
+            "cost_fraction_of_move": 0.0812,
+            "move_to_cost_ratio": 12.3125,
+            "crossover": false
+          },
+          "baseline": {
+            "cost_pips": 5.0,
+            "median_move_pips": 39.4,
+            "cost_fraction_of_move": 0.1269,
+            "move_to_cost_ratio": 7.88,
+            "crossover": false
+          },
+          "stress": {
+            "cost_pips": 9.5,
+            "median_move_pips": 39.4,
+            "cost_fraction_of_move": 0.2411,
+            "move_to_cost_ratio": 4.1474,
+            "crossover": false
+          }
+        }
+      },
+      "note": "Spread from measured data; slippage/commission are explicit assumptions (commission NOT_AVAILABLE). No profit claim."
+    },
+    "XAUUSD": {
+      "instrument": "XAUUSD",
+      "spread_source": "tick(XAUUSDm proxy)",
+      "commission_status": "NOT_AVAILABLE",
+      "scenarios": {
+        "optimistic": {
+          "name": "optimistic",
+          "spread_pips": 2.05,
+          "slippage_pips": 0.5,
+          "commission_pips": 0.0,
+          "commission_status": "NOT_AVAILABLE",
+          "round_trip_pips": 2.55
+        },
+        "baseline": {
+          "name": "baseline",
+          "spread_pips": 3.05,
+          "slippage_pips": 0.5,
+          "commission_pips": 0.0,
+          "commission_status": "NOT_AVAILABLE",
+          "round_trip_pips": 3.55
+        },
+        "stress": {
+          "name": "stress",
+          "spread_pips": 9.05,
+          "slippage_pips": 1.5,
+          "commission_pips": 0.0,
+          "commission_status": "NOT_AVAILABLE",
+          "round_trip_pips": 10.55
+        }
+      },
+      "by_session": {},
+      "cheapest_session": null,
+      "most_expensive_session": null,
+      "cost_drag_by_horizon": {
+        "H1:h12": {
+          "optimistic": {
+            "cost_pips": 2.55,
+            "median_move_pips": 69.34,
+            "cost_fraction_of_move": 0.0368,
+            "move_to_cost_ratio": 27.1922,
+            "crossover": false
+          },
+          "baseline": {
+            "cost_pips": 3.55,
+            "median_move_pips": 69.34,
+            "cost_fraction_of_move": 0.0512,
+            "move_to_cost_ratio": 19.5324,
+            "crossover": false
+          },
+          "stress": {
+            "cost_pips": 10.55,
+            "median_move_pips": 69.34,
+            "cost_fraction_of_move": 0.1521,
+            "move_to_cost_ratio": 6.5725,
+            "crossover": false
+          }
+        },
+        "H1:h24": {
+          "optimistic": {
+            "cost_pips": 2.55,
+            "median_move_pips": 106.685,
+            "cost_fraction_of_move": 0.0239,
+            "move_to_cost_ratio": 41.8373,
+            "crossover": false
+          },
+          "baseline": {
+            "cost_pips": 3.55,
+            "median_move_pips": 106.685,
+            "cost_fraction_of_move": 0.0333,
+            "move_to_cost_ratio": 30.0521,
+            "crossover": false
+          },
+          "stress": {
+            "cost_pips": 10.55,
+            "median_move_pips": 106.685,
+            "cost_fraction_of_move": 0.0989,
+            "move_to_cost_ratio": 10.1123,
+            "crossover": false
+          }
+        },
+        "H4:h4": {
+          "optimistic": {
+            "cost_pips": 2.55,
+            "median_move_pips": 78.24,
+            "cost_fraction_of_move": 0.0326,
+            "move_to_cost_ratio": 30.6824,
+            "crossover": false
+          },
+          "baseline": {
+            "cost_pips": 3.55,
+            "median_move_pips": 78.24,
+            "cost_fraction_of_move": 0.0454,
+            "move_to_cost_ratio": 22.0394,
+            "crossover": false
+          },
+          "stress": {
+            "cost_pips": 10.55,
+            "median_move_pips": 78.24,
+            "cost_fraction_of_move": 0.1348,
+            "move_to_cost_ratio": 7.4161,
+            "crossover": false
+          }
+        },
+        "H4:h8": {
+          "optimistic": {
+            "cost_pips": 2.55,
+            "median_move_pips": 120.7,
+            "cost_fraction_of_move": 0.0211,
+            "move_to_cost_ratio": 47.3333,
+            "crossover": false
+          },
+          "baseline": {
+            "cost_pips": 3.55,
+            "median_move_pips": 120.7,
+            "cost_fraction_of_move": 0.0294,
+            "move_to_cost_ratio": 34.0,
+            "crossover": false
+          },
+          "stress": {
+            "cost_pips": 10.55,
+            "median_move_pips": 120.7,
+            "cost_fraction_of_move": 0.0874,
+            "move_to_cost_ratio": 11.4408,
+            "crossover": false
+          }
+        },
+        "H4:h12": {
+          "optimistic": {
+            "cost_pips": 2.55,
+            "median_move_pips": 154.67,
+            "cost_fraction_of_move": 0.0165,
+            "move_to_cost_ratio": 60.6549,
+            "crossover": false
+          },
+          "baseline": {
+            "cost_pips": 3.55,
+            "median_move_pips": 154.67,
+            "cost_fraction_of_move": 0.023,
+            "move_to_cost_ratio": 43.569,
+            "crossover": false
+          },
+          "stress": {
+            "cost_pips": 10.55,
+            "median_move_pips": 154.67,
+            "cost_fraction_of_move": 0.0682,
+            "move_to_cost_ratio": 14.6607,
+            "crossover": false
+          }
+        },
+        "D1:h1": {
+          "optimistic": {
+            "cost_pips": 2.55,
+            "median_move_pips": 84.07,
+            "cost_fraction_of_move": 0.0303,
+            "move_to_cost_ratio": 32.9686,
+            "crossover": false
+          },
+          "baseline": {
+            "cost_pips": 3.55,
+            "median_move_pips": 84.07,
+            "cost_fraction_of_move": 0.0422,
+            "move_to_cost_ratio": 23.6817,
+            "crossover": false
+          },
+          "stress": {
+            "cost_pips": 10.55,
+            "median_move_pips": 84.07,
+            "cost_fraction_of_move": 0.1255,
+            "move_to_cost_ratio": 7.9687,
+            "crossover": false
+          }
+        },
+        "D1:h2": {
+          "optimistic": {
+            "cost_pips": 2.55,
+            "median_move_pips": 132.87,
+            "cost_fraction_of_move": 0.0192,
+            "move_to_cost_ratio": 52.1059,
+            "crossover": false
+          },
+          "baseline": {
+            "cost_pips": 3.55,
+            "median_move_pips": 132.87,
+            "cost_fraction_of_move": 0.0267,
+            "move_to_cost_ratio": 37.4282,
+            "crossover": false
+          },
+          "stress": {
+            "cost_pips": 10.55,
+            "median_move_pips": 132.87,
+            "cost_fraction_of_move": 0.0794,
+            "move_to_cost_ratio": 12.5943,
+            "crossover": false
+          }
+        }
+      },
+      "note": "Spread from measured data; slippage/commission are explicit assumptions (commission NOT_AVAILABLE). No profit claim."
+    }
+  }
+}

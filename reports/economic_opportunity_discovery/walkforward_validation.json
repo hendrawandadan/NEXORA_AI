@@ -1,0 +1,2042 @@
+{
+  "study": "Walk-forward multi-split validation (STAGE 6 candidates)",
+  "note": "Read-only. Multi-fold expanding-window OOS IC with purging. Stability requires sign-consistency, majority significance, non-dominance and non-trivial magnitude. NOT a model, NOT a profit claim.",
+  "n_folds": 8,
+  "alpha": 0.05,
+  "windows": [
+    5,
+    20,
+    60
+  ],
+  "jobs": {
+    "XAUUSD_D1": {
+      "n_folds": 8,
+      "alpha": 0.05,
+      "n_tests": 8,
+      "n_stable": 0,
+      "criteria": {
+        "sign_consist_min": 0.8,
+        "sig_min": 0.6,
+        "dominance_max": 0.6,
+        "ic_min": 0.02
+      },
+      "results": [
+        {
+          "feature": "ret_5",
+          "horizon": 1,
+          "n_folds_valid": 8,
+          "fold_ics": [
+            -0.13638,
+            -0.07015,
+            0.00775,
+            0.01307,
+            -0.04875,
+            0.07981,
+            -0.0568,
+            -0.07547
+          ],
+          "fold_ps": [
+            0.065631,
+            0.345385,
+            0.917027,
+            0.8606,
+            0.512213,
+            0.282854,
+            0.445034,
+            0.301996
+          ],
+          "fold_ns": [
+            183,
+            183,
+            183,
+            183,
+            183,
+            183,
+            183,
+            189
+          ],
+          "fold_bounds": [
+            [
+              184,
+              368
+            ],
+            [
+              368,
+              552
+            ],
+            [
+              552,
+              736
+            ],
+            [
+              736,
+              920
+            ],
+            [
+              920,
+              1104
+            ],
+            [
+              1104,
+              1288
+            ],
+            [
+              1288,
+              1472
+            ],
+            [
+              1472,
+              1662
+            ]
+          ],
+          "majority_sign": -1,
+          "sign_match": 5,
+          "frac_sign_consistent": 0.625,
+          "median_ic": -0.05278,
+          "std_ic": 0.06238,
+          "frac_folds_significant": 0.0,
+          "max_fold_dominance": 0.2794,
+          "fold_ics_list": [
+            -0.13638,
+            -0.07015,
+            0.00775,
+            0.01307,
+            -0.04875,
+            0.07981,
+            -0.0568,
+            -0.07547
+          ],
+          "stable": false,
+          "stability_checks": {
+            "sign_consistency": false,
+            "majority_significant": false,
+            "not_dominated": true,
+            "magnitude": true
+          },
+          "failed_checks": [
+            "sign_consistency",
+            "majority_significant"
+          ],
+          "stability_reason": "failed: ['sign_consistency', 'majority_significant']"
+        },
+        {
+          "feature": "zclose_5",
+          "horizon": 1,
+          "n_folds_valid": 8,
+          "fold_ics": [
+            -0.00437,
+            -0.08398,
+            -0.04969,
+            -0.1148,
+            -0.10354,
+            0.13949,
+            -0.14997,
+            0.01697
+          ],
+          "fold_ps": [
+            0.953155,
+            0.258349,
+            0.504104,
+            0.12176,
+            0.163063,
+            0.059658,
+            0.04273,
+            0.816759
+          ],
+          "fold_ns": [
+            183,
+            183,
+            183,
+            183,
+            183,
+            183,
+            183,
+            189
+          ],
+          "fold_bounds": [
+            [
+              184,
+              368
+            ],
+            [
+              368,
+              552
+            ],
+            [
+              552,
+              736
+            ],
+            [
+              736,
+              920
+            ],
+            [
+              920,
+              1104
+            ],
+            [
+              1104,
+              1288
+            ],
+            [
+              1288,
+              1472
+            ],
+            [
+              1472,
+              1662
+            ]
+          ],
+          "majority_sign": -1,
+          "sign_match": 6,
+          "frac_sign_consistent": 0.75,
+          "median_ic": -0.06684,
+          "std_ic": 0.08687,
+          "frac_folds_significant": 0.125,
+          "max_fold_dominance": 0.2263,
+          "fold_ics_list": [
+            -0.00437,
+            -0.08398,
+            -0.04969,
+            -0.1148,
+            -0.10354,
+            0.13949,
+            -0.14997,
+            0.01697
+          ],
+          "stable": false,
+          "stability_checks": {
+            "sign_consistency": false,
+            "majority_significant": false,
+            "not_dominated": true,
+            "magnitude": true
+          },
+          "failed_checks": [
+            "sign_consistency",
+            "majority_significant"
+          ],
+          "stability_reason": "failed: ['sign_consistency', 'majority_significant']"
+        },
+        {
+          "feature": "rng_20",
+          "horizon": 1,
+          "n_folds_valid": 8,
+          "fold_ics": [
+            0.00955,
+            0.14188,
+            -0.01428,
+            0.08011,
+            -0.12799,
+            0.09327,
+            -0.08765,
+            -0.09387
+          ],
+          "fold_ps": [
+            0.897908,
+            0.055378,
+            0.847864,
+            0.281021,
+            0.084221,
+            0.2092,
+            0.23806,
+            0.198882
+          ],
+          "fold_ns": [
+            183,
+            183,
+            183,
+            183,
+            183,
+            183,
+            183,
+            189
+          ],
+          "fold_bounds": [
+            [
+              184,
+              368
+            ],
+            [
+              368,
+              552
+            ],
+            [
+              552,
+              736
+            ],
+            [
+              736,
+              920
+            ],
+            [
+              920,
+              1104
+            ],
+            [
+              1104,
+              1288
+            ],
+            [
+              1288,
+              1472
+            ],
+            [
+              1472,
+              1662
+            ]
+          ],
+          "majority_sign": 1,
+          "sign_match": 4,
+          "frac_sign_consistent": 0.5,
+          "median_ic": -0.00236,
+          "std_ic": 0.09248,
+          "frac_folds_significant": 0.0,
+          "max_fold_dominance": 0.2188,
+          "fold_ics_list": [
+            0.00955,
+            0.14188,
+            -0.01428,
+            0.08011,
+            -0.12799,
+            0.09327,
+            -0.08765,
+            -0.09387
+          ],
+          "stable": false,
+          "stability_checks": {
+            "sign_consistency": false,
+            "majority_significant": false,
+            "not_dominated": true,
+            "magnitude": false
+          },
+          "failed_checks": [
+            "sign_consistency",
+            "majority_significant",
+            "magnitude"
+          ],
+          "stability_reason": "failed: ['sign_consistency', 'majority_significant', 'magnitude']"
+        },
+        {
+          "feature": "rng_60",
+          "horizon": 1,
+          "n_folds_valid": 8,
+          "fold_ics": [
+            -0.00408,
+            0.12595,
+            -0.11813,
+            0.06406,
+            -0.07381,
+            0.05974,
+            -0.1064,
+            -0.08309
+          ],
+          "fold_ps": [
+            0.956257,
+            0.089333,
+            0.11123,
+            0.388928,
+            0.320688,
+            0.421796,
+            0.151709,
+            0.255655
+          ],
+          "fold_ns": [
+            183,
+            183,
+            183,
+            183,
+            183,
+            183,
+            183,
+            189
+          ],
+          "fold_bounds": [
+            [
+              184,
+              368
+            ],
+            [
+              368,
+              552
+            ],
+            [
+              552,
+              736
+            ],
+            [
+              736,
+              920
+            ],
+            [
+              920,
+              1104
+            ],
+            [
+              1104,
+              1288
+            ],
+            [
+              1288,
+              1472
+            ],
+            [
+              1472,
+              1662
+            ]
+          ],
+          "majority_sign": -1,
+          "sign_match": 5,
+          "frac_sign_consistent": 0.625,
+          "median_ic": -0.03895,
+          "std_ic": 0.08579,
+          "frac_folds_significant": 0.0,
+          "max_fold_dominance": 0.1983,
+          "fold_ics_list": [
+            -0.00408,
+            0.12595,
+            -0.11813,
+            0.06406,
+            -0.07381,
+            0.05974,
+            -0.1064,
+            -0.08309
+          ],
+          "stable": false,
+          "stability_checks": {
+            "sign_consistency": false,
+            "majority_significant": false,
+            "not_dominated": true,
+            "magnitude": true
+          },
+          "failed_checks": [
+            "sign_consistency",
+            "majority_significant"
+          ],
+          "stability_reason": "failed: ['sign_consistency', 'majority_significant']"
+        },
+        {
+          "feature": "ret_5",
+          "horizon": 2,
+          "n_folds_valid": 8,
+          "fold_ics": [
+            -0.28058,
+            -0.08946,
+            0.07838,
+            -0.01278,
+            0.00757,
+            0.1496,
+            -0.03954,
+            -0.11735
+          ],
+          "fold_ps": [
+            0.000125,
+            0.229783,
+            0.292919,
+            0.864016,
+            0.919245,
+            0.043842,
+            0.596162,
+            0.108736
+          ],
+          "fold_ns": [
+            182,
+            182,
+            182,
+            182,
+            182,
+            182,
+            182,
+            188
+          ],
+          "fold_bounds": [
+            [
+              184,
+              368
+            ],
+            [
+              368,
+              552
+            ],
+            [
+              552,
+              736
+            ],
+            [
+              736,
+              920
+            ],
+            [
+              920,
+              1104
+            ],
+            [
+              1104,
+              1288
+            ],
+            [
+              1288,
+              1472
+            ],
+            [
+              1472,
+              1662
+            ]
+          ],
+          "majority_sign": -1,
+          "sign_match": 5,
+          "frac_sign_consistent": 0.625,
+          "median_ic": -0.02616,
+          "std_ic": 0.12209,
+          "frac_folds_significant": 0.25,
+          "max_fold_dominance": 0.3619,
+          "fold_ics_list": [
+            -0.28058,
+            -0.08946,
+            0.07838,
+            -0.01278,
+            0.00757,
+            0.1496,
+            -0.03954,
+            -0.11735
+          ],
+          "stable": false,
+          "stability_checks": {
+            "sign_consistency": false,
+            "majority_significant": false,
+            "not_dominated": true,
+            "magnitude": true
+          },
+          "failed_checks": [
+            "sign_consistency",
+            "majority_significant"
+          ],
+          "stability_reason": "failed: ['sign_consistency', 'majority_significant']"
+        },
+        {
+          "feature": "zclose_5",
+          "horizon": 2,
+          "n_folds_valid": 8,
+          "fold_ics": [
+            -0.08845,
+            -0.10311,
+            -0.01369,
+            -0.1066,
+            -0.13777,
+            0.19436,
+            -0.07027,
+            -0.01136
+          ],
+          "fold_ps": [
+            0.235103,
+            0.166029,
+            0.854505,
+            0.152066,
+            0.063638,
+            0.008562,
+            0.345895,
+            0.877058
+          ],
+          "fold_ns": [
+            182,
+            182,
+            182,
+            182,
+            182,
+            182,
+            182,
+            188
+          ],
+          "fold_bounds": [
+            [
+              184,
+              368
+            ],
+            [
+              368,
+              552
+            ],
+            [
+              552,
+              736
+            ],
+            [
+              736,
+              920
+            ],
+            [
+              920,
+              1104
+            ],
+            [
+              1104,
+              1288
+            ],
+            [
+              1288,
+              1472
+            ],
+            [
+              1472,
+              1662
+            ]
+          ],
+          "majority_sign": -1,
+          "sign_match": 7,
+          "frac_sign_consistent": 0.875,
+          "median_ic": -0.07936,
+          "std_ic": 0.09851,
+          "frac_folds_significant": 0.125,
+          "max_fold_dominance": 0.2679,
+          "fold_ics_list": [
+            -0.08845,
+            -0.10311,
+            -0.01369,
+            -0.1066,
+            -0.13777,
+            0.19436,
+            -0.07027,
+            -0.01136
+          ],
+          "stable": false,
+          "stability_checks": {
+            "sign_consistency": true,
+            "majority_significant": false,
+            "not_dominated": true,
+            "magnitude": true
+          },
+          "failed_checks": [
+            "majority_significant"
+          ],
+          "stability_reason": "failed: ['majority_significant']"
+        },
+        {
+          "feature": "rng_20",
+          "horizon": 2,
+          "n_folds_valid": 8,
+          "fold_ics": [
+            0.02215,
+            0.21321,
+            -0.0667,
+            0.07736,
+            -0.19155,
+            0.08707,
+            -0.14147,
+            -0.11761
+          ],
+          "fold_ps": [
+            0.766639,
+            0.003854,
+            0.371018,
+            0.299284,
+            0.009586,
+            0.242481,
+            0.056791,
+            0.107955
+          ],
+          "fold_ns": [
+            182,
+            182,
+            182,
+            182,
+            182,
+            182,
+            182,
+            188
+          ],
+          "fold_bounds": [
+            [
+              184,
+              368
+            ],
+            [
+              368,
+              552
+            ],
+            [
+              552,
+              736
+            ],
+            [
+              736,
+              920
+            ],
+            [
+              920,
+              1104
+            ],
+            [
+              1104,
+              1288
+            ],
+            [
+              1288,
+              1472
+            ],
+            [
+              1472,
+              1662
+            ]
+          ],
+          "majority_sign": 1,
+          "sign_match": 4,
+          "frac_sign_consistent": 0.5,
+          "median_ic": -0.02227,
+          "std_ic": 0.12883,
+          "frac_folds_significant": 0.25,
+          "max_fold_dominance": 0.2325,
+          "fold_ics_list": [
+            0.02215,
+            0.21321,
+            -0.0667,
+            0.07736,
+            -0.19155,
+            0.08707,
+            -0.14147,
+            -0.11761
+          ],
+          "stable": false,
+          "stability_checks": {
+            "sign_consistency": false,
+            "majority_significant": false,
+            "not_dominated": true,
+            "magnitude": true
+          },
+          "failed_checks": [
+            "sign_consistency",
+            "majority_significant"
+          ],
+          "stability_reason": "failed: ['sign_consistency', 'majority_significant']"
+        },
+        {
+          "feature": "rng_60",
+          "horizon": 2,
+          "n_folds_valid": 8,
+          "fold_ics": [
+            0.05174,
+            0.21781,
+            -0.23604,
+            0.12455,
+            -0.13105,
+            0.01323,
+            -0.16803,
+            -0.08233
+          ],
+          "fold_ps": [
+            0.48789,
+            0.00314,
+            0.001337,
+            0.093902,
+            0.077841,
+            0.8593,
+            0.023366,
+            0.261336
+          ],
+          "fold_ns": [
+            182,
+            182,
+            182,
+            182,
+            182,
+            182,
+            182,
+            188
+          ],
+          "fold_bounds": [
+            [
+              184,
+              368
+            ],
+            [
+              368,
+              552
+            ],
+            [
+              552,
+              736
+            ],
+            [
+              736,
+              920
+            ],
+            [
+              920,
+              1104
+            ],
+            [
+              1104,
+              1288
+            ],
+            [
+              1288,
+              1472
+            ],
+            [
+              1472,
+              1662
+            ]
+          ],
+          "majority_sign": 1,
+          "sign_match": 4,
+          "frac_sign_consistent": 0.5,
+          "median_ic": -0.03455,
+          "std_ic": 0.14499,
+          "frac_folds_significant": 0.375,
+          "max_fold_dominance": 0.2303,
+          "fold_ics_list": [
+            0.05174,
+            0.21781,
+            -0.23604,
+            0.12455,
+            -0.13105,
+            0.01323,
+            -0.16803,
+            -0.08233
+          ],
+          "stable": false,
+          "stability_checks": {
+            "sign_consistency": false,
+            "majority_significant": false,
+            "not_dominated": true,
+            "magnitude": true
+          },
+          "failed_checks": [
+            "sign_consistency",
+            "majority_significant"
+          ],
+          "stability_reason": "failed: ['sign_consistency', 'majority_significant']"
+        }
+      ],
+      "stable": [],
+      "status": "ok",
+      "window": {
+        "start": "2020-01-02 00:00:00",
+        "end": "2025-07-20 00:00:00",
+        "rows": 1662
+      }
+    },
+    "XAUUSD_H4": {
+      "n_folds": 8,
+      "alpha": 0.05,
+      "n_tests": 8,
+      "n_stable": 0,
+      "criteria": {
+        "sign_consist_min": 0.8,
+        "sig_min": 0.6,
+        "dominance_max": 0.6,
+        "ic_min": 0.02
+      },
+      "results": [
+        {
+          "feature": "rng_20",
+          "horizon": 8,
+          "n_folds_valid": 8,
+          "fold_ics": [
+            0.02685,
+            0.16769,
+            -0.07274,
+            0.06721,
+            -0.00511,
+            0.05529,
+            -0.0298,
+            -0.07259
+          ],
+          "fold_ps": [
+            0.410156,
+            0.0,
+            0.025499,
+            0.039054,
+            0.875425,
+            0.08974,
+            0.360677,
+            0.025806
+          ],
+          "fold_ns": [
+            943,
+            943,
+            943,
+            943,
+            943,
+            943,
+            943,
+            943
+          ],
+          "fold_bounds": [
+            [
+              951,
+              1902
+            ],
+            [
+              1902,
+              2853
+            ],
+            [
+              2853,
+              3804
+            ],
+            [
+              3804,
+              4755
+            ],
+            [
+              4755,
+              5706
+            ],
+            [
+              5706,
+              6657
+            ],
+            [
+              6657,
+              7608
+            ],
+            [
+              7608,
+              8559
+            ]
+          ],
+          "majority_sign": 1,
+          "sign_match": 4,
+          "frac_sign_consistent": 0.5,
+          "median_ic": 0.01087,
+          "std_ic": 0.07546,
+          "frac_folds_significant": 0.5,
+          "max_fold_dominance": 0.3372,
+          "fold_ics_list": [
+            0.02685,
+            0.16769,
+            -0.07274,
+            0.06721,
+            -0.00511,
+            0.05529,
+            -0.0298,
+            -0.07259
+          ],
+          "stable": false,
+          "stability_checks": {
+            "sign_consistency": false,
+            "majority_significant": false,
+            "not_dominated": true,
+            "magnitude": false
+          },
+          "failed_checks": [
+            "sign_consistency",
+            "majority_significant",
+            "magnitude"
+          ],
+          "stability_reason": "failed: ['sign_consistency', 'majority_significant', 'magnitude']"
+        },
+        {
+          "feature": "rng_60",
+          "horizon": 8,
+          "n_folds_valid": 8,
+          "fold_ics": [
+            0.03291,
+            0.14273,
+            -0.07275,
+            0.06385,
+            -0.08693,
+            0.03766,
+            -0.0768,
+            -0.03515
+          ],
+          "fold_ps": [
+            0.31265,
+            1.1e-05,
+            0.025487,
+            0.049978,
+            0.007563,
+            0.24794,
+            0.018332,
+            0.280961
+          ],
+          "fold_ns": [
+            943,
+            943,
+            943,
+            943,
+            943,
+            943,
+            943,
+            943
+          ],
+          "fold_bounds": [
+            [
+              951,
+              1902
+            ],
+            [
+              1902,
+              2853
+            ],
+            [
+              2853,
+              3804
+            ],
+            [
+              3804,
+              4755
+            ],
+            [
+              4755,
+              5706
+            ],
+            [
+              5706,
+              6657
+            ],
+            [
+              6657,
+              7608
+            ],
+            [
+              7608,
+              8559
+            ]
+          ],
+          "majority_sign": 1,
+          "sign_match": 4,
+          "frac_sign_consistent": 0.5,
+          "median_ic": -0.00112,
+          "std_ic": 0.07659,
+          "frac_folds_significant": 0.625,
+          "max_fold_dominance": 0.2601,
+          "fold_ics_list": [
+            0.03291,
+            0.14273,
+            -0.07275,
+            0.06385,
+            -0.08693,
+            0.03766,
+            -0.0768,
+            -0.03515
+          ],
+          "stable": false,
+          "stability_checks": {
+            "sign_consistency": false,
+            "majority_significant": true,
+            "not_dominated": true,
+            "magnitude": false
+          },
+          "failed_checks": [
+            "sign_consistency",
+            "magnitude"
+          ],
+          "stability_reason": "failed: ['sign_consistency', 'magnitude']"
+        },
+        {
+          "feature": "vol_60",
+          "horizon": 8,
+          "n_folds_valid": 8,
+          "fold_ics": [
+            0.00225,
+            0.04106,
+            -0.07702,
+            0.02055,
+            -0.07784,
+            0.04203,
+            0.04927,
+            -0.01499
+          ],
+          "fold_ps": [
+            0.94501,
+            0.207738,
+            0.01801,
+            0.52841,
+            0.016815,
+            0.197227,
+            0.130574,
+            0.645667
+          ],
+          "fold_ns": [
+            943,
+            943,
+            943,
+            943,
+            943,
+            943,
+            943,
+            943
+          ],
+          "fold_bounds": [
+            [
+              951,
+              1902
+            ],
+            [
+              1902,
+              2853
+            ],
+            [
+              2853,
+              3804
+            ],
+            [
+              3804,
+              4755
+            ],
+            [
+              4755,
+              5706
+            ],
+            [
+              5706,
+              6657
+            ],
+            [
+              6657,
+              7608
+            ],
+            [
+              7608,
+              8559
+            ]
+          ],
+          "majority_sign": 1,
+          "sign_match": 5,
+          "frac_sign_consistent": 0.625,
+          "median_ic": 0.0114,
+          "std_ic": 0.04808,
+          "frac_folds_significant": 0.25,
+          "max_fold_dominance": 0.2395,
+          "fold_ics_list": [
+            0.00225,
+            0.04106,
+            -0.07702,
+            0.02055,
+            -0.07784,
+            0.04203,
+            0.04927,
+            -0.01499
+          ],
+          "stable": false,
+          "stability_checks": {
+            "sign_consistency": false,
+            "majority_significant": false,
+            "not_dominated": true,
+            "magnitude": false
+          },
+          "failed_checks": [
+            "sign_consistency",
+            "majority_significant",
+            "magnitude"
+          ],
+          "stability_reason": "failed: ['sign_consistency', 'majority_significant', 'magnitude']"
+        },
+        {
+          "feature": "ret_60",
+          "horizon": 8,
+          "n_folds_valid": 8,
+          "fold_ics": [
+            -0.14281,
+            0.00092,
+            -0.04243,
+            -0.00916,
+            0.06006,
+            -0.01534,
+            -0.10443,
+            -0.01672
+          ],
+          "fold_ps": [
+            1.1e-05,
+            0.977464,
+            0.192953,
+            0.778873,
+            0.065251,
+            0.638056,
+            0.00132,
+            0.608032
+          ],
+          "fold_ns": [
+            943,
+            943,
+            943,
+            943,
+            943,
+            943,
+            943,
+            943
+          ],
+          "fold_bounds": [
+            [
+              951,
+              1902
+            ],
+            [
+              1902,
+              2853
+            ],
+            [
+              2853,
+              3804
+            ],
+            [
+              3804,
+              4755
+            ],
+            [
+              4755,
+              5706
+            ],
+            [
+              5706,
+              6657
+            ],
+            [
+              6657,
+              7608
+            ],
+            [
+              7608,
+              8559
+            ]
+          ],
+          "majority_sign": -1,
+          "sign_match": 6,
+          "frac_sign_consistent": 0.75,
+          "median_ic": -0.01603,
+          "std_ic": 0.05937,
+          "frac_folds_significant": 0.25,
+          "max_fold_dominance": 0.3644,
+          "fold_ics_list": [
+            -0.14281,
+            0.00092,
+            -0.04243,
+            -0.00916,
+            0.06006,
+            -0.01534,
+            -0.10443,
+            -0.01672
+          ],
+          "stable": false,
+          "stability_checks": {
+            "sign_consistency": false,
+            "majority_significant": false,
+            "not_dominated": true,
+            "magnitude": false
+          },
+          "failed_checks": [
+            "sign_consistency",
+            "majority_significant",
+            "magnitude"
+          ],
+          "stability_reason": "failed: ['sign_consistency', 'majority_significant', 'magnitude']"
+        },
+        {
+          "feature": "rng_20",
+          "horizon": 12,
+          "n_folds_valid": 8,
+          "fold_ics": [
+            0.00845,
+            0.24361,
+            -0.0945,
+            0.07739,
+            -0.01287,
+            0.08247,
+            -0.01687,
+            -0.09074
+          ],
+          "fold_ps": [
+            0.79604,
+            0.0,
+            0.003751,
+            0.017702,
+            0.693718,
+            0.011467,
+            0.605694,
+            0.005393
+          ],
+          "fold_ns": [
+            939,
+            939,
+            939,
+            939,
+            939,
+            939,
+            939,
+            939
+          ],
+          "fold_bounds": [
+            [
+              951,
+              1902
+            ],
+            [
+              1902,
+              2853
+            ],
+            [
+              2853,
+              3804
+            ],
+            [
+              3804,
+              4755
+            ],
+            [
+              4755,
+              5706
+            ],
+            [
+              5706,
+              6657
+            ],
+            [
+              6657,
+              7608
+            ],
+            [
+              7608,
+              8559
+            ]
+          ],
+          "majority_sign": 1,
+          "sign_match": 4,
+          "frac_sign_consistent": 0.5,
+          "median_ic": -0.00221,
+          "std_ic": 0.10306,
+          "frac_folds_significant": 0.625,
+          "max_fold_dominance": 0.3886,
+          "fold_ics_list": [
+            0.00845,
+            0.24361,
+            -0.0945,
+            0.07739,
+            -0.01287,
+            0.08247,
+            -0.01687,
+            -0.09074
+          ],
+          "stable": false,
+          "stability_checks": {
+            "sign_consistency": false,
+            "majority_significant": true,
+            "not_dominated": true,
+            "magnitude": false
+          },
+          "failed_checks": [
+            "sign_consistency",
+            "magnitude"
+          ],
+          "stability_reason": "failed: ['sign_consistency', 'magnitude']"
+        },
+        {
+          "feature": "rng_60",
+          "horizon": 12,
+          "n_folds_valid": 8,
+          "fold_ics": [
+            0.02852,
+            0.19233,
+            -0.10259,
+            0.09527,
+            -0.116,
+            0.05381,
+            -0.07562,
+            -0.03679
+          ],
+          "fold_ps": [
+            0.38276,
+            0.0,
+            0.001645,
+            0.003476,
+            0.000368,
+            0.099343,
+            0.020486,
+            0.260052
+          ],
+          "fold_ns": [
+            939,
+            939,
+            939,
+            939,
+            939,
+            939,
+            939,
+            939
+          ],
+          "fold_bounds": [
+            [
+              951,
+              1902
+            ],
+            [
+              1902,
+              2853
+            ],
+            [
+              2853,
+              3804
+            ],
+            [
+              3804,
+              4755
+            ],
+            [
+              4755,
+              5706
+            ],
+            [
+              5706,
+              6657
+            ],
+            [
+              6657,
+              7608
+            ],
+            [
+              7608,
+              8559
+            ]
+          ],
+          "majority_sign": 1,
+          "sign_match": 4,
+          "frac_sign_consistent": 0.5,
+          "median_ic": -0.00414,
+          "std_ic": 0.1004,
+          "frac_folds_significant": 0.625,
+          "max_fold_dominance": 0.2744,
+          "fold_ics_list": [
+            0.02852,
+            0.19233,
+            -0.10259,
+            0.09527,
+            -0.116,
+            0.05381,
+            -0.07562,
+            -0.03679
+          ],
+          "stable": false,
+          "stability_checks": {
+            "sign_consistency": false,
+            "majority_significant": true,
+            "not_dominated": true,
+            "magnitude": false
+          },
+          "failed_checks": [
+            "sign_consistency",
+            "magnitude"
+          ],
+          "stability_reason": "failed: ['sign_consistency', 'magnitude']"
+        },
+        {
+          "feature": "vol_60",
+          "horizon": 12,
+          "n_folds_valid": 8,
+          "fold_ics": [
+            -0.01338,
+            0.07466,
+            -0.10743,
+            0.03545,
+            -0.09075,
+            0.06628,
+            0.06095,
+            -0.00832
+          ],
+          "fold_ps": [
+            0.682088,
+            0.022137,
+            0.000977,
+            0.277857,
+            0.005387,
+            0.042297,
+            0.061924,
+            0.799007
+          ],
+          "fold_ns": [
+            939,
+            939,
+            939,
+            939,
+            939,
+            939,
+            939,
+            939
+          ],
+          "fold_bounds": [
+            [
+              951,
+              1902
+            ],
+            [
+              1902,
+              2853
+            ],
+            [
+              2853,
+              3804
+            ],
+            [
+              3804,
+              4755
+            ],
+            [
+              4755,
+              5706
+            ],
+            [
+              5706,
+              6657
+            ],
+            [
+              6657,
+              7608
+            ],
+            [
+              7608,
+              8559
+            ]
+          ],
+          "majority_sign": 1,
+          "sign_match": 4,
+          "frac_sign_consistent": 0.5,
+          "median_ic": 0.01356,
+          "std_ic": 0.06607,
+          "frac_folds_significant": 0.5,
+          "max_fold_dominance": 0.235,
+          "fold_ics_list": [
+            -0.01338,
+            0.07466,
+            -0.10743,
+            0.03545,
+            -0.09075,
+            0.06628,
+            0.06095,
+            -0.00832
+          ],
+          "stable": false,
+          "stability_checks": {
+            "sign_consistency": false,
+            "majority_significant": false,
+            "not_dominated": true,
+            "magnitude": false
+          },
+          "failed_checks": [
+            "sign_consistency",
+            "majority_significant",
+            "magnitude"
+          ],
+          "stability_reason": "failed: ['sign_consistency', 'majority_significant', 'magnitude']"
+        },
+        {
+          "feature": "ret_60",
+          "horizon": 12,
+          "n_folds_valid": 8,
+          "fold_ics": [
+            -0.18765,
+            -0.00985,
+            -0.05753,
+            0.01021,
+            0.06863,
+            -0.04289,
+            -0.09482,
+            -0.02067
+          ],
+          "fold_ps": [
+            0.0,
+            0.763134,
+            0.078063,
+            0.754604,
+            0.035488,
+            0.18912,
+            0.003634,
+            0.526977
+          ],
+          "fold_ns": [
+            939,
+            939,
+            939,
+            939,
+            939,
+            939,
+            939,
+            939
+          ],
+          "fold_bounds": [
+            [
+              951,
+              1902
+            ],
+            [
+              1902,
+              2853
+            ],
+            [
+              2853,
+              3804
+            ],
+            [
+              3804,
+              4755
+            ],
+            [
+              4755,
+              5706
+            ],
+            [
+              5706,
+              6657
+            ],
+            [
+              6657,
+              7608
+            ],
+            [
+              7608,
+              8559
+            ]
+          ],
+          "majority_sign": -1,
+          "sign_match": 6,
+          "frac_sign_consistent": 0.75,
+          "median_ic": -0.03178,
+          "std_ic": 0.07133,
+          "frac_folds_significant": 0.375,
+          "max_fold_dominance": 0.3812,
+          "fold_ics_list": [
+            -0.18765,
+            -0.00985,
+            -0.05753,
+            0.01021,
+            0.06863,
+            -0.04289,
+            -0.09482,
+            -0.02067
+          ],
+          "stable": false,
+          "stability_checks": {
+            "sign_consistency": false,
+            "majority_significant": false,
+            "not_dominated": true,
+            "magnitude": true
+          },
+          "failed_checks": [
+            "sign_consistency",
+            "majority_significant"
+          ],
+          "stability_reason": "failed: ['sign_consistency', 'majority_significant']"
+        }
+      ],
+      "stable": [],
+      "status": "ok",
+      "window": {
+        "start": "2020-01-02 00:00:00",
+        "end": "2025-07-20 20:00:00",
+        "rows": 8559
+      }
+    },
+    "EURUSD_H4": {
+      "n_folds": 8,
+      "alpha": 0.05,
+      "n_tests": 4,
+      "n_stable": 0,
+      "criteria": {
+        "sign_consist_min": 0.8,
+        "sig_min": 0.6,
+        "dominance_max": 0.6,
+        "ic_min": 0.02
+      },
+      "results": [
+        {
+          "feature": "zclose_60",
+          "horizon": 12,
+          "n_folds_valid": 8,
+          "fold_ics": [
+            -0.05133,
+            -0.00647,
+            -0.09012,
+            -0.05278,
+            0.02003,
+            -0.05053,
+            -0.11552,
+            -0.06739
+          ],
+          "fold_ps": [
+            0.096593,
+            0.834278,
+            0.003485,
+            0.087552,
+            0.516967,
+            0.101877,
+            0.000177,
+            0.02861
+          ],
+          "fold_ns": [
+            1049,
+            1049,
+            1049,
+            1049,
+            1049,
+            1049,
+            1049,
+            1055
+          ],
+          "fold_bounds": [
+            [
+              1061,
+              2122
+            ],
+            [
+              2122,
+              3183
+            ],
+            [
+              3183,
+              4244
+            ],
+            [
+              4244,
+              5305
+            ],
+            [
+              5305,
+              6366
+            ],
+            [
+              6366,
+              7427
+            ],
+            [
+              7427,
+              8488
+            ],
+            [
+              8488,
+              9555
+            ]
+          ],
+          "majority_sign": -1,
+          "sign_match": 7,
+          "frac_sign_consistent": 0.875,
+          "median_ic": -0.05205,
+          "std_ic": 0.04029,
+          "frac_folds_significant": 0.375,
+          "max_fold_dominance": 0.2544,
+          "fold_ics_list": [
+            -0.05133,
+            -0.00647,
+            -0.09012,
+            -0.05278,
+            0.02003,
+            -0.05053,
+            -0.11552,
+            -0.06739
+          ],
+          "stable": false,
+          "stability_checks": {
+            "sign_consistency": true,
+            "majority_significant": false,
+            "not_dominated": true,
+            "magnitude": true
+          },
+          "failed_checks": [
+            "majority_significant"
+          ],
+          "stability_reason": "failed: ['majority_significant']"
+        },
+        {
+          "feature": "ret_60",
+          "horizon": 12,
+          "n_folds_valid": 8,
+          "fold_ics": [
+            -0.05151,
+            -0.09709,
+            0.01451,
+            -0.00993,
+            0.04645,
+            -0.09084,
+            -0.15554,
+            -0.09033
+          ],
+          "fold_ps": [
+            0.095409,
+            0.001642,
+            0.638663,
+            0.747948,
+            0.132693,
+            0.003231,
+            0.0,
+            0.003321
+          ],
+          "fold_ns": [
+            1049,
+            1049,
+            1049,
+            1049,
+            1049,
+            1049,
+            1049,
+            1055
+          ],
+          "fold_bounds": [
+            [
+              1061,
+              2122
+            ],
+            [
+              2122,
+              3183
+            ],
+            [
+              3183,
+              4244
+            ],
+            [
+              4244,
+              5305
+            ],
+            [
+              5305,
+              6366
+            ],
+            [
+              6366,
+              7427
+            ],
+            [
+              7427,
+              8488
+            ],
+            [
+              8488,
+              9555
+            ]
+          ],
+          "majority_sign": -1,
+          "sign_match": 6,
+          "frac_sign_consistent": 0.75,
+          "median_ic": -0.07092,
+          "std_ic": 0.06283,
+          "frac_folds_significant": 0.5,
+          "max_fold_dominance": 0.2796,
+          "fold_ics_list": [
+            -0.05151,
+            -0.09709,
+            0.01451,
+            -0.00993,
+            0.04645,
+            -0.09084,
+            -0.15554,
+            -0.09033
+          ],
+          "stable": false,
+          "stability_checks": {
+            "sign_consistency": false,
+            "majority_significant": false,
+            "not_dominated": true,
+            "magnitude": true
+          },
+          "failed_checks": [
+            "sign_consistency",
+            "majority_significant"
+          ],
+          "stability_reason": "failed: ['sign_consistency', 'majority_significant']"
+        },
+        {
+          "feature": "vol_60",
+          "horizon": 12,
+          "n_folds_valid": 8,
+          "fold_ics": [
+            -0.05235,
+            0.0722,
+            0.14239,
+            0.0754,
+            -0.21917,
+            0.1885,
+            0.04481,
+            0.0515
+          ],
+          "fold_ps": [
+            0.090111,
+            0.019343,
+            4e-06,
+            0.014579,
+            0.0,
+            0.0,
+            0.146942,
+            0.094547
+          ],
+          "fold_ns": [
+            1049,
+            1049,
+            1049,
+            1049,
+            1049,
+            1049,
+            1049,
+            1055
+          ],
+          "fold_bounds": [
+            [
+              1061,
+              2122
+            ],
+            [
+              2122,
+              3183
+            ],
+            [
+              3183,
+              4244
+            ],
+            [
+              4244,
+              5305
+            ],
+            [
+              5305,
+              6366
+            ],
+            [
+              6366,
+              7427
+            ],
+            [
+              7427,
+              8488
+            ],
+            [
+              8488,
+              9555
+            ]
+          ],
+          "majority_sign": 1,
+          "sign_match": 6,
+          "frac_sign_consistent": 0.75,
+          "median_ic": 0.06185,
+          "std_ic": 0.1176,
+          "frac_folds_significant": 0.625,
+          "max_fold_dominance": 0.259,
+          "fold_ics_list": [
+            -0.05235,
+            0.0722,
+            0.14239,
+            0.0754,
+            -0.21917,
+            0.1885,
+            0.04481,
+            0.0515
+          ],
+          "stable": false,
+          "stability_checks": {
+            "sign_consistency": false,
+            "majority_significant": true,
+            "not_dominated": true,
+            "magnitude": true
+          },
+          "failed_checks": [
+            "sign_consistency"
+          ],
+          "stability_reason": "failed: ['sign_consistency']"
+        },
+        {
+          "feature": "rng_60",
+          "horizon": 12,
+          "n_folds_valid": 8,
+          "fold_ics": [
+            -0.00731,
+            0.2202,
+            0.05258,
+            0.07573,
+            -0.07921,
+            0.07596,
+            0.03955,
+            0.07734
+          ],
+          "fold_ps": [
+            0.813128,
+            0.0,
+            0.088731,
+            0.014153,
+            0.010279,
+            0.013865,
+            0.20056,
+            0.011972
+          ],
+          "fold_ns": [
+            1049,
+            1049,
+            1049,
+            1049,
+            1049,
+            1049,
+            1049,
+            1055
+          ],
+          "fold_bounds": [
+            [
+              1061,
+              2122
+            ],
+            [
+              2122,
+              3183
+            ],
+            [
+              3183,
+              4244
+            ],
+            [
+              4244,
+              5305
+            ],
+            [
+              5305,
+              6366
+            ],
+            [
+              6366,
+              7427
+            ],
+            [
+              7427,
+              8488
+            ],
+            [
+              8488,
+              9555
+            ]
+          ],
+          "majority_sign": 1,
+          "sign_match": 6,
+          "frac_sign_consistent": 0.75,
+          "median_ic": 0.06416,
+          "std_ic": 0.07966,
+          "frac_folds_significant": 0.625,
+          "max_fold_dominance": 0.3507,
+          "fold_ics_list": [
+            -0.00731,
+            0.2202,
+            0.05258,
+            0.07573,
+            -0.07921,
+            0.07596,
+            0.03955,
+            0.07734
+          ],
+          "stable": false,
+          "stability_checks": {
+            "sign_consistency": false,
+            "majority_significant": true,
+            "not_dominated": true,
+            "magnitude": true
+          },
+          "failed_checks": [
+            "sign_consistency"
+          ],
+          "stability_reason": "failed: ['sign_consistency']"
+        }
+      ],
+      "stable": [],
+      "status": "ok",
+      "window": {
+        "start": "2020-12-18 12:00:00",
+        "end": "2026-11-06 20:00:00",
+        "rows": 9555
+      }
+    }
+  },
+  "summary": {
+    "total_tests": 20,
+    "stable": 0,
+    "unstable": 20
+  }
+}

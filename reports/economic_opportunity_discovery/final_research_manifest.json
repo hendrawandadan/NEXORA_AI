@@ -1,0 +1,105 @@
+{
+  "report": "NEXORA AI Economic Opportunity Discovery ? STAGE 7 Final Research Report",
+  "version": "1.0",
+  "status": "COMPLETE",
+  "generated_utc": "2026-11-09T15:40:57.656928+00:00",
+  "final_verdict": "READY_WITH_CONDITIONS",
+  "artifacts": [
+    {
+      "artifact": "FINAL_RESEARCH_REPORT.md",
+      "path": "reports/economic_opportunity_discovery/FINAL_RESEARCH_REPORT.md",
+      "sha256": "4b40e8f8159f33cabf0214fd716847643f494a3117c732c4b9668f5a32c47715",
+      "bytes": 16537,
+      "exists": true
+    },
+    {
+      "artifact": "FINAL_RESEARCH_DECISION.md",
+      "path": "reports/economic_opportunity_discovery/FINAL_RESEARCH_DECISION.md",
+      "sha256": "6d25ac206cb9f74edc3b7e172966a46533b06b8b5b6557fa42899d2e8f85312f",
+      "bytes": 4250,
+      "exists": true
+    },
+    {
+      "artifact": "final_research_report.json",
+      "path": "reports/economic_opportunity_discovery/final_research_report.json",
+      "sha256": "8428b10abafe64a6380da88191e3b4153826f93c8d0ab1399060e9ae4e0a3250",
+      "bytes": 3581,
+      "exists": true
+    },
+    {
+      "artifact": "horizon_discovery.json",
+      "path": "reports/economic_opportunity_discovery/horizon_discovery.json",
+      "sha256": "a40ccf8fa0686e5b08908bbb9163b56c9fbbe2a3d5edd717b5526d3a8ccb59ab",
+      "bytes": 46880,
+      "exists": true
+    },
+    {
+      "artifact": "instrument_discovery.json",
+      "path": "reports/economic_opportunity_discovery/instrument_discovery.json",
+      "sha256": "22a844112fe0cdc64461b0bdc5f8c3dde513337a41694905f65aa575b27dc606",
+      "bytes": 57237,
+      "exists": true
+    },
+    {
+      "artifact": "transaction_cost_analysis.json",
+      "path": "reports/economic_opportunity_discovery/transaction_cost_analysis.json",
+      "sha256": "e636eab58ca802b6774553cf617bff4c614df9409168637bc7ce711a739ad167",
+      "bytes": 24018,
+      "exists": true
+    },
+    {
+      "artifact": "data_availability.json",
+      "path": "reports/economic_opportunity_discovery/data_availability.json",
+      "sha256": "adbc388d6e0b442c23fd90226d5d04ecdcd0eca12becd47d578266a8b39c9c69",
+      "bytes": 9055,
+      "exists": true
+    },
+    {
+      "artifact": "new_information_assessment.json",
+      "path": "reports/economic_opportunity_discovery/new_information_assessment.json",
+      "sha256": "b090382c5365cc36e5d706cdd8ddf926119f4d0308533f3e4a0d4a4357e6bc63",
+      "bytes": 142106,
+      "exists": true
+    },
+    {
+      "artifact": "opportunity_assessment.json",
+      "path": "reports/economic_opportunity_discovery/opportunity_assessment.json",
+      "sha256": "b460f3750ab418a95532ee6133ddb5f97d905fe30398f547c621c3d19fee79de",
+      "bytes": 70185,
+      "exists": true
+    }
+  ],
+  "inputs_used": [
+    {
+      "input": "horizon_discovery_manifest.json",
+      "sha256": "8e951213d5cf819652509a47395ebd3cd9c9c7cca5182fc0031d9c97982fa7e8",
+      "exists": true
+    },
+    {
+      "input": "instrument_discovery_manifest.json",
+      "sha256": "3359e71c26969285f037edf589ee27b0bad1ca647a7756ee131f9d7bf3b0c115",
+      "exists": true
+    },
+    {
+      "input": "transaction_cost_analysis_manifest.json",
+      "sha256": "88088c73217d6defc7d81c1bf077b0172f0fc0fcf3bd92510d4d9c1a618c85e4",
+      "exists": true
+    },
+    {
+      "input": "data_availability_manifest.json",
+      "sha256": "3f86f496e9e098b3812d04493bcb1392e80dca6eb5cc72c3a81f1c416d22fa9d",
+      "exists": true
+    },
+    {
+      "input": "new_information_assessment_manifest.json",
+      "sha256": "d2c2047cc3fa937d50d2a0051bf4001088199049eb531f4beaee8222c5b63ace",
+      "exists": true
+    },
+    {
+      "input": "opportunity_assessment_manifest.json",
+      "sha256": "971e28e4be3527a845e7a1dd2850d80edf3dea3bc0a26feb1aaa113c838f1bc8",
+      "exists": true
+    }
+  ],
+  "integrity": "all listed existing artifacts hashed with SHA256; stage 0-6 manifests untouched"
+}

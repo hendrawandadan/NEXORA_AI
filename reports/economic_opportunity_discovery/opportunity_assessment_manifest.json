@@ -1,0 +1,13 @@
+{
+  "inputs": {
+    "horizon_discovery.json": "a40ccf8fa0686e5b08908bbb9163b56c9fbbe2a3d5edd717b5526d3a8ccb59ab",
+    "instrument_discovery.json": "22a844112fe0cdc64461b0bdc5f8c3dde513337a41694905f65aa575b27dc606",
+    "transaction_cost_analysis.json": "e636eab58ca802b6774553cf617bff4c614df9409168637bc7ce711a739ad167",
+    "data_availability.json": "adbc388d6e0b442c23fd90226d5d04ecdcd0eca12becd47d578266a8b39c9c69",
+    "new_information_assessment.json": "b090382c5365cc36e5d706cdd8ddf926119f4d0308533f3e4a0d4a4357e6bc63"
+  },
+  "outputs": {
+    "opportunity_assessment.json": "b460f3750ab418a95532ee6133ddb5f97d905fe30398f547c621c3d19fee79de"
+  },
+  "cost_scenario": "baseline"
+}

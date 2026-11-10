@@ -1,0 +1,9 @@
+{
+  "inputs": {
+    "instrument_discovery.json": "22a844112fe0cdc64461b0bdc5f8c3dde513337a41694905f65aa575b27dc606",
+    "transaction_cost_analysis.json": "e636eab58ca802b6774553cf617bff4c614df9409168637bc7ce711a739ad167"
+  },
+  "outputs": {
+    "data_availability.json": "adbc388d6e0b442c23fd90226d5d04ecdcd0eca12becd47d578266a8b39c9c69"
+  }
+}

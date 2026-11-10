@@ -1,0 +1,74 @@
+{
+  "decision_id": "NEXORA-GOV-PRD-001",
+  "title": "Price-Derived Research Lane Suspension",
+  "effective_date": "2026-11-09",
+  "status": "SUSPENDED",
+  "policy": "TEMPORARY_SUSPENSION_OPTION_A",
+  "reopenability": "REOPENABLE_WITH_EVIDENCE_AND_AUTHORIZATION",
+  "authority": "explicit user decision only; no scheduler / autonomous agent / training runner may reopen",
+  "background": {
+    "stages_completed": ["STAGE_0", "STAGE_1", "STAGE_2", "STAGE_3", "STAGE_4", "STAGE_5", "STAGE_6", "STAGE_7", "WALKFORWARD_VALIDATION"],
+    "walkforward_folds": 8,
+    "walkforward_total_tests": 20,
+    "walkforward_stable": 0,
+    "findings": [
+      "0/20 candidates met robust stability criteria.",
+      "XAUUSD D1 h1/h2 failed stability.",
+      "XAUUSD H4 h8/h12 showed IC sign reversal across folds.",
+      "EURUSD H4 h12 was sensitive to the number of folds.",
+      "No stable predictive edge was established."
+    ]
+  },
+  "scope_of_suspension": {
+    "feature_families": [
+      "momentum and return-based features",
+      "price-derived z-score",
+      "range and position-in-range",
+      "volatility-derived features already tested"
+    ],
+    "candidates": ["XAUUSD D1 h1", "XAUUSD D1 h2", "XAUUSD H4 h8", "XAUUSD H4 h12", "EURUSD H4 h12"],
+    "failed_hypotheses": "price-derived hypotheses that failed Walk-Forward Validation"
+  },
+  "suspended_candidates": [
+    {"instrument": "XAUUSD", "timeframe": "D1", "horizon": 1, "stage6_score": 0.7687, "walkforward_stable": false},
+    {"instrument": "XAUUSD", "timeframe": "D1", "horizon": 2, "stage6_score": 0.8238, "walkforward_stable": false},
+    {"instrument": "XAUUSD", "timeframe": "H4", "horizon": 8, "stage6_score": 0.6857, "walkforward_stable": false},
+    {"instrument": "XAUUSD", "timeframe": "H4", "horizon": 12, "stage6_score": 0.7040, "walkforward_stable": false},
+    {"instrument": "EURUSD", "timeframe": "H4", "horizon": 12, "stage6_score": 0.6920, "walkforward_stable": false}
+  ],
+  "prohibited_activities": [
+    "train models on failed candidates",
+    "hyperparameter tuning to force a positive result",
+    "promote models from this research lane",
+    "enable related strategies for live trading",
+    "delete or overwrite failure reports",
+    "modify historical experiment results"
+  ],
+  "preserved_assets": [
+    "code", "datasets", "hypotheses", "experiments", "reports", "manifests", "test results"
+  ],
+  "reopening_conditions": [
+    "new data source providing additional information",
+    "substantively different new hypothesis from the failed hypothesis",
+    "previously unavailable data-quality evidence",
+    "a new measurement method with scientific justification that is testable"
+  ],
+  "reopening_procedure": [
+    "document the reason for reopening",
+    "data and leakage inspection",
+    "create a new hypothesis",
+    "pre-registration",
+    "set GO/NO-GO criteria",
+    "walk-forward validation",
+    "net-of-cost evaluation",
+    "user approval before training or model promotion"
+  ],
+  "evidence": {
+    "walkforward_report": "reports/economic_opportunity_discovery/WALKFORWARD_VALIDATION_REPORT.md",
+    "walkforward_json": "reports/economic_opportunity_discovery/walkforward_validation.json",
+    "final_research_decision": "reports/economic_opportunity_discovery/FINAL_RESEARCH_DECISION.md",
+    "final_research_report": "reports/economic_opportunity_discovery/final_research_report.json",
+    "new_information_assessment": "reports/economic_opportunity_discovery/new_information_assessment.json",
+    "opportunity_assessment": "reports/economic_opportunity_discovery/opportunity_assessment.json"
+  }
+}

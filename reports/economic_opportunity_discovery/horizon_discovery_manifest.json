@@ -1,0 +1,40 @@
+{
+  "inputs": {
+    "M30": {
+      "path": "data/raw/EURUSD/EURUSD_M30_202001020000_202611062130.csv",
+      "sha256": "e6729c4596f872f503cc04c7611375419395ab9cc92f9d918121609cdb282945"
+    },
+    "H1": {
+      "path": "data/raw/EURUSD/EURUSD_H1_202001020000_202611062100.csv",
+      "sha256": "ee758bcc8f11f43b188a42ce761b6f5f07e7e27d0dda23955c514cea45989227"
+    },
+    "H4": {
+      "path": "data/raw/EURUSD/EURUSD_H4_202001020000_202611062000.csv",
+      "sha256": "5c94f204af9bda2066a55f8445b41ef7b056fcf9f6c15ebf7683652cf4aee067"
+    }
+  },
+  "outputs": {
+    "horizon_discovery.json": "a40ccf8fa0686e5b08908bbb9163b56c9fbbe2a3d5edd717b5526d3a8ccb59ab"
+  },
+  "symbol": "EURUSD",
+  "candidates": {
+    "M30": [
+      8,
+      16,
+      24,
+      48
+    ],
+    "H1": [
+      4,
+      8,
+      12,
+      24
+    ],
+    "H4": [
+      2,
+      4,
+      8,
+      12
+    ]
+  }
+}

@@ -52,4 +52,7 @@ Thumbs.db
 *.local
 data/raw_fast/**
 
+# IDE agent configs (contain API keys / secrets — never commit)
+.continue/
+
 processed/**

@@ -1,0 +1,90 @@
+{
+  "project": "NEXORA AI",
+  "stage": 7,
+  "status": "COMPLETE",
+  "scope": "STAGE_0_TO_6",
+  "final_verdict": "READY_WITH_CONDITIONS",
+  "technical_implementation": "SUCCESS",
+  "research_execution": "SUCCESS",
+  "predictive_edge_evidence": "NOT_ESTABLISHED",
+  "training_readiness": "NOT_READY",
+  "production_readiness": "NOT_READY",
+  "completed_stages": [
+    "STAGE 0 Project & Data Inspection",
+    "STAGE 1 Horizon Discovery",
+    "STAGE 2 Instrument Discovery",
+    "STAGE 3 Transaction Cost Analysis",
+    "STAGE 4 Data Availability & Quality",
+    "STAGE 5 New Information Assessment",
+    "STAGE 6 Economic Opportunity Assessment"
+  ],
+  "key_findings": [
+    "Movements far exceed real costs; gold baseline move/cost up to ~34x, no crossover.",
+    "Real round-trip costs much lower than STAGE-1 bar assumptions (XAU 25->3.55 pip).",
+    "XAUUSD bar quality grade A; tick Bid/Ask available for GBP/USDJPY/XAU.",
+    "3 research candidates (hypotheses): XAUUSD D1 h2/h1, EURUSD H4 h12."
+  ],
+  "negative_findings": [
+    "No stable forward information: XAUUSD rng_20 h24 TRAIN +0.020 -> TEST -0.083 (sign flip).",
+    "EURUSD vol_60 h12 2025 +0.167 -> 2026 +0.002 (regime artifact, vanished).",
+    "Most BH survivors have TRAIN IC ~ 0 (period artifact).",
+    "GBPUSDm/USDJPYm lack OHLC bars; cannot compute IC yet."
+  ],
+  "research_candidates": [
+    {
+      "instrument": "XAUUSD",
+      "timeframe": "D1",
+      "horizon": 2,
+      "score": 0.8238,
+      "signal_quality": 0.5233,
+      "verdict": "RESEARCH_CANDIDATE",
+      "evidence": "sign-consistent IC; see new_information_assessment.json"
+    },
+    {
+      "instrument": "XAUUSD",
+      "timeframe": "D1",
+      "horizon": 1,
+      "score": 0.7687,
+      "signal_quality": 0.3746,
+      "verdict": "RESEARCH_CANDIDATE",
+      "evidence": "sign-consistent IC; see new_information_assessment.json"
+    },
+    {
+      "instrument": "EURUSD",
+      "timeframe": "H4",
+      "horizon": 12,
+      "score": 0.692,
+      "signal_quality": 0.4714,
+      "verdict": "RESEARCH_CANDIDATE",
+      "evidence": "sign-consistent IC; see new_information_assessment.json"
+    }
+  ],
+  "data_gaps": [
+    "XAUUSDm OHLC from sibling XAUUSD bars, not from XAUUSDm ticks.",
+    "XAUUSDm tick coverage ends 2025-07-20.",
+    "EURUSD spread is ESTIMATED (no tick).",
+    "Commission NOT_AVAILABLE (Exness account type unknown).",
+    "GBPUSDm/USDJPYm have tick only, no OHLC bars.",
+    "AUDUSD/USDCAD/USDCHF data unavailable."
+  ],
+  "risks": [
+    "Confusing statistical significance with trading edge.",
+    "Regime-specific IC artifacts causing false positives.",
+    "Thin OOS sample for XAUUSD D1 (n_test ~ 497).",
+    "EURUSD cost estimation + unknown commission.",
+    "Overfitting if thresholded on small samples."
+  ],
+  "recommendations": [
+    "Walk-forward multi-split validation for XAUUSD ret_5/zclose_5 (D1/H4) & EURUSD ret_60 (H4 h12).",
+    "Net-of-cost analysis with STAGE-3 band + real commission.",
+    "Acquire tick EURUSD or confirm commission; build OHLC from tick for GBP/USDJPY.",
+    "If walk-forward not stable -> close the line."
+  ],
+  "limitations": [
+    "PREP-001 showed no economic edge after cost (prior finding, unchanged).",
+    "Adaptive Barrier R1 did not beat ATR baseline (prior finding, unchanged).",
+    "IC significant != stable; regime artifact risk demonstrated.",
+    "Research candidates are hypotheses, NOT proven opportunities.",
+    "No profit claim; no live-trading recommendation."
+  ]
+}
