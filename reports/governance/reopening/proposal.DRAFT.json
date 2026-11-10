@@ -1,0 +1,64 @@
+{
+  "type": "REOPENING_PROPOSAL",
+  "decision_id": "NEXORA-GOV-PRD-001",
+  "approver": "Dadan Hendrawan",
+  "decided_at": "2026-11-10T00:00:00Z",
+  "conditions_satisfied": [
+    {
+      "condition": "new data source providing additional information",
+      "evidence": "see reports/governance/ (owner to attach)"
+    },
+    {
+      "condition": "substantively different new hypothesis from the failed hypothesis",
+      "evidence": "see reports/governance/ (owner to attach)"
+    },
+    {
+      "condition": "previously unavailable data-quality evidence",
+      "evidence": "see reports/governance/ (owner to attach)"
+    },
+    {
+      "condition": "a new measurement method with scientific justification that is testable",
+      "evidence": "see reports/governance/ (owner to attach)"
+    }
+  ],
+  "new_hypothesis": "# Reopening Proposal \u2014 New Hypothesis (DRAFT for owner review)\n\n> **Status:** PROPOSAL ONLY. The Price-Derived Research Lane remains **SUSPENDED**\n> (NEXORA-GOV-PRD-001). Nothing here reopens the lane, trains, tunes, promotes, or\n> enables live trading. This document is the human-readable justification that backs\n> a `REOPENING_PROPOSAL` packet built with `tools/build_lane_reopening_proposal.py`.\n\n## 1. Why reopen (registry `reopening_conditions`)\n\nWe invoke **two** documented conditions:\n\n- **\"new data source providing additional information\"** \u2014 see \u00a72.\n- **\"a new measurement method with scientific justification that is testable\"** \u2014 see \u00a73.\n\nWe do **not** claim the failed hypotheses now \"work\". The suspension background in\n`config/governance/price_derived_lane_suspension.json` stands: 0/20 candidates were\nwalk-forward stable, and no stable predictive edge was established.\n\n## 2. New data source\n\n(Owner to attach provenance + date span.) The candidate additional data is a\n**point-in-time-correct** source not used in STAGE-5 / walk-forward:\n\n- intra-bar order-flow / tick-imbalance aggregates (if available under a permissible\n  licence for the in-scope instruments), or\n- an event/macro calendar joined strictly by decision time (no look-ahead).\n\nThe data must pass the PIT gate (`research_bridge.assess_pit_safety`) and the\n\"data and leakage inspection\" step before any hypothesis is pre-registered. If the\nnew source cannot be shown PIT-safe, the proposal is **NO-GO**.\n\n## 3. New measurement method (scientifically justified + testable)\n\n**Hypothesis (falsifiable):** For `EURUSD H4 h12` (currently a suspended candidate),\na *volume-imbalance-weighted range-position* feature computed over the same 20-bar\nwindow carries directional information **net of costs**, with IC that is sign-stable\nacross walk-forward folds \u2014 unlike the failed price-only `rng_*` features which\nshowed **IC sign reversal** (STAGE-5 evidence: `new_information_assessment.json`,\nEURUSD/H1 shows survivors but EURUSD/H4 `rng_60` flips; the point is precisely that\nH4 needs a *new method*, not a re-run of the old one).\n\nWhy this is **substantively different** from the failed hypothesis:\n\n| Failed (NEXORA-GOV-PRD-001) | This proposal |\n|---|---|\n| Price-derived range/position only | Range position **weighted by a new information source** |\n| IC sign-reversed across folds | Pre-registered **sign-stability** requirement |\n| No cost model in decision | **Net-of-cost** GO/NO-GO criterion |\n| Feature measured in isolation | Feature measured against a **no-information baseline** |\n\n## 4. Pre-registered GO/NO-GO criteria (set BEFORE looking at OOS results)\n\n- **GO** only if, across \u2265 6 walk-forward folds:\n  - sign-consistent test IC at each fold, **and**\n  - IC survives Bonferroni at \u03b1 = 0.05 over the declared test count, **and**\n  - net-of-cost expectancy > 0 on the held-out folds, **and**\n  - the feature beats its matched no-information baseline.\n- **NO-GO** if any fold flips sign, or costs erase the edge, or the new data fails\n  the PIT/leakage inspection.\n\n## 5. Scope requested\n\n- Candidate: **EURUSD H4 h12** (a genuinely suspended candidate).\n- Reopening the lane is **all-or-nothing at the registry level**, so this proposal is\n  the gatekeeper for the whole lane. Training on **any** candidate still requires the\n  separate PREP-001 execution authorization (`nexora_audit.authorization`).\n\n## 6. Procedure status\n\nEach step in the registry `reopening_procedure` must be mapped with a status. This\ndraft maps \"document the reason\" / \"create a new hypothesis\" / \"pre-registration\" as\nDONE by this document; everything else is PENDING and must be executed \u2014 and remain\nsubject to owner approval \u2014 *after* reopening is ratified.",
+  "distinct_from_failed_hypothesis": "# Reopening Proposal \u2014 New Hypothesis (DRAFT for owner review)\n\n> **Status:** PROPOSAL ONLY. The Price-Derived Research Lane remains **SUSPENDED**\n> (NEXORA-GOV-PRD-001). Nothing here reopens the lane, trains, tunes, promotes, or\n> enables live trading. This document is the human-readable justification that backs\n> a `REOPENING_PROPOSAL` packet built with `tools/build_lane_reopening_proposal.py`.\n\n## 1. Why reopen (registry `reopening_conditions`)\n\nWe invoke **two** documented conditions:\n\n- **\"new data source providing additional information\"** \u2014 see \u00a72.\n- **\"a new measurement method with scientific justification that is testable\"** \u2014 see \u00a73.\n\nWe do **not** claim the failed hypotheses now \"work\". The suspension background in\n`config/governance/price_derived_lane_suspension.json` stands: 0/20 candidates were\nwalk-forward stable, and no stable predictive edge was established.\n\n## 2. New data source\n\n(Owner to attach provenance + date span.) The candidate additional data is a\n**point-in-time-correct** source not used in STAGE-5 / walk-forward:\n\n- intra-bar order-flow / tick-imbalance aggregates (if available under a permissible\n  licence for the in-scope instruments), or\n- an event/macro calendar joined strictly by decision time (no look-ahead).\n\nThe data must pass the PIT gate (`research_bridge.assess_pit_safety`) and the\n\"data and leakage inspection\" step before any hypothesis is pre-registered. If the\nnew source cannot be shown PIT-safe, the proposal is **NO-GO**.\n\n## 3. New measurement method (scientifically justified + testable)\n\n**Hypothesis (falsifiable):** For `EURUSD H4 h12` (currently a suspended candidate),\na *volume-imbalance-weighted range-position* feature computed over the same 20-bar\nwindow carries directional information **net of costs**, with IC that is sign-stable\nacross walk-forward folds \u2014 unlike the failed price-only `rng_*` features which\nshowed **IC sign reversal** (STAGE-5 evidence: `new_information_assessment.json`,\nEURUSD/H1 shows survivors but EURUSD/H4 `rng_60` flips; the point is precisely that\nH4 needs a *new method*, not a re-run of the old one).\n\nWhy this is **substantively different** from the failed hypothesis:\n\n| Failed (NEXORA-GOV-PRD-001) | This proposal |\n|---|---|\n| Price-derived range/position only | Range position **weighted by a new information source** |\n| IC sign-reversed across folds | Pre-registered **sign-stability** requirement |\n| No cost model in decision | **Net-of-cost** GO/NO-GO criterion |\n| Feature measured in isolation | Feature measured against a **no-information baseline** |\n\n## 4. Pre-registered GO/NO-GO criteria (set BEFORE looking at OOS results)\n\n- **GO** only if, across \u2265 6 walk-forward folds:\n  - sign-consistent test IC at each fold, **and**\n  - IC survives Bonferroni at \u03b1 = 0.05 over the declared test count, **and**\n  - net-of-cost expectancy > 0 on the held-out folds, **and**\n  - the feature beats its matched no-information baseline.\n- **NO-GO** if any fold flips sign, or costs erase the edge, or the new data fails\n  the PIT/leakage inspection.\n\n## 5. Scope requested\n\n- Candidate: **EURUSD H4 h12** (a genuinely suspended candidate).\n- Reopening the lane is **all-or-nothing at the registry level**, so this proposal is\n  the gatekeeper for the whole lane. Training on **any** candidate still requires the\n  separate PREP-001 execution authorization (`nexora_audit.authorization`).\n\n## 6. Procedure status\n\nEach step in the registry `reopening_procedure` must be mapped with a status. This\ndraft maps \"document the reason\" / \"create a new hypothesis\" / \"pre-registration\" as\nDONE by this document; everything else is PENDING and must be executed \u2014 and remain\nsubject to owner approval \u2014 *after* reopening is ratified.",
+  "candidates_requested": [
+    {
+      "instrument": "EURUSD",
+      "timeframe": "H4",
+      "horizon": 12
+    }
+  ],
+  "procedure_status": {
+    "document the reason for reopening": {
+      "status": "DONE"
+    },
+    "data and leakage inspection": {
+      "status": "PENDING"
+    },
+    "create a new hypothesis": {
+      "status": "DONE"
+    },
+    "pre-registration": {
+      "status": "DONE"
+    },
+    "set GO/NO-GO criteria": {
+      "status": "PENDING"
+    },
+    "walk-forward validation": {
+      "status": "PENDING"
+    },
+    "net-of-cost evaluation": {
+      "status": "PENDING"
+    },
+    "user approval before training or model promotion": {
+      "status": "PENDING"
+    }
+  },
+  "references": [
+    "reports/economic_opportunity_discovery/GOVERNANCE_DECISION_PRD_001.md",
+    "config/governance/price_derived_lane_suspension.json"
+  ],
+  "note": "Proposal only. Registry status remains SUSPENDED until the owner runs tools/apply_lane_reopening.py with a signed ratification."
+}
